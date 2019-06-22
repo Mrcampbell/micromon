@@ -1,0 +1,18 @@
+version: '3'
+services: 
+  pokemon-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./pokemon-service
+    volumes: 
+      - ./pokemon-service/:/go/src/github.com/Mrcampbell/pgo2/pokemon-service
+    ports:
+      - "9090:9090" # remove after testing, we don't want to expose it
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pokemon
+      TZ: America/Denver

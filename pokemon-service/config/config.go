@@ -3,7 +3,7 @@ package config
 const (
 	DBUser     = "postgres"
 	DBPassword = "password"
-	DBDatabase = "todo"
+	DBDatabase = "pokemon"
 	DBHost     = "db"
 	DBPort     = "5432"
 	GRPCPort   = ":9090"
