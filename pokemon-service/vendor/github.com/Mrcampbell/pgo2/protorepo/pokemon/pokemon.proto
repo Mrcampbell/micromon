@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "pokemon";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+service PokemonService {
+  rpc GetPokemon(GetPokemonRequest) returns (GetPokemonResponse) {
+    option (google.api.http) ={
+      get: "/v1/pokemon/{id}"
+    };
+  }
+  rpc ListPokemon(ListPokemonRequest) returns (ListPokemonResponse) {
+    option (google.api.http) ={
+      get: "/v1/pokemon"
+    };
+  }
+}
+
+message Pokemon {
+  int32 id = 1;
+  
+  // @inject_tag: sql:",notnull"
+  int32 breed_id = 2;
+
+  // @inject_tag: sql:"type:timestamptz,default:now()"
+	google.protobuf.Timestamp created_at = 5;
+
+	// @inject_tag: sql:"type:timestamptz"
+	google.protobuf.Timestamp updated_at = 6;
+}
+
+message GetPokemonRequest {
+	string id = 1;
+}
+
+message GetPokemonResponse {
+	Pokemon pokemon = 1;
+}
+
+message ListPokemonRequest {
+}
+
+message ListPokemonResponse {
+	repeated Pokemon pokemon = 1;
+}
