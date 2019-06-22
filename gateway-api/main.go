@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
-	"github.com/golang/glog"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"google.golang.org/grpc"
 )
@@ -17,7 +17,7 @@ var (
 
 func main() {
 	if err := run(); err != nil {
-		glog.Fatal(err)
+		log.Fatal(err)
 	}
 }
 

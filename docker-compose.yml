@@ -1,13 +1,19 @@
 version: '3'
 services: 
+  gateway-api:
+    build:
+      dockerfile: Dockerfile
+      context: ./gateway-api/
+    volumes: 
+      - ./gateway-api/:/go/src/github.com/Mrcampbell/pgo2/gateway-api
+    ports:
+      - "8081:8081"
   pokemon-service:
     build:
       dockerfile: Dockerfile
       context: ./pokemon-service
     volumes: 
       - ./pokemon-service/:/go/src/github.com/Mrcampbell/pgo2/pokemon-service
-    ports:
-      - "9090:9090" # remove after testing, we don't want to expose it
   db:
     image: postgres
     restart: always
