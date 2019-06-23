@@ -29,11 +29,11 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 type Pokemon struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// @inject_tag: sql:",notnull"
-	BreedId int32 `protobuf:"varint,2,opt,name=breed_id,json=breedId,proto3" json:"breed_id,omitempty"`
+	BreedId int32 `protobuf:"varint,2,opt,name=breed_id,json=breedId,proto3" json:"breed_id,omitempty" sql:",notnull"`
 	// @inject_tag: sql:"type:timestamptz,default:now()"
-	CreatedAt *timestamp.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CreatedAt *timestamp.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty" sql:"type:timestamptz,default:now()"`
 	// @inject_tag: sql:"type:timestamptz"
-	UpdatedAt            *timestamp.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	UpdatedAt            *timestamp.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty" sql:"type:timestamptz"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
