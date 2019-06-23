@@ -3,10 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "QYOsOEQNoJOnKcWLBjYfdrezvMo=",
+			"checksumSHA1": "g5IPKaTnOR0WkDGdSt4N+DD1U8w=",
 			"path": "github.com/Mrcampbell/pgo2/protorepo/pokemon",
-			"revision": "e570b7cdcf26904877756e9b4d371a4596c7013a",
-			"revisionTime": "2019-06-22T22:07:29Z"
+			"revision": "34b69c391de444258dcf778701bd07c1c526519d",
+			"revisionTime": "2019-06-22T22:33:27Z"
 		},
 		{
 			"checksumSHA1": "XVVsiUDhG5Dh7zgJJ3YwXmsS9B8=",

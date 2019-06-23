@@ -4,5 +4,51 @@ package pokemon;
 
 option go_package = "pokemon";
 
+import "google/api/annotations.proto";
+
+// Since this is a Read-Only service, only getters are provided
 service BreedService {
+  rpc GetBreedDetail(GetBreedDetailRequest) returns (GetBreedDetailResponse) {
+    option (google.api.http) ={
+      get: "/v1/breed/{id}"
+    };
+  }
+
+  rpc GetBreedSummary(GetBreedSummaryRequest) returns (GetBreedSummaryResponse) {
+    option (google.api.http) ={
+      get: "/v1/breed/{id}/summary"
+    };
+  }
+}
+
+message BreedSummary {
+  string id = 1;
+  string name = 2;
+}
+
+message BreedDetail {
+  string id = 1;
+  string name = 2;
+  int32 hp = 3;
+  int32 attack = 4;
+  int32 defense = 5;
+  int32 special_attack = 6;
+  int32 special_defense = 7;
+  int32 speed = 8;
+}
+
+message GetBreedSummaryRequest {
+  string id = 1;
+}
+
+message GetBreedSummaryResponse {
+  BreedSummary breed = 1;
+}
+
+message GetBreedDetailRequest {
+  string id = 1;
+}
+
+message GetBreedDetailResponse {
+  BreedDetail breed = 1;
 }

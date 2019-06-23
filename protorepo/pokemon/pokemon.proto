@@ -21,6 +21,7 @@ service PokemonService {
 }
 
 message Pokemon {
+  // @inject_tag: sql:",pk"
   string id = 1;
   
   // @inject_tag: sql:",notnull"
