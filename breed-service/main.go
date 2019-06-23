@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/Mrcampbell/pgo2/breed-service/mock"
+	"github.com/Mrcampbell/pgo2/breed-service/boltdb"
 	"github.com/Mrcampbell/pgo2/pokemon-service/config"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 	"google.golang.org/grpc"
@@ -17,7 +17,11 @@ func main() {
 		log.Fatalf("Failed to listen on: %v", config.GRPCPort)
 	}
 
-	service := mock.NewBreedService()
+	service, err := boltdb.NewBreedService()
+
+	if err != nil {
+		log.Fatal(err)
+	}
 	server := grpc.NewServer()
 	pokemon.RegisterBreedServiceServer(server, service)
 
