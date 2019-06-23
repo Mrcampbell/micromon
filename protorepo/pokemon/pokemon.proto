@@ -5,7 +5,6 @@ package pokemon;
 option go_package = "pokemon";
 
 import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
 
 service PokemonService {
   rpc GetPokemon(GetPokemonRequest) returns (GetPokemonResponse) {
@@ -26,12 +25,6 @@ message Pokemon {
   
   // @inject_tag: sql:",notnull"
   int32 breed_id = 2;
-
-  // @inject_tag: sql:"type:timestamptz,default:now()"
-	google.protobuf.Timestamp created_at = 5;
-
-	// @inject_tag: sql:"type:timestamptz"
-	google.protobuf.Timestamp updated_at = 6;
 }
 
 message GetPokemonRequest {
