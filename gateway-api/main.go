@@ -13,6 +13,7 @@ import (
 
 var (
 	pokemonServerEndpoint = "pokemon-service:9090"
+	breedServerEndpoint   = "breed-service:9090"
 )
 
 func main() {
@@ -29,6 +30,10 @@ func run() error {
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	err := pokemon.RegisterPokemonServiceHandlerFromEndpoint(ctx, mux, pokemonServerEndpoint, opts)
+	if err != nil {
+		return err
+	}
+	err = pokemon.RegisterBreedServiceHandlerFromEndpoint(ctx, mux, breedServerEndpoint, opts)
 	if err != nil {
 		return err
 	}
