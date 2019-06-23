@@ -21,7 +21,7 @@ service PokemonService {
 }
 
 message Pokemon {
-  int32 id = 1;
+  string id = 1;
   
   // @inject_tag: sql:",notnull"
   int32 breed_id = 2;
@@ -34,7 +34,7 @@ message Pokemon {
 }
 
 message GetPokemonRequest {
-	int32 id = 1;
+	string id = 1;
 }
 
 message GetPokemonResponse {

@@ -15,10 +15,16 @@
 			"revisionTime": "2019-06-22T22:46:06Z"
 		},
 		{
-			"checksumSHA1": "JPK5L08nkmM36FLcN8cyi0LgC4c=",
+			"checksumSHA1": "JvBxz8NSzihDq3lO3Gtw+gQ7qpg=",
 			"path": "github.com/Mrcampbell/pgo2/protorepo/pokemon",
 			"revision": "34b69c391de444258dcf778701bd07c1c526519d",
 			"revisionTime": "2019-06-22T22:33:27Z"
+		},
+		{
+			"checksumSHA1": "20Pind5XCrfZL/F0oibWfd9gotA=",
+			"path": "github.com/boltdb/bolt",
+			"revision": "fd01fc79c553a8e99d512a07e8e0c63d4a3ccfc5",
+			"revisionTime": "2018-03-02T18:00:52Z"
 		},
 		{
 			"checksumSHA1": "GifGRJb2d6GFQ3L4BZvOYYmalDU=",
