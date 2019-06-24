@@ -9,6 +9,24 @@
 			"revisionTime": "2019-06-22T22:33:27Z"
 		},
 		{
+			"checksumSHA1": "g06KOc9faGeu0J6262AQfpL1x/o=",
+			"path": "github.com/dgraph-io/dgo",
+			"revision": "f7391571f1c43f93e4f69619430461de051dc60a",
+			"revisionTime": "2019-06-20T18:48:58Z"
+		},
+		{
+			"checksumSHA1": "PYeQuJSfDbcz7/7bIVTodhY11F4=",
+			"path": "github.com/dgraph-io/dgo/protos/api",
+			"revision": "f7391571f1c43f93e4f69619430461de051dc60a",
+			"revisionTime": "2019-06-20T18:48:58Z"
+		},
+		{
+			"checksumSHA1": "YOS7SDK4NjeABDXH3c1Jr9OuQYo=",
+			"path": "github.com/dgraph-io/dgo/y",
+			"revision": "f7391571f1c43f93e4f69619430461de051dc60a",
+			"revisionTime": "2019-06-20T18:48:58Z"
+		},
+		{
 			"checksumSHA1": "GifGRJb2d6GFQ3L4BZvOYYmalDU=",
 			"path": "github.com/golang/protobuf/jsonpb",
 			"revision": "e91709a02e0e8ff8b86b7aa913fdc9ae9498e825",
@@ -98,6 +116,12 @@
 			"path": "github.com/grpc-ecosystem/grpc-gateway/utilities",
 			"revision": "52a539ec166cf7380660e9c7ebde5206169d385d",
 			"revisionTime": "2019-04-14T22:19:32Z"
+		},
+		{
+			"checksumSHA1": "I7hloldMJZTqUx6hbVDp5nk9fZQ=",
+			"path": "github.com/pkg/errors",
+			"revision": "27936f6d90f9c8e1145f11ed52ffffbfdb9e0af7",
+			"revisionTime": "2019-02-27T00:00:51Z"
 		},
 		{
 			"checksumSHA1": "pCY4YtdNKVBYRbNvODjx8hj0hIs=",
@@ -374,6 +398,12 @@
 			"path": "google.golang.org/grpc/resolver/passthrough",
 			"revision": "d7af56a5e494ceb44a0749ca576c83cfd3a42bd2",
 			"revisionTime": "2019-04-16T22:54:26Z"
+		},
+		{
+			"checksumSHA1": "qagX2p0Qp5g2g7FpkNAfMQ94jMo=",
+			"path": "google.golang.org/grpc/serviceconfig",
+			"revision": "e8b58ff6375ab412b0b026b0c627ad3914e827c4",
+			"revisionTime": "2019-06-24T16:40:15Z"
 		},
 		{
 			"checksumSHA1": "3ZPGj/HdfLTiK7I3xPdnqELnHdk=",

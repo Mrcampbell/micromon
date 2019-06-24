@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net"
 
@@ -17,7 +18,9 @@ func main() {
 		log.Fatalf("Failed to listen on: %v", config.GRPCPort)
 	}
 
-	service, err := dgraph.NewMoveService()
+	ctx := context.Background()
+
+	service, err := dgraph.NewMoveService(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
