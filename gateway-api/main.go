@@ -14,6 +14,7 @@ import (
 var (
 	pokemonServerEndpoint = "pokemon-service:9090"
 	breedServerEndpoint   = "breed-service:9090"
+	moveServiceEndpoint   = "move-service:9090"
 )
 
 func main() {
@@ -37,6 +38,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
+
 	fmt.Println("Registering and Listening to Pokemon Service...")
 	return http.ListenAndServe(":8081", mux)
 }

@@ -7,7 +7,10 @@ import (
 	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -22,7 +25,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type Move struct {
+type MoveDetail struct {
 	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -30,60 +33,273 @@ type Move struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Move) Reset()         { *m = Move{} }
-func (m *Move) String() string { return proto.CompactTextString(m) }
-func (*Move) ProtoMessage()    {}
-func (*Move) Descriptor() ([]byte, []int) {
+func (m *MoveDetail) Reset()         { *m = MoveDetail{} }
+func (m *MoveDetail) String() string { return proto.CompactTextString(m) }
+func (*MoveDetail) ProtoMessage()    {}
+func (*MoveDetail) Descriptor() ([]byte, []int) {
 	return fileDescriptor_de903a9fd6d2d107, []int{0}
 }
 
-func (m *Move) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Move.Unmarshal(m, b)
+func (m *MoveDetail) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_MoveDetail.Unmarshal(m, b)
 }
-func (m *Move) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Move.Marshal(b, m, deterministic)
+func (m *MoveDetail) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_MoveDetail.Marshal(b, m, deterministic)
 }
-func (m *Move) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Move.Merge(m, src)
+func (m *MoveDetail) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MoveDetail.Merge(m, src)
 }
-func (m *Move) XXX_Size() int {
-	return xxx_messageInfo_Move.Size(m)
+func (m *MoveDetail) XXX_Size() int {
+	return xxx_messageInfo_MoveDetail.Size(m)
 }
-func (m *Move) XXX_DiscardUnknown() {
-	xxx_messageInfo_Move.DiscardUnknown(m)
+func (m *MoveDetail) XXX_DiscardUnknown() {
+	xxx_messageInfo_MoveDetail.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Move proto.InternalMessageInfo
+var xxx_messageInfo_MoveDetail proto.InternalMessageInfo
 
-func (m *Move) GetId() int32 {
+func (m *MoveDetail) GetId() int32 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *Move) GetName() string {
+func (m *MoveDetail) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
+type MoveSummary struct {
+	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *MoveSummary) Reset()         { *m = MoveSummary{} }
+func (m *MoveSummary) String() string { return proto.CompactTextString(m) }
+func (*MoveSummary) ProtoMessage()    {}
+func (*MoveSummary) Descriptor() ([]byte, []int) {
+	return fileDescriptor_de903a9fd6d2d107, []int{1}
+}
+
+func (m *MoveSummary) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_MoveSummary.Unmarshal(m, b)
+}
+func (m *MoveSummary) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_MoveSummary.Marshal(b, m, deterministic)
+}
+func (m *MoveSummary) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MoveSummary.Merge(m, src)
+}
+func (m *MoveSummary) XXX_Size() int {
+	return xxx_messageInfo_MoveSummary.Size(m)
+}
+func (m *MoveSummary) XXX_DiscardUnknown() {
+	xxx_messageInfo_MoveSummary.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MoveSummary proto.InternalMessageInfo
+
+func (m *MoveSummary) GetId() int32 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type GetMoveSummaryRequest struct {
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetMoveSummaryRequest) Reset()         { *m = GetMoveSummaryRequest{} }
+func (m *GetMoveSummaryRequest) String() string { return proto.CompactTextString(m) }
+func (*GetMoveSummaryRequest) ProtoMessage()    {}
+func (*GetMoveSummaryRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_de903a9fd6d2d107, []int{2}
+}
+
+func (m *GetMoveSummaryRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetMoveSummaryRequest.Unmarshal(m, b)
+}
+func (m *GetMoveSummaryRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetMoveSummaryRequest.Marshal(b, m, deterministic)
+}
+func (m *GetMoveSummaryRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMoveSummaryRequest.Merge(m, src)
+}
+func (m *GetMoveSummaryRequest) XXX_Size() int {
+	return xxx_messageInfo_GetMoveSummaryRequest.Size(m)
+}
+func (m *GetMoveSummaryRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetMoveSummaryRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetMoveSummaryRequest proto.InternalMessageInfo
+
+func (m *GetMoveSummaryRequest) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+type GetMoveSummaryResponse struct {
+	Move                 *MoveSummary `protobuf:"bytes,1,opt,name=move,proto3" json:"move,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
+}
+
+func (m *GetMoveSummaryResponse) Reset()         { *m = GetMoveSummaryResponse{} }
+func (m *GetMoveSummaryResponse) String() string { return proto.CompactTextString(m) }
+func (*GetMoveSummaryResponse) ProtoMessage()    {}
+func (*GetMoveSummaryResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_de903a9fd6d2d107, []int{3}
+}
+
+func (m *GetMoveSummaryResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetMoveSummaryResponse.Unmarshal(m, b)
+}
+func (m *GetMoveSummaryResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetMoveSummaryResponse.Marshal(b, m, deterministic)
+}
+func (m *GetMoveSummaryResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMoveSummaryResponse.Merge(m, src)
+}
+func (m *GetMoveSummaryResponse) XXX_Size() int {
+	return xxx_messageInfo_GetMoveSummaryResponse.Size(m)
+}
+func (m *GetMoveSummaryResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetMoveSummaryResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetMoveSummaryResponse proto.InternalMessageInfo
+
+func (m *GetMoveSummaryResponse) GetMove() *MoveSummary {
+	if m != nil {
+		return m.Move
+	}
+	return nil
+}
+
+type GetMoveDetailRequest struct {
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetMoveDetailRequest) Reset()         { *m = GetMoveDetailRequest{} }
+func (m *GetMoveDetailRequest) String() string { return proto.CompactTextString(m) }
+func (*GetMoveDetailRequest) ProtoMessage()    {}
+func (*GetMoveDetailRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_de903a9fd6d2d107, []int{4}
+}
+
+func (m *GetMoveDetailRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetMoveDetailRequest.Unmarshal(m, b)
+}
+func (m *GetMoveDetailRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetMoveDetailRequest.Marshal(b, m, deterministic)
+}
+func (m *GetMoveDetailRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMoveDetailRequest.Merge(m, src)
+}
+func (m *GetMoveDetailRequest) XXX_Size() int {
+	return xxx_messageInfo_GetMoveDetailRequest.Size(m)
+}
+func (m *GetMoveDetailRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetMoveDetailRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetMoveDetailRequest proto.InternalMessageInfo
+
+func (m *GetMoveDetailRequest) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+type GetMoveDetailResponse struct {
+	Move                 *MoveDetail `protobuf:"bytes,1,opt,name=move,proto3" json:"move,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
+}
+
+func (m *GetMoveDetailResponse) Reset()         { *m = GetMoveDetailResponse{} }
+func (m *GetMoveDetailResponse) String() string { return proto.CompactTextString(m) }
+func (*GetMoveDetailResponse) ProtoMessage()    {}
+func (*GetMoveDetailResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_de903a9fd6d2d107, []int{5}
+}
+
+func (m *GetMoveDetailResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetMoveDetailResponse.Unmarshal(m, b)
+}
+func (m *GetMoveDetailResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetMoveDetailResponse.Marshal(b, m, deterministic)
+}
+func (m *GetMoveDetailResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMoveDetailResponse.Merge(m, src)
+}
+func (m *GetMoveDetailResponse) XXX_Size() int {
+	return xxx_messageInfo_GetMoveDetailResponse.Size(m)
+}
+func (m *GetMoveDetailResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetMoveDetailResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetMoveDetailResponse proto.InternalMessageInfo
+
+func (m *GetMoveDetailResponse) GetMove() *MoveDetail {
+	if m != nil {
+		return m.Move
+	}
+	return nil
+}
+
 func init() {
-	proto.RegisterType((*Move)(nil), "pokemon.Move")
+	proto.RegisterType((*MoveDetail)(nil), "pokemon.MoveDetail")
+	proto.RegisterType((*MoveSummary)(nil), "pokemon.MoveSummary")
+	proto.RegisterType((*GetMoveSummaryRequest)(nil), "pokemon.GetMoveSummaryRequest")
+	proto.RegisterType((*GetMoveSummaryResponse)(nil), "pokemon.GetMoveSummaryResponse")
+	proto.RegisterType((*GetMoveDetailRequest)(nil), "pokemon.GetMoveDetailRequest")
+	proto.RegisterType((*GetMoveDetailResponse)(nil), "pokemon.GetMoveDetailResponse")
 }
 
 func init() { proto.RegisterFile("pokemon/move.proto", fileDescriptor_de903a9fd6d2d107) }
 
 var fileDescriptor_de903a9fd6d2d107 = []byte{
-	// 112 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x2a, 0xc8, 0xcf, 0x4e,
-	0xcd, 0xcd, 0xcf, 0xd3, 0xcf, 0xcd, 0x2f, 0x4b, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62,
-	0x87, 0x8a, 0x29, 0x69, 0x71, 0xb1, 0xf8, 0xe6, 0x97, 0xa5, 0x0a, 0xf1, 0x71, 0x31, 0x65, 0xa6,
-	0x48, 0x30, 0x2a, 0x30, 0x6a, 0xb0, 0x06, 0x31, 0x65, 0xa6, 0x08, 0x09, 0x71, 0xb1, 0xe4, 0x25,
-	0xe6, 0xa6, 0x4a, 0x30, 0x29, 0x30, 0x6a, 0x70, 0x06, 0x81, 0xd9, 0x46, 0xbc, 0x5c, 0xdc, 0x20,
-	0xb5, 0xc1, 0xa9, 0x45, 0x65, 0x99, 0xc9, 0xa9, 0x4e, 0x9c, 0x51, 0x30, 0x53, 0x92, 0xd8, 0xc0,
-	0xa6, 0x1a, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x80, 0x54, 0xc3, 0x7c, 0x6b, 0x00, 0x00, 0x00,
+	// 308 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x92, 0xc1, 0x4a, 0xf3, 0x40,
+	0x10, 0xc7, 0x49, 0xe8, 0xf7, 0x49, 0xa7, 0xb4, 0xc2, 0xd8, 0x6a, 0x29, 0x56, 0x4b, 0x0e, 0x36,
+	0xa7, 0xac, 0xd6, 0x17, 0x90, 0x22, 0x78, 0xf2, 0x12, 0x6f, 0xde, 0x56, 0x33, 0x94, 0xc5, 0x66,
+	0x37, 0x26, 0xdb, 0x80, 0x88, 0x17, 0x5f, 0xc1, 0x47, 0xf3, 0x15, 0xc4, 0xe7, 0x90, 0x6e, 0xb6,
+	0x25, 0x5b, 0xcd, 0x2d, 0x64, 0x7f, 0x33, 0xbf, 0xf9, 0xef, 0x0e, 0x60, 0xa6, 0x9e, 0x28, 0x55,
+	0x92, 0xa5, 0xaa, 0xa4, 0x28, 0xcb, 0x95, 0x56, 0xb8, 0x67, 0xff, 0x8d, 0x8e, 0x17, 0x4a, 0x2d,
+	0x96, 0xc4, 0x78, 0x26, 0x18, 0x97, 0x52, 0x69, 0xae, 0x85, 0x92, 0x45, 0x85, 0x05, 0xe7, 0x00,
+	0xb7, 0xaa, 0xa4, 0x6b, 0xd2, 0x5c, 0x2c, 0xb1, 0x07, 0xbe, 0x48, 0x86, 0xde, 0xc4, 0x0b, 0xff,
+	0xc5, 0xbe, 0x48, 0x10, 0xa1, 0x25, 0x79, 0x4a, 0x43, 0x7f, 0xe2, 0x85, 0xed, 0xd8, 0x7c, 0x07,
+	0x63, 0xe8, 0xac, 0x2b, 0xee, 0x56, 0x69, 0xca, 0xf3, 0x97, 0xdd, 0x92, 0x60, 0x0a, 0x83, 0x1b,
+	0xd2, 0x35, 0x22, 0xa6, 0xe7, 0x15, 0x15, 0xba, 0x06, 0xb6, 0x0d, 0x38, 0x87, 0xc3, 0x5d, 0xb0,
+	0xc8, 0x94, 0x2c, 0x08, 0x43, 0x68, 0xad, 0x83, 0x18, 0xb6, 0x33, 0xeb, 0x47, 0x36, 0x49, 0x54,
+	0x67, 0x0d, 0x11, 0x9c, 0x41, 0xdf, 0xf6, 0xa8, 0x02, 0x34, 0xb9, 0xae, 0xb6, 0x43, 0x6d, 0x38,
+	0xab, 0x9a, 0x3a, 0xaa, 0x03, 0x47, 0x65, 0x51, 0x03, 0xcc, 0xbe, 0x3d, 0x1b, 0x9b, 0xf2, 0x52,
+	0x3c, 0x12, 0x12, 0x74, 0x9d, 0x8e, 0x38, 0xde, 0xd6, 0xfe, 0x35, 0xd1, 0xe8, 0xa4, 0xe9, 0xb8,
+	0x1a, 0x24, 0x18, 0xbc, 0x7f, 0x7e, 0x7d, 0xf8, 0xfb, 0xd8, 0x65, 0xe5, 0x85, 0x79, 0x46, 0xf6,
+	0x2a, 0x92, 0x37, 0xcc, 0xa0, 0xe7, 0x5e, 0x12, 0xfe, 0x6a, 0xe4, 0x5e, 0xf3, 0xe8, 0xb4, 0xf1,
+	0xdc, 0x9a, 0xc6, 0xc6, 0x74, 0x84, 0x03, 0xc7, 0xc4, 0x8a, 0x0a, 0x9b, 0xb7, 0xef, 0x37, 0x9b,
+	0xf3, 0xf0, 0xdf, 0xac, 0xc8, 0xe5, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x5b, 0x45, 0x34, 0x2b,
+	0x5f, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -98,6 +314,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MoveServiceClient interface {
+	GetMoveDetail(ctx context.Context, in *GetMoveDetailRequest, opts ...grpc.CallOption) (*GetMoveDetailResponse, error)
+	GetMoveSummary(ctx context.Context, in *GetMoveSummaryRequest, opts ...grpc.CallOption) (*GetMoveSummaryResponse, error)
 }
 
 type moveServiceClient struct {
@@ -108,22 +326,94 @@ func NewMoveServiceClient(cc *grpc.ClientConn) MoveServiceClient {
 	return &moveServiceClient{cc}
 }
 
+func (c *moveServiceClient) GetMoveDetail(ctx context.Context, in *GetMoveDetailRequest, opts ...grpc.CallOption) (*GetMoveDetailResponse, error) {
+	out := new(GetMoveDetailResponse)
+	err := c.cc.Invoke(ctx, "/pokemon.MoveService/GetMoveDetail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *moveServiceClient) GetMoveSummary(ctx context.Context, in *GetMoveSummaryRequest, opts ...grpc.CallOption) (*GetMoveSummaryResponse, error) {
+	out := new(GetMoveSummaryResponse)
+	err := c.cc.Invoke(ctx, "/pokemon.MoveService/GetMoveSummary", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MoveServiceServer is the server API for MoveService service.
 type MoveServiceServer interface {
+	GetMoveDetail(context.Context, *GetMoveDetailRequest) (*GetMoveDetailResponse, error)
+	GetMoveSummary(context.Context, *GetMoveSummaryRequest) (*GetMoveSummaryResponse, error)
 }
 
 // UnimplementedMoveServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedMoveServiceServer struct {
 }
 
+func (*UnimplementedMoveServiceServer) GetMoveDetail(ctx context.Context, req *GetMoveDetailRequest) (*GetMoveDetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMoveDetail not implemented")
+}
+func (*UnimplementedMoveServiceServer) GetMoveSummary(ctx context.Context, req *GetMoveSummaryRequest) (*GetMoveSummaryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMoveSummary not implemented")
+}
+
 func RegisterMoveServiceServer(s *grpc.Server, srv MoveServiceServer) {
 	s.RegisterService(&_MoveService_serviceDesc, srv)
+}
+
+func _MoveService_GetMoveDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMoveDetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MoveServiceServer).GetMoveDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pokemon.MoveService/GetMoveDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MoveServiceServer).GetMoveDetail(ctx, req.(*GetMoveDetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MoveService_GetMoveSummary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMoveSummaryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MoveServiceServer).GetMoveSummary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pokemon.MoveService/GetMoveSummary",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MoveServiceServer).GetMoveSummary(ctx, req.(*GetMoveSummaryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 var _MoveService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pokemon.MoveService",
 	HandlerType: (*MoveServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "pokemon/move.proto",
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetMoveDetail",
+			Handler:    _MoveService_GetMoveDetail_Handler,
+		},
+		{
+			MethodName: "GetMoveSummary",
+			Handler:    _MoveService_GetMoveSummary_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "pokemon/move.proto",
 }
