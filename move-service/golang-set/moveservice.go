@@ -3,16 +3,16 @@ package dgraph
 import (
 	"context"
 
-	mapset "github.com/deckarep/golang-set"
+	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 )
 
 type MoveService struct {
-	set mapset.Set
+	set map[int]pokemon.Move
 }
 
 func NewMoveService(ctx context.Context) (*MoveService, error) {
 
-	set := mapset.NewSet()
+	var set map[int]pokemon.Move
 
 	return &MoveService{
 		set: set,
@@ -20,5 +20,12 @@ func NewMoveService(ctx context.Context) (*MoveService, error) {
 }
 
 func (ms *MoveService) load() {
-	ms.set.Add()
+	ms.set[1] = pokemon.Move{
+		Id:   1,
+		Name: "Scratch",
+	}
+	ms.set[2] = pokemon.Move{
+		Id:   2,
+		Name: "Pound",
+	}
 }
