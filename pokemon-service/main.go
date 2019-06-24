@@ -5,7 +5,7 @@ import (
 	"net"
 
 	"github.com/Mrcampbell/pgo2/pokemon-service/config"
-	"github.com/Mrcampbell/pgo2/pokemon-service/mock"
+	"github.com/Mrcampbell/pgo2/pokemon-service/psql"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 	"google.golang.org/grpc"
 )
@@ -17,7 +17,10 @@ func main() {
 		log.Fatalf("Failed to listen on: %v", config.GRPCPort)
 	}
 
-	service := mock.NewPokemonService()
+	service, err := psql.NewPokemonService()
+	if err != nil {
+		log.Fatal(err)
+	}
 	server := grpc.NewServer()
 	pokemon.RegisterPokemonServiceServer(server, service)
 

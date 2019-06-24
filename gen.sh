@@ -13,3 +13,5 @@ protoc -I/usr/local/include -I. \
   **/*.proto
 
 gv update github.com/Mrcampbell/pgo2/protorepo/pokemon
+
+protoc-go-inject-tag -input=./pokemon.pb.go  
