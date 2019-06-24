@@ -1,8 +1,6 @@
-package dgraph
+package moveservice
 
 import (
-	"context"
-
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 )
 
@@ -10,13 +8,13 @@ type MoveService struct {
 	set map[int]pokemon.Move
 }
 
-func NewMoveService(ctx context.Context) (*MoveService, error) {
+func NewMoveService() *MoveService {
 
 	var set map[int]pokemon.Move
 
 	return &MoveService{
 		set: set,
-	}, nil
+	}
 }
 
 func (ms *MoveService) load() {

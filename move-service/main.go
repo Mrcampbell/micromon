@@ -1,12 +1,11 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net"
 
 	"github.com/Mrcampbell/pgo2/move-service/config"
-	"github.com/Mrcampbell/pgo2/move-service/dgraph"
+	"github.com/Mrcampbell/pgo2/move-service/moveservice"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 	"google.golang.org/grpc"
 )
@@ -18,15 +17,10 @@ func main() {
 		log.Fatalf("Failed to listen on: %v", config.GRPCPort)
 	}
 
-	ctx := context.Background()
-
-	service, err := dgraph.NewMoveService(ctx)
-	if err != nil {
-		log.Fatal(err)
-	}
+	service := moveservice.NewMoveService()
 	server := grpc.NewServer()
 	pokemon.RegisterMoveServiceServer(server, service)
 
-	log.Println("Starting Pokemon Service..")
+	log.Println("Starting Move Service..")
 	server.Serve(lis)
 }
