@@ -16,7 +16,7 @@ func NewBreedService() *BreedService {
 func (*BreedService) GetBreedSummary(ctx context.Context, req *pokemon.GetBreedSummaryRequest) (*pokemon.GetBreedSummaryResponse, error) {
 	return &pokemon.GetBreedSummaryResponse{
 		Breed: &pokemon.BreedSummary{
-			Id:   1,
+			Id:   "1",
 			Name: "Bulbasaur",
 		},
 	}, nil
@@ -25,7 +25,7 @@ func (*BreedService) GetBreedSummary(ctx context.Context, req *pokemon.GetBreedS
 func (*BreedService) GetBreedDetail(ctx context.Context, req *pokemon.GetBreedDetailRequest) (*pokemon.GetBreedDetailResponse, error) {
 	return &pokemon.GetBreedDetailResponse{
 		Breed: &pokemon.BreedDetail{
-			Id:             1,
+			Id:             "1",
 			Name:           "Bulbasaur",
 			Hp:             2,
 			Attack:         3,

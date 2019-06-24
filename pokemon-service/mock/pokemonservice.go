@@ -16,7 +16,7 @@ func NewPokemonService() *PokemonService {
 func (*PokemonService) GetPokemon(ctx context.Context, req *pokemon.GetPokemonRequest) (*pokemon.GetPokemonResponse, error) {
 	return &pokemon.GetPokemonResponse{
 		Pokemon: &pokemon.Pokemon{
-			Id:      1,
+			Id:      "1",
 			BreedId: 1,
 		},
 	}, nil
@@ -26,11 +26,11 @@ func (*PokemonService) ListPokemon(ctx context.Context, req *pokemon.ListPokemon
 	return &pokemon.ListPokemonResponse{
 		Pokemon: []*pokemon.Pokemon{
 			&pokemon.Pokemon{
-				Id:      1,
+				Id:      "1",
 				BreedId: 1,
 			},
 			&pokemon.Pokemon{
-				Id:      2,
+				Id:      "2",
 				BreedId: 25,
 			},
 		},
