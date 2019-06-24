@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "pokemon";
+
+import "google/api/annotations.proto";
+
+service PokemonService {
+  rpc GetPokemon(GetPokemonRequest) returns (GetPokemonResponse) {
+    option (google.api.http) ={
+      get: "/v1/pokemon/{id}"
+    };
+  }
+  rpc ListPokemon(ListPokemonRequest) returns (ListPokemonResponse) {
+    option (google.api.http) ={
+      get: "/v1/pokemon"
+    };
+  }
+}
+
+message Pokemon {
+  // @inject_tag: sql:",pk"
+  string id = 1;
+  
+  // @inject_tag: sql:",notnull"
+  int32 breed_id = 2;
+}
+
+message GetPokemonRequest {
+	string id = 1;
+}
+
+message GetPokemonResponse {
+	Pokemon pokemon = 1;
+}
+
+message ListPokemonRequest {
+}
+
+message ListPokemonResponse {
+	repeated Pokemon pokemon = 1;
+}
