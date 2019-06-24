@@ -1,4 +1,4 @@
-version: '3'
+version: "3.2"
 services: 
   gateway-api:
     build:
@@ -7,7 +7,7 @@ services:
     volumes: 
       - ./gateway-api/:/go/src/github.com/Mrcampbell/pgo2/gateway-api
     ports:
-      - "8081:8081"
+      - 8081:8081
   pokemon-service:
     build:
       dockerfile: Dockerfile
@@ -20,7 +20,13 @@ services:
       context: ./breed-service
     volumes: 
       - ./breed-service/:/go/src/github.com/Mrcampbell/pgo2/breed-service
-  db:
+  move-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./move-service
+    volumes: 
+      - ./move-service/:/go/src/github.com/Mrcampbell/pgo2/move-service
+  postgres-db:
     image: postgres
     restart: always
     environment:
@@ -28,3 +34,42 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: pokemon
       TZ: America/Denver
+  zero:
+    image: dgraph/dgraph:latest
+    volumes:
+      - type: volume
+        source: dgraph
+        target: /dgraph
+        volume:
+          nocopy: true
+    ports:
+      - 5080:5080
+      - 6080:6080
+    restart: on-failure
+    command: dgraph zero --my=zero:5080
+  server:
+    image: dgraph/dgraph:latest
+    volumes:
+      - type: volume
+        source: dgraph
+        target: /dgraph
+        volume:
+          nocopy: true
+    ports:
+      - 8080:8080
+      - 9080:9080
+    restart: on-failure
+    command: dgraph alpha --my=server:7080 --lru_mb=2048 --zero=zero:5080
+  ratel:
+    image: dgraph/dgraph:latest
+    volumes:
+      - type: volume
+        source: dgraph
+        target: /dgraph
+        volume:
+          nocopy: true
+    ports:
+      - 8082:8000
+    command: dgraph-ratel
+volumes:
+  dgraph:
