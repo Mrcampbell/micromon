@@ -27,11 +27,11 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type Pokemon struct {
 	// @inject_tag: sql:",pk"
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" sql:",pk"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// @inject_tag: sql:",notnull"
-	BreedId int32 `protobuf:"varint,2,opt,name=breed_id,json=breedId,proto3" json:"breed_id,omitempty" sql:",notnull"`
+	BreedId int32 `protobuf:"varint,2,opt,name=breed_id,json=breedId,proto3" json:"breed_id,omitempty"`
 	// @inject_tag: sql:"-"
-	BreedSummary         *BreedSummary `protobuf:"bytes,3,opt,name=breed_summary,json=breedSummary,proto3" json:"breed_summary,omitempty" sql:"-"`
+	BreedSummary         *BreedSummary `protobuf:"bytes,3,opt,name=breed_summary,json=breedSummary,proto3" json:"breed_summary,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
