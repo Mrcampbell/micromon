@@ -5,7 +5,7 @@ import (
 	"net"
 
 	"github.com/Mrcampbell/pgo2/breed-service/boltdb"
-	"github.com/Mrcampbell/pgo2/pokemon-service/config"
+	"github.com/Mrcampbell/pgo2/breed-service/config"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 	"google.golang.org/grpc"
 )
