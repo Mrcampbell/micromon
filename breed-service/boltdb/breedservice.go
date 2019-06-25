@@ -48,8 +48,10 @@ func (bs *BreedService) initialize() error {
 		}
 
 		b1, err := encode(pokemon.BreedDetail{
-			Id:             "1",
-			Name:           "Bulbasaur",
+			Summary: &pokemon.BreedSummary{
+				Id:   "1",
+				Name: "Bulbasaur",
+			},
 			Hp:             1,
 			Attack:         2,
 			Defense:        3,
@@ -61,8 +63,10 @@ func (bs *BreedService) initialize() error {
 			return err
 		}
 		b2, err := encode(pokemon.BreedDetail{
-			Id:             "2",
-			Name:           "Ivysaur",
+			Summary: &pokemon.BreedSummary{
+				Id:   "2",
+				Name: "Ivysaur",
+			},
 			Hp:             1,
 			Attack:         2,
 			Defense:        3,

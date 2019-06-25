@@ -64,6 +64,10 @@ func (ps *PokemonService) ListPokemon(ctx context.Context, req *pokemon.ListPoke
 	}, nil
 }
 
+func (ps *PokemonService) InternalCreatePokemon(ctx context.Context, req *pokemon.InternalCreatePokemonRequest) (*pokemon.InternalCreatePokemonResponse, error) {
+	return nil, nil
+}
+
 func createSchema(db *pg.DB) error {
 	for _, model := range []interface{}{(*pokemon.Pokemon)(nil)} {
 		err := db.CreateTable(model, &orm.CreateTableOptions{

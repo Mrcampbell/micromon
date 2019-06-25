@@ -24,8 +24,5 @@ func decode(data []byte) (pokemon.BreedDetail, error) {
 }
 
 func convertDetailToSummmary(b pokemon.BreedDetail) pokemon.BreedSummary {
-	return pokemon.BreedSummary{
-		Id:   b.Id,
-		Name: b.Name,
-	}
+	return *b.Summary
 }
