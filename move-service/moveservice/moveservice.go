@@ -1,29 +1,46 @@
 package moveservice
 
 import (
+	"context"
+	"fmt"
+
+	"github.com/Mrcampbell/pgo2/move-service/moveservice/convert"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 )
 
 type MoveService struct {
-	set map[int]pokemon.Move
+	set map[string]pokemon.MoveDetail
 }
 
 func NewMoveService() *MoveService {
 
-	var set map[int]pokemon.Move
+	set := make(map[string]pokemon.MoveDetail, 0)
 
-	return &MoveService{
+	ms := &MoveService{
 		set: set,
 	}
+
+	ms.load()
+	return ms
 }
 
-func (ms *MoveService) load() {
-	ms.set[1] = pokemon.Move{
-		Id:   1,
-		Name: "Scratch",
+func (ms *MoveService) GetMoveDetail(ctx context.Context, req *pokemon.GetMoveDetailRequest) (*pokemon.GetMoveDetailResponse, error) {
+	move, ok := ms.set[req.Id]
+	if !ok {
+		return nil, fmt.Errorf("GetMoveDetail: Requested Move ID not found in Records: %v", req.Id)
 	}
-	ms.set[2] = pokemon.Move{
-		Id:   2,
-		Name: "Pound",
+	return &pokemon.GetMoveDetailResponse{
+		Move: &move,
+	}, nil
+}
+
+func (ms *MoveService) GetMoveSummary(ctx context.Context, req *pokemon.GetMoveSummaryRequest) (*pokemon.GetMoveSummaryResponse, error) {
+	move, ok := ms.set[req.Id]
+	if !ok {
+		return nil, fmt.Errorf("GetMoveDetail: Requested Move ID not found in Records: %v", req.Id)
 	}
+	summary := convert.MoveDetailToSummary(move)
+	return &pokemon.GetMoveSummaryResponse{
+		Move: &summary,
+	}, nil
 }

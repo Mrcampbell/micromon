@@ -42,11 +42,17 @@ func NewPokemonService() (*PokemonService, error) {
 }
 
 func (ps *PokemonService) GetPokemon(ctx context.Context, req *pokemon.GetPokemonRequest) (*pokemon.GetPokemonResponse, error) {
-	return nil, nil
+	p := &pokemon.Pokemon{Id: req.Id}
+	err := ps.DB.Select(p)
+	if err != nil {
+		return nil, err
+	}
+	return &pokemon.GetPokemonResponse{
+		Pokemon: p,
+	}, nil
 }
 
 func (ps *PokemonService) ListPokemon(ctx context.Context, req *pokemon.ListPokemonRequest) (*pokemon.ListPokemonResponse, error) {
-
 	var p []*pokemon.Pokemon
 	err := ps.DB.Model(&p).Select()
 	if err != nil {

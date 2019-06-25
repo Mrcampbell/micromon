@@ -39,6 +39,11 @@ func run() error {
 		return err
 	}
 
+	err = pokemon.RegisterMoveServiceHandlerFromEndpoint(ctx, mux, moveServiceEndpoint, opts)
+	if err != nil {
+		return err
+	}
+
 	fmt.Println("Registering and Listening to Pokemon Service...")
 	return http.ListenAndServe(":8081", mux)
 }

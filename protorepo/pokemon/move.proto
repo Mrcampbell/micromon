@@ -9,24 +9,24 @@ import "google/api/annotations.proto";
 service MoveService {
   rpc GetMoveDetail(GetMoveDetailRequest) returns (GetMoveDetailResponse) {
     option (google.api.http) ={
-      get: "/v1/move/{id}"
+      get: "/v1/moves/{id}"
     };
   }
 
   rpc GetMoveSummary(GetMoveSummaryRequest) returns (GetMoveSummaryResponse) {
     option (google.api.http) ={
-      get: "/v1/move/{id}/summary"
+      get: "/v1/moves/{id}/summary"
     };
   }
 }
 
 message MoveDetail {
-  int32 id = 1;
+  string id = 1;
   string name = 2;
 }
 
 message MoveSummary {
-  int32 id = 1;
+  string id = 1;
 }
 
 message GetMoveSummaryRequest {
