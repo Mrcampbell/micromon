@@ -5,6 +5,7 @@ package pokemon;
 option go_package = "pokemon";
 
 import "google/api/annotations.proto";
+import "pokemon/type.proto";
 
 // Since this is a Read-Only service, only getters are provided
 service BreedService {
@@ -24,17 +25,18 @@ service BreedService {
 message BreedSummary {
   string id = 1;
   string name = 2;
+  pokemon.Type type_1 = 3;
+  pokemon.Type type_2 = 4;
 }
 
 message BreedDetail {
-  string id = 1;
-  string name = 2;
-  int32 hp = 3;
-  int32 attack = 4;
-  int32 defense = 5;
-  int32 special_attack = 6;
-  int32 special_defense = 7;
-  int32 speed = 8;
+  BreedSummary summary = 1;
+  int32 hp = 2;
+  int32 attack = 3;
+  int32 defense = 4;
+  int32 special_attack = 5;
+  int32 special_defense = 6;
+  int32 speed = 7;
 }
 
 message GetBreedSummaryRequest {

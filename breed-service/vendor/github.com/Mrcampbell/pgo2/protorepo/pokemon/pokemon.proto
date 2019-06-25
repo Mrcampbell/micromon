@@ -5,7 +5,7 @@ package pokemon;
 option go_package = "pokemon";
 
 import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
+import "pokemon/breed.proto";
 
 service PokemonService {
   rpc GetPokemon(GetPokemonRequest) returns (GetPokemonResponse) {
@@ -18,19 +18,23 @@ service PokemonService {
       get: "/v1/pokemon"
     };
   }
+  rpc InternalCreatePokemon(InternalCreatePokemonRequest) returns (InternalCreatePokemonResponse) {
+    option (google.api.http) ={
+      post: "/internal/v1/pokemon",
+      body: "*"
+    };
+  }
 }
 
 message Pokemon {
+  // @inject_tag: sql:",pk"
   string id = 1;
   
   // @inject_tag: sql:",notnull"
   int32 breed_id = 2;
 
-  // @inject_tag: sql:"type:timestamptz,default:now()"
-	google.protobuf.Timestamp created_at = 5;
-
-	// @inject_tag: sql:"type:timestamptz"
-	google.protobuf.Timestamp updated_at = 6;
+    // @inject_tag: sql:"-"
+  pokemon.BreedSummary breed_summary = 3;
 }
 
 message GetPokemonRequest {
@@ -46,4 +50,20 @@ message ListPokemonRequest {
 
 message ListPokemonResponse {
 	repeated Pokemon pokemon = 1;
+}
+
+message InternalCreatePokemonRequest {
+  string breed_id = 1;
+  int32 level = 2;
+  bool override_gender_is_male = 3;
+  int32 override_iv_hp = 4;
+  int32 override_iv_attack = 5;
+  int32 override_iv_defense = 6;
+  int32 override_iv_special_attack = 7;
+  int32 override_iv_special_defense = 8;
+  int32 override_iv_special_speed = 9;
+}
+
+message InternalCreatePokemonResponse {
+  Pokemon pokemon = 1;
 }
