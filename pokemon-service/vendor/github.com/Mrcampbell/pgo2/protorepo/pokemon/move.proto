@@ -5,6 +5,7 @@ package pokemon;
 option go_package = "pokemon";
 
 import "google/api/annotations.proto";
+import "pokemon/type.proto";
 
 service MoveService {
   rpc GetMoveDetail(GetMoveDetailRequest) returns (GetMoveDetailResponse) {
@@ -21,12 +22,12 @@ service MoveService {
 }
 
 message MoveDetail {
-  string id = 1;
-  string name = 2;
+  MoveSummary summary = 1;
 }
 
 message MoveSummary {
   string id = 1;
+  pokemon.Type type = 2;
 }
 
 message GetMoveSummaryRequest {
