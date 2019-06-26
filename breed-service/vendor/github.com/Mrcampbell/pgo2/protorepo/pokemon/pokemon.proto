@@ -6,6 +6,7 @@ option go_package = "pokemon";
 
 import "google/api/annotations.proto";
 import "pokemon/breed.proto";
+import "pokemon/statgroup.proto";
 
 service PokemonService {
   rpc GetPokemon(GetPokemonRequest) returns (GetPokemonResponse) {
@@ -33,8 +34,12 @@ message Pokemon {
   // @inject_tag: sql:",notnull"
   string breed_id = 2;
 
-    // @inject_tag: sql:"-"
+  // @inject_tag: sql:"-"
   pokemon.BreedSummary breed_summary = 3;
+  
+  pokemon.StatGroup iv = 4;
+  pokemon.StatGroup ev = 5;
+  pokemon.StatGroup stat = 6;
 }
 
 message GetPokemonRequest {
@@ -56,12 +61,7 @@ message InternalCreatePokemonRequest {
   string breed_id = 1;
   int32 level = 2;
   bool override_gender_is_male = 3;
-  int32 override_iv_hp = 4;
-  int32 override_iv_attack = 5;
-  int32 override_iv_defense = 6;
-  int32 override_iv_special_attack = 7;
-  int32 override_iv_special_defense = 8;
-  int32 override_iv_special_speed = 9;
+  pokemon.StatGroup override_stat_group = 4;
 }
 
 message InternalCreatePokemonResponse {
