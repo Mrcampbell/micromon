@@ -29,6 +29,7 @@ func run() error {
 	defer cancel()
 
 	mux := runtime.NewServeMux()
+
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	err := pokemon.RegisterPokemonServiceHandlerFromEndpoint(ctx, mux, pokemonServerEndpoint, opts)
 	if err != nil {
@@ -45,5 +46,14 @@ func run() error {
 	}
 
 	fmt.Println("Registering and Listening to Pokemon Service...")
-	return http.ListenAndServe(":8081", mux)
+	return http.ListenAndServe(":8081", middlewares(mux))
+}
+
+func middlewares(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.String() != "/favicon.ico" {
+			fmt.Println(r.URL, r.Method)
+		}
+		h.ServeHTTP(w, r)
+	})
 }

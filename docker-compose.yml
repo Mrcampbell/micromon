@@ -34,6 +34,8 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: pokemon
       TZ: America/Denver
+    ports:
+    - "6543:5432"
 #   zero:
 #     image: dgraph/dgraph:latest
 #     volumes:

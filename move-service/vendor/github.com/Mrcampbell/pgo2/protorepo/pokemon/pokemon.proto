@@ -31,7 +31,7 @@ message Pokemon {
   string id = 1;
   
   // @inject_tag: sql:",notnull"
-  int32 breed_id = 2;
+  string breed_id = 2;
 
     // @inject_tag: sql:"-"
   pokemon.BreedSummary breed_summary = 3;

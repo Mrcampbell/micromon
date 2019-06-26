@@ -3,10 +3,16 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "q2qIJmubf1bKPTgNEWDNfZ0XYEg=",
+			"checksumSHA1": "x7hi5mZnEzsmY9k11JQ77wdbYjo=",
 			"path": "github.com/Mrcampbell/pgo2/protorepo/pokemon",
 			"revision": "34b69c391de444258dcf778701bd07c1c526519d",
 			"revisionTime": "2019-06-22T22:33:27Z"
+		},
+		{
+			"checksumSHA1": "4hjToEo97I1X8tXjD79g1eFBFR4=",
+			"path": "github.com/Mrcampbell/pgo2/shared-library/uuid",
+			"revision": "5743ca8c243ab662597161e0ecb99f9e0852778b",
+			"revisionTime": "2019-06-26T17:37:39Z"
 		},
 		{
 			"checksumSHA1": "XVVsiUDhG5Dh7zgJJ3YwXmsS9B8=",
@@ -136,6 +142,12 @@
 			"path": "github.com/golang/protobuf/ptypes/wrappers",
 			"revision": "e91709a02e0e8ff8b86b7aa913fdc9ae9498e825",
 			"revisionTime": "2019-04-09T05:09:43Z"
+		},
+		{
+			"checksumSHA1": "s5tdcjh84+tiKS3oSq77mzjB970=",
+			"path": "github.com/google/uuid",
+			"revision": "c2e93f3ae59f2904160ceaab466009f965df46d6",
+			"revisionTime": "2019-04-16T17:24:45Z"
 		},
 		{
 			"checksumSHA1": "POMWFQKvaDrJ1dlFWWl5uYigTGA=",

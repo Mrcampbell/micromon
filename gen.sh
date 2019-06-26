@@ -12,6 +12,8 @@ protoc -I/usr/local/include -I. \
   --grpc-gateway_out=logtostderr=true:. \
   **/*.proto
 
+protoc-go-inject-tag -input=./pokemon/pokemon.pb.go  
+
 gv update github.com/Mrcampbell/pgo2/protorepo/pokemon
 
 protoc-go-inject-tag -input=./pokemon.pb.go  
