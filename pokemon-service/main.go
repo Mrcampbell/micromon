@@ -17,7 +17,14 @@ func main() {
 		log.Fatalf("Failed to listen on: %v", config.GRPCPort)
 	}
 
-	service, err := psql.NewPokemonService()
+	conn, err := grpc.Dial(config.BreedServiceAddress, grpc.WithInsecure())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	breedClient := pokemon.NewBreedServiceClient(conn)
+
+	service, err := psql.NewPokemonService(breedClient)
 	if err != nil {
 		log.Fatal(err)
 	}

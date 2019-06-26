@@ -1,11 +1,12 @@
 package config
 
 const (
-	DBUser     = "postgres"
-	DBPassword = "password"
-	DBDatabase = "pokemon"
-	DBHost     = "postgres-db"
-	DBPort     = "5432"
-	GRPCPort   = ":9090"
-	HTTPPort   = ":8080"
+	DBUser              = "postgres"
+	DBPassword          = "password"
+	DBDatabase          = "pokemon"
+	DBHost              = "postgres-db"
+	DBPort              = "5432"
+	GRPCPort            = ":9090"
+	HTTPPort            = ":8080"
+	BreedServiceAddress = "breed-service:9090"
 )

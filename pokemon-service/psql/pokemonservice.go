@@ -6,16 +6,16 @@ import (
 
 	"github.com/Mrcampbell/pgo2/pokemon-service/config"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
-	"github.com/Mrcampbell/pgo2/shared-library/uuid"
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
 )
 
 type PokemonService struct {
-	DB *pg.DB
+	DB          *pg.DB
+	breedClient pokemon.BreedServiceClient
 }
 
-func NewPokemonService() (*PokemonService, error) {
+func NewPokemonService(breedClient pokemon.BreedServiceClient) (*PokemonService, error) {
 	db := pg.Connect(&pg.Options{
 		Addr:     config.DBHost + ":" + config.DBUser,
 		Database: config.DBDatabase,
@@ -38,20 +38,29 @@ func NewPokemonService() (*PokemonService, error) {
 	}
 
 	return &PokemonService{
-		DB: db,
+		DB:          db,
+		breedClient: breedClient,
 	}, nil
 }
 
 func (ps *PokemonService) GetPokemon(ctx context.Context, req *pokemon.GetPokemonRequest) (*pokemon.GetPokemonResponse, error) {
-	p := &pokemon.Pokemon{Id: req.Id}
-	err := ps.DB.Select(p)
+	p := pokemon.Pokemon{Id: req.Id}
+	err := ps.DB.Select(&p)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(p)
+	b, err := ps.breedClient.GetBreedSummary(ctx, &pokemon.GetBreedSummaryRequest{
+		Id: p.BreedId,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	p.BreedSummary = b.Summary
 
 	return &pokemon.GetPokemonResponse{
-		Pokemon: p,
+		Pokemon: &p,
 	}, nil
 }
 
@@ -68,14 +77,23 @@ func (ps *PokemonService) ListPokemon(ctx context.Context, req *pokemon.ListPoke
 }
 
 func (ps *PokemonService) InternalCreatePokemon(ctx context.Context, req *pokemon.InternalCreatePokemonRequest) (*pokemon.InternalCreatePokemonResponse, error) {
+	breed, err := ps.breedClient.GetBreedDetail(ctx, &pokemon.GetBreedDetailRequest{
+		Id: req.BreedId,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	result := buildPokemon(*breed.Detail, *req)
+
+	err = Upsert(ps.DB, &result)
+	if err != nil {
+		return nil, err
+	}
+
 	return &pokemon.InternalCreatePokemonResponse{
-		Pokemon: &pokemon.Pokemon{
-			BreedId: req.BreedId,
-			Id:      uuid.PrefixedUUID("p"),
-			Iv:      &pokemon.StatGroup{},
-			Ev:      &pokemon.StatGroup{},
-			Stat:    &pokemon.StatGroup{},
-		},
+		Pokemon: &result,
 	}, nil
 }
 
@@ -83,10 +101,10 @@ func createSchema(db *pg.DB) error {
 	for _, model := range []interface{}{(*pokemon.Pokemon)(nil)} {
 
 		// todo: remove after debug
-		db.DropTable(model, &orm.DropTableOptions{
-			Cascade:  true,
-			IfExists: true,
-		})
+		// db.DropTable(model, &orm.DropTableOptions{
+		// 	Cascade:  true,
+		// 	IfExists: true,
+		// })
 		err := db.CreateTable(model, &orm.CreateTableOptions{
 			Temp:        false,
 			IfNotExists: true,

@@ -52,12 +52,14 @@ func (bs *BreedService) initialize() error {
 				Id:   "1",
 				Name: "Bulbasaur",
 			},
-			Hp:             1,
-			Attack:         2,
-			Defense:        3,
-			SpecialAttack:  4,
-			SpecialDefense: 5,
-			Speed:          6,
+			Stats: &pokemon.StatGroup{
+				Hp:             45,
+				Attack:         49,
+				Defense:        49,
+				SpecialAttack:  65,
+				SpecialDefense: 65,
+				Speed:          45,
+			},
 		})
 		if err != nil {
 			return err
@@ -67,21 +69,46 @@ func (bs *BreedService) initialize() error {
 				Id:   "2",
 				Name: "Ivysaur",
 			},
-			Hp:             1,
-			Attack:         2,
-			Defense:        3,
-			SpecialAttack:  4,
-			SpecialDefense: 5,
-			Speed:          6,
+			Stats: &pokemon.StatGroup{
+				Hp:             60,
+				Attack:         62,
+				Defense:        63,
+				SpecialAttack:  80,
+				SpecialDefense: 80,
+				Speed:          60,
+			},
 		})
 		if err != nil {
 			return err
 		}
+
+		b3, err := encode(pokemon.BreedDetail{
+			Summary: &pokemon.BreedSummary{
+				Id:   "25",
+				Name: "Pikachu",
+			},
+			Stats: &pokemon.StatGroup{
+				Hp:             35,
+				Attack:         55,
+				Defense:        30,
+				SpecialAttack:  50,
+				SpecialDefense: 40,
+				Speed:          90,
+			},
+		})
+		if err != nil {
+			return err
+		}
+
 		err = b.Put([]byte("1"), b1)
 		if err != nil {
 			return err
 		}
 		err = b.Put([]byte("2"), b2)
+		if err != nil {
+			return err
+		}
+		err = b.Put([]byte("25"), b3)
 		if err != nil {
 			return err
 		}
@@ -100,7 +127,7 @@ func (bs *BreedService) GetBreedSummary(ctx context.Context, req *pokemon.GetBre
 	summary := convertDetailToSummmary(*b)
 
 	return &pokemon.GetBreedSummaryResponse{
-		Breed: &summary,
+		Summary: &summary,
 	}, nil
 }
 
@@ -112,7 +139,7 @@ func (bs *BreedService) GetBreedDetail(ctx context.Context, req *pokemon.GetBree
 	}
 
 	return &pokemon.GetBreedDetailResponse{
-		Breed: b,
+		Detail: b,
 	}, nil
 }
 
