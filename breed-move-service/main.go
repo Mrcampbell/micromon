@@ -5,6 +5,7 @@ import (
 	"net"
 
 	"github.com/Mrcampbell/pgo2/breed-move-service/config"
+	bms "github.com/Mrcampbell/pgo2/breed-move-service/grpc"
 	"github.com/Mrcampbell/pgo2/breed-move-service/psql"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 	"google.golang.org/grpc"
@@ -17,12 +18,15 @@ func main() {
 		log.Fatalf("Failed to listen on: %v", config.GRPCPort)
 	}
 
-	service, err := psql.NewBreedMoveService()
+	bmservice, err := psql.NewBreedMoveService()
 	if err != nil {
 		log.Fatal(err)
 	}
 	server := grpc.NewServer()
-	pokemon.RegisterBreedMoveServiceServer(server, service)
+
+	bmserver := bms.NewBreedMoveServer(*bmservice)
+
+	pokemon.RegisterBreedMoveServiceServer(server, bmserver)
 
 	log.Println("Starting Pokemon Service..")
 	server.Serve(lis)

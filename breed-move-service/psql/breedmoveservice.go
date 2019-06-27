@@ -6,6 +6,8 @@ func NewBreedMoveService() (*BreedMoveService, error) {
 	return &BreedMoveService{}, nil
 }
 
+
+
 // GetAllPreviousLevelUpLearnableMoveIDsForBreed gets ALL the possible moves for a pokemon to have learned in the wild.
 //  Useful for when generating wild pokemon and you need a random moveset.
 func (ps *BreedMoveService) GetAllPreviousLevelUpLearnableMoveIDsForBreed(breedID string, generation, level int) ([]int, error) {
