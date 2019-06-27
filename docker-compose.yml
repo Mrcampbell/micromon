@@ -3,7 +3,7 @@ services:
   gateway-api:
     build:
       dockerfile: Dockerfile
-      context: ./gateway-api/
+      context: ./gateway-api
     volumes: 
       - ./gateway-api/:/go/src/github.com/Mrcampbell/pgo2/gateway-api
     ports:
@@ -20,6 +20,12 @@ services:
       context: ./breed-service
     volumes: 
       - ./breed-service/:/go/src/github.com/Mrcampbell/pgo2/breed-service
+  breed-move-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./breed-move-service
+    volumes: 
+      - ./breed-move-service/:/go/src/github.com/Mrcampbell/pgo2/breed-move-service
   move-service:
     build:
       dockerfile: Dockerfile
