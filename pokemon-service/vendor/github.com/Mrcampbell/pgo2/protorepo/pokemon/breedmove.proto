@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "pokemon";
+
+service BreedMoveService {
+  rpc GetMovesForBreed(GetMovesForBreedRequest) returns (GetMovesForBreedResponse) {}
+}
+
+message GetMovesForBreedRequest {
+  string breed_id = 1;
+  string version_group_id = 2;
+}
+
+message GetMovesForBreedResponse {
+  repeated BreedMove breed_moves = 1;
+}
+
+message BreedMove {
+  string breed_id = 1;
+  string version_group_id = 2;
+  string move_id = 3;
+  string learn_method_id = 4;
+  int32 level = 5;
+}

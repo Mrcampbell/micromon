@@ -28,6 +28,6 @@ func main() {
 
 	pokemon.RegisterBreedMoveServiceServer(server, bmserver)
 
-	log.Println("Starting Pokemon Service..")
+	log.Println("Starting Breed Move Service..")
 	server.Serve(lis)
 }

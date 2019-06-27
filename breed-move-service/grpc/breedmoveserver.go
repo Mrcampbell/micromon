@@ -18,5 +18,12 @@ func NewBreedMoveServer(bmservice psql.BreedMoveService) *BreedMoveServer {
 }
 
 func (bms *BreedMoveServer) GetMovesForBreed(ctx context.Context, req *pokemon.GetMovesForBreedRequest) (*pokemon.GetMovesForBreedResponse, error) {
-	return nil, nil
+	breedMoves, err := bms.breedMoveService.GetMovesForBreed(ctx, req.BreedId, req.VersionGroupId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pokemon.GetMovesForBreedResponse{
+		BreedMoves: breedMoves,
+	}, nil
 }

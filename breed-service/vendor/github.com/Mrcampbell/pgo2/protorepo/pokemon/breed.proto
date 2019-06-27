@@ -34,7 +34,7 @@ message BreedSummary {
 message BreedDetail {
   BreedSummary summary = 1;
   pokemon.StatGroup stats = 2;
-  repeated pokemon.BreedMoves breed_moves = 3;
+  repeated pokemon.BreedMove breed_moves = 3;
 }
 
 message GetBreedSummaryRequest {

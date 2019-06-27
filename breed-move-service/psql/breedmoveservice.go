@@ -1,9 +1,11 @@
 package psql
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/Mrcampbell/pgo2/breed-move-service/config"
+	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 	"github.com/go-pg/pg"
 )
 
@@ -40,4 +42,19 @@ func (ps *BreedMoveService) GetAllPreviousLevelUpLearnableMoveIDsForBreed(breedI
 // GetRandomMoveIDSetForBreed Calls GetAllPreviousLevelUpLearnableMoveIDsForBreed but only returns (up to) 4 id's
 func (ps *BreedMoveService) GetRandomMoveIDSetForBreed(breedID string, generation, level int) ([]int, error) {
 	return nil, nil
+}
+
+func (ps *BreedMoveService) GetMovesForBreed(ctx context.Context, breedID string, version_groupd_id string) ([]*pokemon.BreedMove, error) {
+	var bms []*pokemon.BreedMove
+
+	err := ps.DB.ModelContext(ctx, &bms).
+		Where("breed_id = ?", breedID).
+		Where("version_group_id = ?", "16").
+		Select()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return bms, nil
 }

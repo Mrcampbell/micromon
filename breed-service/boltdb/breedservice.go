@@ -14,10 +14,11 @@ var (
 )
 
 type BreedService struct {
-	DB *bolt.DB
+	DB              *bolt.DB
+	breedMoveClient pokemon.BreedMoveServiceClient
 }
 
-func NewBreedService() (*BreedService, error) {
+func NewBreedService(breedMoveClient pokemon.BreedMoveServiceClient) (*BreedService, error) {
 	db, err := bolt.Open("data/db.bolt", 0600, &bolt.Options{
 		Timeout: 1 * time.Second,
 	})
@@ -27,7 +28,8 @@ func NewBreedService() (*BreedService, error) {
 	}
 
 	bs := &BreedService{
-		DB: db,
+		DB:              db,
+		breedMoveClient: breedMoveClient,
 	}
 
 	err = bs.initialize()
@@ -137,6 +139,16 @@ func (bs *BreedService) GetBreedDetail(ctx context.Context, req *pokemon.GetBree
 	if err != nil {
 		return nil, err
 	}
+
+	bm, err := bs.breedMoveClient.GetMovesForBreed(ctx, &pokemon.GetMovesForBreedRequest{
+		BreedId: req.Id,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	b.BreedMoves = bm.BreedMoves
 
 	return &pokemon.GetBreedDetailResponse{
 		Detail: b,

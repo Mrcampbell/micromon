@@ -17,7 +17,14 @@ func main() {
 		log.Fatalf("Failed to listen on: %v", config.GRPCPort)
 	}
 
-	service, err := boltdb.NewBreedService()
+	conn, err := grpc.Dial(config.BreedMoveService, grpc.WithInsecure())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	breedMoveClient := pokemon.NewBreedMoveServiceClient(conn)
+
+	service, err := boltdb.NewBreedService(breedMoveClient)
 
 	if err != nil {
 		log.Fatal(err)
