@@ -9,6 +9,60 @@
 			"revisionTime": "2019-06-22T22:33:27Z"
 		},
 		{
+			"checksumSHA1": "XVVsiUDhG5Dh7zgJJ3YwXmsS9B8=",
+			"path": "github.com/go-pg/pg",
+			"revision": "50c566b109ca9408003cceccda27e71eaaf75235",
+			"revisionTime": "2019-06-17T10:44:41Z"
+		},
+		{
+			"checksumSHA1": "/+e/olE+ETsQntzXuETCEvuWmCY=",
+			"path": "github.com/go-pg/pg/internal",
+			"revision": "50c566b109ca9408003cceccda27e71eaaf75235",
+			"revisionTime": "2019-06-17T10:44:41Z"
+		},
+		{
+			"checksumSHA1": "dwGkEeqtBAgUN/eTcDjTPPr8r+U=",
+			"path": "github.com/go-pg/pg/internal/iszero",
+			"revision": "50c566b109ca9408003cceccda27e71eaaf75235",
+			"revisionTime": "2019-06-17T10:44:41Z"
+		},
+		{
+			"checksumSHA1": "F1qU1XdjPMxFWIW1hJtA9sIbDB4=",
+			"path": "github.com/go-pg/pg/internal/parser",
+			"revision": "50c566b109ca9408003cceccda27e71eaaf75235",
+			"revisionTime": "2019-06-17T10:44:41Z"
+		},
+		{
+			"checksumSHA1": "giPKgSAfhKH0pWvyJtk4+OeKHYU=",
+			"path": "github.com/go-pg/pg/internal/pool",
+			"revision": "50c566b109ca9408003cceccda27e71eaaf75235",
+			"revisionTime": "2019-06-17T10:44:41Z"
+		},
+		{
+			"checksumSHA1": "7P+N8ejLZbWr4K5xd1pfo5QR3pU=",
+			"path": "github.com/go-pg/pg/internal/structfilter",
+			"revision": "50c566b109ca9408003cceccda27e71eaaf75235",
+			"revisionTime": "2019-06-17T10:44:41Z"
+		},
+		{
+			"checksumSHA1": "IvB0FfsH3bs5YKjRtAw2w1klU90=",
+			"path": "github.com/go-pg/pg/internal/tag",
+			"revision": "50c566b109ca9408003cceccda27e71eaaf75235",
+			"revisionTime": "2019-06-17T10:44:41Z"
+		},
+		{
+			"checksumSHA1": "eFvkdvtTBqzGf4ndV5E/8TCjen8=",
+			"path": "github.com/go-pg/pg/orm",
+			"revision": "50c566b109ca9408003cceccda27e71eaaf75235",
+			"revisionTime": "2019-06-17T10:44:41Z"
+		},
+		{
+			"checksumSHA1": "TvtxFCHTh2tXlw84VbtSU1Jyx/4=",
+			"path": "github.com/go-pg/pg/types",
+			"revision": "50c566b109ca9408003cceccda27e71eaaf75235",
+			"revisionTime": "2019-06-17T10:44:41Z"
+		},
+		{
 			"checksumSHA1": "GifGRJb2d6GFQ3L4BZvOYYmalDU=",
 			"path": "github.com/golang/protobuf/jsonpb",
 			"revision": "b285ee9cfc6c881bb20c0d8dc73370ea9b9ec90f",
@@ -98,6 +152,18 @@
 			"path": "github.com/grpc-ecosystem/grpc-gateway/utilities",
 			"revision": "52a539ec166cf7380660e9c7ebde5206169d385d",
 			"revisionTime": "2019-04-14T22:19:32Z"
+		},
+		{
+			"checksumSHA1": "iqeSAF7imnVsW+iqLqf6kkYn1VU=",
+			"path": "github.com/jinzhu/inflection",
+			"revision": "f5c5f50e6090ae76a29240b61ae2a90dd810112e",
+			"revisionTime": "2019-06-03T04:28:36Z"
+		},
+		{
+			"checksumSHA1": "1MGpGDQqnUoRpv7VEcQrXOBydXE=",
+			"path": "golang.org/x/crypto/pbkdf2",
+			"revision": "df01cb2cc480549d72034218dd98bf97671450ac",
+			"revisionTime": "2019-04-17T08:53:58Z"
 		},
 		{
 			"checksumSHA1": "pCY4YtdNKVBYRbNvODjx8hj0hIs=",
@@ -398,6 +464,12 @@
 			"path": "google.golang.org/grpc/tap",
 			"revision": "e8b58ff6375ab412b0b026b0c627ad3914e827c4",
 			"revisionTime": "2019-06-24T16:40:15Z"
+		},
+		{
+			"checksumSHA1": "FauB4huCttPCgR/pu8Yi95fb2+8=",
+			"path": "mellium.im/sasl",
+			"revision": "2a61779921b6e437e546b15bd4d92331e593ff75",
+			"revisionTime": "2019-03-25T16:33:52Z"
 		}
 	],
 	"rootPath": "github.com/Mrcampbell/pgo2/breed-move-service"
