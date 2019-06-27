@@ -1,0 +1,13 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "PbYbkj6j5TTYeMnI5ZaiWLhD7dU=",
+			"path": "github.com/Mrcampbell/pgo2/protorepo/pokemon",
+			"revision": "34b69c391de444258dcf778701bd07c1c526519d",
+			"revisionTime": "2019-06-22T22:33:27Z"
+		}
+	],
+	"rootPath": "github.com/Mrcampbell/pgo2/breed-move-service"
+}

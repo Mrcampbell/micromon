@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "pokemon";
+
+import "google/api/annotations.proto";
+import "pokemon/type.proto";
+import "pokemon/statgroup.proto";
+
+// Since this is a Read-Only service, only getters are provided
+service BreedService {
+  rpc GetBreedDetail(GetBreedDetailRequest) returns (GetBreedDetailResponse) {
+    option (google.api.http) ={
+      get: "/v1/breed/{id}"
+    };
+  }
+
+  rpc GetBreedSummary(GetBreedSummaryRequest) returns (GetBreedSummaryResponse) {
+    option (google.api.http) ={
+      get: "/v1/breed/{id}/summary"
+    };
+  }
+}
+
+message BreedSummary {
+  string id = 1;
+  string name = 2;
+  pokemon.Type type_1 = 3;
+  pokemon.Type type_2 = 4;
+}
+
+message BreedDetail {
+  BreedSummary summary = 1;
+  pokemon.StatGroup stats = 2;
+}
+
+message GetBreedSummaryRequest {
+  string id = 1;
+}
+
+message GetBreedSummaryResponse {
+  BreedSummary summary = 1;
+}
+
+message GetBreedDetailRequest {
+  string id = 1;
+}
+
+message GetBreedDetailResponse {
+  BreedDetail detail = 1;
+}

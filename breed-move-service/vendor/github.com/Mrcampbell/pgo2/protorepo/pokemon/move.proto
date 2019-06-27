@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "pokemon";
+
+import "google/api/annotations.proto";
+import "pokemon/type.proto";
+
+service MoveService {
+  rpc GetMoveDetail(GetMoveDetailRequest) returns (GetMoveDetailResponse) {
+    option (google.api.http) ={
+      get: "/v1/moves/{id}"
+    };
+  }
+
+  rpc GetMoveSummary(GetMoveSummaryRequest) returns (GetMoveSummaryResponse) {
+    option (google.api.http) ={
+      get: "/v1/moves/{id}/summary"
+    };
+  }
+}
+
+message MoveDetail {
+  MoveSummary summary = 1;
+}
+
+message MoveSummary {
+  string id = 1;
+  pokemon.Type type = 2;
+}
+
+message GetMoveSummaryRequest {
+  string id = 1;
+}
+
+message GetMoveSummaryResponse {
+  MoveSummary move = 1;
+}
+
+message GetMoveDetailRequest {
+  string id = 1;
+}
+
+message GetMoveDetailResponse {
+  MoveDetail move = 1;
+}
