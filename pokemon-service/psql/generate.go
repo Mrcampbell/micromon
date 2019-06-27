@@ -55,6 +55,8 @@ func buildPokemon(breed pokemon.BreedDetail, p pokemon.InternalCreatePokemonRequ
 	specDef := calcStat(int(p.Level), int(breed.Stats.SpecialDefense), iSpecDef, 0)
 	speed := calcStat(int(p.Level), int(breed.Stats.Speed), iSpeed, 0)
 
+	randomLevelUpLearnableMoves := getRandomLevelUpLearnableMoves(breed.BreedMoves)
+
 	return pokemon.Pokemon{
 		Id:           uuid.PrefixedUUID("p"),
 		BreedId:      breed.Summary.Id,
@@ -100,3 +102,9 @@ func calcStat(level, base, iv, ev int) int {
 func calcHP(level, base, iv, ev int) int {
 	return calcStat(level, base, iv, ev) + 5 + level
 }
+
+func getRandomLevelUpLearnableMoves(bm []*pokemon.BreedMove) []*pokemon.BreedMove {
+
+}
+
+func filterBreedMoves()

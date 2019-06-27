@@ -3,6 +3,7 @@ syntax = "proto3";
 package pokemon;
 
 option go_package = "pokemon";
+import "pokemon/versiongroup.proto";
 
 service BreedMoveService {
   rpc GetMovesForBreed(GetMovesForBreedRequest) returns (GetMovesForBreedResponse) {}
@@ -17,10 +18,24 @@ message GetMovesForBreedResponse {
   repeated BreedMove breed_moves = 1;
 }
 
+enum LearnMethod {
+  LEARN_METHOD_UNKNOWN = 0;
+  LEVEL_UP = 1;
+  EGG = 2;
+  TUTOR = 3;
+  MACHINE = 4;
+  STADIUM_SURFING_PIKACHU = 5;
+  LIGHT_BALL_EGG = 6;
+  COLOSSEUM_PURIFICATION = 7;
+  XD_SHADOW = 8;
+  XD_PURIFICATION = 9;
+  FORM_CHANGE = 10;
+}
+
 message BreedMove {
   string breed_id = 1;
-  string version_group_id = 2;
+  pokemon.VersionGroup version_group_id = 2;
   string move_id = 3;
-  string learn_method_id = 4;
+  LearnMethod learn_method_id = 4;
   int32 level = 5;
 }

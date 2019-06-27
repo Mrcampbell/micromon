@@ -6,6 +6,8 @@ option go_package = "pokemon";
 
 import "google/api/annotations.proto";
 import "pokemon/type.proto";
+import "pokemon/statgroup.proto";
+import "pokemon/breedmove.proto";
 
 // Since this is a Read-Only service, only getters are provided
 service BreedService {
@@ -31,12 +33,8 @@ message BreedSummary {
 
 message BreedDetail {
   BreedSummary summary = 1;
-  int32 hp = 2;
-  int32 attack = 3;
-  int32 defense = 4;
-  int32 special_attack = 5;
-  int32 special_defense = 6;
-  int32 speed = 7;
+  pokemon.StatGroup stats = 2;
+  repeated pokemon.BreedMove breed_moves = 3;
 }
 
 message GetBreedSummaryRequest {
@@ -44,7 +42,7 @@ message GetBreedSummaryRequest {
 }
 
 message GetBreedSummaryResponse {
-  BreedSummary breed = 1;
+  BreedSummary summary = 1;
 }
 
 message GetBreedDetailRequest {
@@ -52,5 +50,5 @@ message GetBreedDetailRequest {
 }
 
 message GetBreedDetailResponse {
-  BreedDetail breed = 1;
+  BreedDetail detail = 1;
 }
