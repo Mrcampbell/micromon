@@ -143,16 +143,16 @@ func (bs *BreedService) GetBreedDetail(ctx context.Context, req *pokemon.GetBree
 		return nil, err
 	}
 
-	// bm, err := bs.breedMoveClient.GetMovesForBreed(ctx, &pokemon.GetMovesForBreedRequest{
-	// 	BreedId: req.Id,
-	// })
+	bm, err := bs.breedMoveClient.GetMovesForBreed(ctx, &pokemon.GetMovesForBreedRequest{
+		BreedId: req.Id,
+	})
 
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
-	// b.BreedMoves = bm.BreedMoves
+	b.BreedMoves = bm.BreedMoves
 
 	return &pokemon.GetBreedDetailResponse{
 		Detail: b,
