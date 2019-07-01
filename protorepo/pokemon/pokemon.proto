@@ -42,10 +42,19 @@ message Pokemon {
   pokemon.StatGroup ev = 5;
   pokemon.StatGroup stat = 6;
 
+  // @inject_tag: sql:"-"  
   pokemon.MoveSummary move_one = 7;
+  // @inject_tag: sql:"-"
   pokemon.MoveSummary move_two = 8;
+  // @inject_tag: sql:"-"
   pokemon.MoveSummary move_three = 9;
+  // @inject_tag: sql:"-"
   pokemon.MoveSummary move_four = 10;
+
+  string move_one_id = 11;
+  string move_two_id = 12;
+  string move_three_id = 13;
+  string move_four_id = 14;
 }
 
 message GetPokemonRequest {

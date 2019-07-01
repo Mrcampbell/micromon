@@ -8,6 +8,8 @@ import (
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 )
 
+var _ pokemon.MoveServiceServer = &MoveService{}
+
 type MoveService struct {
 	set map[string]pokemon.MoveDetail
 }

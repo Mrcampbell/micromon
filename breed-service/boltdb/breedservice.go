@@ -12,6 +12,7 @@ import (
 var (
 	bucket = []byte("Breeds")
 )
+var _ pokemon.BreedServiceServer = &BreedService{}
 
 type BreedService struct {
 	DB              *bolt.DB
@@ -24,6 +25,7 @@ func NewBreedService(breedMoveClient pokemon.BreedMoveServiceClient) (*BreedServ
 	})
 
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
@@ -123,6 +125,7 @@ func (bs *BreedService) GetBreedSummary(ctx context.Context, req *pokemon.GetBre
 
 	b, err := bs.readBreedByID(req.Id)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
@@ -135,20 +138,24 @@ func (bs *BreedService) GetBreedSummary(ctx context.Context, req *pokemon.GetBre
 
 func (bs *BreedService) GetBreedDetail(ctx context.Context, req *pokemon.GetBreedDetailRequest) (*pokemon.GetBreedDetailResponse, error) {
 
+	fmt.Println("BREED REQUEST")
+
 	b, err := bs.readBreedByID(req.Id)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
-	bm, err := bs.breedMoveClient.GetMovesForBreed(ctx, &pokemon.GetMovesForBreedRequest{
-		BreedId: req.Id,
-	})
+	// bm, err := bs.breedMoveClient.GetMovesForBreed(ctx, &pokemon.GetMovesForBreedRequest{
+	// 	BreedId: req.Id,
+	// })
 
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
-	b.BreedMoves = bm.BreedMoves
+	// b.BreedMoves = bm.BreedMoves
 
 	return &pokemon.GetBreedDetailResponse{
 		Detail: b,
@@ -172,6 +179,7 @@ func (bs *BreedService) readBreedByID(id string) (*pokemon.BreedDetail, error) {
 	})
 
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	return &breed, nil

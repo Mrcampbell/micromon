@@ -9,4 +9,5 @@ const (
 	GRPCPort                  = ":9090"
 	HTTPPort                  = ":8080"
 	DefaultVersionGroupNumber = 18
+	MoveServiceAddress        = "move-service:9090"
 )

@@ -2,6 +2,7 @@ package boltdb
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 )
@@ -9,6 +10,7 @@ import (
 func encode(breed pokemon.BreedDetail) ([]byte, error) {
 	enc, err := json.Marshal(breed)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	return enc, nil

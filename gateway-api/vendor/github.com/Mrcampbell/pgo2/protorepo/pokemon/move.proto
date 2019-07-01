@@ -28,6 +28,7 @@ message MoveDetail {
 message MoveSummary {
   string id = 1;
   pokemon.Type type = 2;
+  string name = 3;
 }
 
 message GetMoveSummaryRequest {

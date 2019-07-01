@@ -4,9 +4,14 @@ package pokemon;
 
 option go_package = "pokemon";
 import "pokemon/versiongroup.proto";
+import "pokemon/move.proto";
 
 service BreedMoveService {
+  // This returns ALL the moves for a breed for a given version group
   rpc GetMovesForBreed(GetMovesForBreedRequest) returns (GetMovesForBreedResponse) {}
+
+  // Get four random, level up learnable moves, perfect for random encounters and generated pokemon for trades
+  rpc GetRandomMoveSetForBreed(GetRandomMoveSetForBreedRequest) returns (GetRandomMoveSetForBreedResponse) {}
 }
 
 message GetMovesForBreedRequest {
@@ -16,6 +21,19 @@ message GetMovesForBreedRequest {
 
 message GetMovesForBreedResponse {
   repeated BreedMove breed_moves = 1;
+}
+
+message GetRandomMoveSetForBreedRequest {
+  string breed_id = 1;
+  pokemon.VersionGroup version_group_id = 2;
+  int32 level = 3;
+}
+
+message GetRandomMoveSetForBreedResponse {
+  pokemon.MoveSummary move_one = 1;
+  pokemon.MoveSummary move_two = 2;
+  pokemon.MoveSummary move_three = 3;
+  pokemon.MoveSummary move_four = 4;
 }
 
 enum LearnMethod {

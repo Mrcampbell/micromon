@@ -1,6 +1,8 @@
 package psql
 
 import (
+	"context"
+	"fmt"
 	"math"
 	"math/rand"
 
@@ -8,7 +10,9 @@ import (
 	"github.com/Mrcampbell/pgo2/shared-library/uuid"
 )
 
-func buildPokemon(breed pokemon.BreedDetail, p pokemon.InternalCreatePokemonRequest) pokemon.Pokemon {
+func (ps *PokemonService) buildPokemon(ctx context.Context, breed pokemon.BreedDetail, p pokemon.InternalCreatePokemonRequest, vg pokemon.VersionGroup) (pokemon.Pokemon, error) {
+
+	fmt.Println(breed, p, vg)
 
 	var iHP, iAtk, iDef, iSpecAtk, iSpecDef, iSpeed int
 
@@ -55,12 +59,28 @@ func buildPokemon(breed pokemon.BreedDetail, p pokemon.InternalCreatePokemonRequ
 	specDef := calcStat(int(p.Level), int(breed.Stats.SpecialDefense), iSpecDef, 0)
 	speed := calcStat(int(p.Level), int(breed.Stats.Speed), iSpeed, 0)
 
-	randomLevelUpLearnableMoves := getRandomLevelUpLearnableMoves(breed.BreedMoves)
+	fmt.Println("PRE MOVE REQUEST")
+
+	moves, err := ps.breedMoveClient.GetRandomMoveSetForBreed(ctx, &pokemon.GetRandomMoveSetForBreedRequest{
+		BreedId:        breed.Summary.Id,
+		Level:          p.Level,
+		VersionGroupId: vg,
+	})
+	if err != nil {
+		fmt.Println(err)
+		return pokemon.Pokemon{}, err
+	}
+
+	fmt.Println("Moves: ", moves)
 
 	return pokemon.Pokemon{
 		Id:           uuid.PrefixedUUID("p"),
 		BreedId:      breed.Summary.Id,
 		BreedSummary: breed.Summary,
+		MoveOne:      moves.MoveOne,
+		MoveTwo:      moves.MoveTwo,
+		MoveThree:    moves.MoveThree,
+		MoveFour:     moves.MoveFour,
 		Ev: &pokemon.StatGroup{
 			Hp:             int32(1),
 			Attack:         int32(1),
@@ -85,7 +105,7 @@ func buildPokemon(breed pokemon.BreedDetail, p pokemon.InternalCreatePokemonRequ
 			SpecialDefense: int32(specDef),
 			Speed:          int32(speed),
 		},
-	}
+	}, nil
 }
 
 func calcStat(level, base, iv, ev int) int {
@@ -102,9 +122,3 @@ func calcStat(level, base, iv, ev int) int {
 func calcHP(level, base, iv, ev int) int {
 	return calcStat(level, base, iv, ev) + 5 + level
 }
-
-func getRandomLevelUpLearnableMoves(bm []*pokemon.BreedMove) []*pokemon.BreedMove {
-
-}
-
-func filterBreedMoves()
