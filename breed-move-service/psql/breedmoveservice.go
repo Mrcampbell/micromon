@@ -54,15 +54,48 @@ func (ps *BreedMoveService) GetRandomMoveSummarySetForBreed(ctx context.Context,
 		bms[i], bms[j] = bms[j], bms[i]
 	})
 
-	var bmslice []*pokemon.BreedMove
-	if len(bms) < 5 {
-		bmslice = bms
-	} else {
-		bmslice = bms[0:3]
+	if len(bms) < 2 {
+		bms = append(bms, &pokemon.BreedMove{
+			MoveId:         "0",
+			LearnMethodId:  pokemon.LearnMethod_LEVEL_UP,
+			BreedId:        breedID,
+			Level:          0,
+			VersionGroupId: pokemon.VersionGroup_UNKNOWN_VERSION_GROUP,
+		})
 	}
 
+	if len(bms) < 3 {
+		bms = append(bms, &pokemon.BreedMove{
+			MoveId:         "0",
+			LearnMethodId:  pokemon.LearnMethod_LEVEL_UP,
+			BreedId:        breedID,
+			Level:          0,
+			VersionGroupId: pokemon.VersionGroup_UNKNOWN_VERSION_GROUP,
+		})
+	}
+	if len(bms) < 4 {
+		bms = append(bms, &pokemon.BreedMove{
+			MoveId:         "0",
+			LearnMethodId:  pokemon.LearnMethod_LEVEL_UP,
+			BreedId:        breedID,
+			Level:          0,
+			VersionGroupId: pokemon.VersionGroup_UNKNOWN_VERSION_GROUP,
+		})
+	}
+
+	if len(bms) < 5 {
+		bms = append(bms, &pokemon.BreedMove{
+			MoveId:         "0",
+			LearnMethodId:  pokemon.LearnMethod_LEVEL_UP,
+			BreedId:        breedID,
+			Level:          0,
+			VersionGroupId: pokemon.VersionGroup_UNKNOWN_VERSION_GROUP,
+		})
+	}
+
+	// TODO: remove api call for unknown move
 	var summarys []*pokemon.MoveSummary
-	for _, bm := range bmslice {
+	for _, bm := range bms {
 		ms, err := ps.moveClient.GetMoveSummary(ctx, &pokemon.GetMoveSummaryRequest{
 			Id: bm.MoveId,
 		})

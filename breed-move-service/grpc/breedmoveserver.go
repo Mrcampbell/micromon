@@ -50,25 +50,13 @@ func (bms *BreedMoveServer) GetRandomMoveSetForBreed(ctx context.Context, req *p
 	}
 	response := pokemon.GetRandomMoveSetForBreedResponse{}
 
-	// if len(ms) == 0 {
-	// 	return nil, fmt.Errorf("No Moves were returned for breed, version group, and level")
-	// }
+	response.MoveOne = ms[0]
 
-	if len(ms) > 0 {
-		response.MoveOne = ms[0]
-	}
+	response.MoveTwo = ms[1]
 
-	if len(ms) > 1 {
-		response.MoveTwo = ms[1]
-	}
+	response.MoveThree = ms[2]
 
-	if len(ms) > 2 {
-		response.MoveThree = ms[2]
-	}
-
-	if len(ms) > 3 {
-		response.MoveFour = ms[3]
-	}
+	response.MoveFour = ms[3]
 
 	return &response, nil
 }
