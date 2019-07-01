@@ -39,8 +39,16 @@ func (ms *MoveService) GetMoveDetail(ctx context.Context, req *pokemon.GetMoveDe
 func (ms *MoveService) GetMoveSummary(ctx context.Context, req *pokemon.GetMoveSummaryRequest) (*pokemon.GetMoveSummaryResponse, error) {
 	move, ok := ms.set[req.Id]
 	if !ok {
-		return nil, fmt.Errorf("GetMoveDetail: Requested Move ID not found in Records: %v", req.Id)
+		fmt.Printf("GetMoveDetail: Requested Move ID not found in Records: %v\n", req.Id)
+		return &pokemon.GetMoveSummaryResponse{
+			Move: &pokemon.MoveSummary{
+				Id:   req.Id,
+				Name: "UNKNOWN",
+				Type: pokemon.Type_UNKNOWN,
+			},
+		}, nil
 	}
+
 	summary := convert.MoveDetailToSummary(move)
 	return &pokemon.GetMoveSummaryResponse{
 		Move: &summary,
