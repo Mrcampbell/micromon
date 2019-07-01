@@ -21,9 +21,6 @@ func NewBreedMoveServer(bmservice psql.BreedMoveService) *BreedMoveServer {
 }
 
 func (bms *BreedMoveServer) GetMovesForBreed(ctx context.Context, req *pokemon.GetMovesForBreedRequest) (*pokemon.GetMovesForBreedResponse, error) {
-
-	fmt.Println("MOVES REQUEST")
-
 	if req.VersionGroupId == pokemon.VersionGroup_UNKNOWN_VERSION_GROUP {
 		fmt.Println("Version Group Not Provided")
 		req.VersionGroupId = pokemon.VersionGroup_ULTRA_SUN_ULTRA_MOON
@@ -41,8 +38,6 @@ func (bms *BreedMoveServer) GetMovesForBreed(ctx context.Context, req *pokemon.G
 }
 
 func (bms *BreedMoveServer) GetRandomMoveSetForBreed(ctx context.Context, req *pokemon.GetRandomMoveSetForBreedRequest) (*pokemon.GetRandomMoveSetForBreedResponse, error) {
-
-	fmt.Println("RANDOM MOVE REQUEST")
 	ms, err := bms.breedMoveService.GetRandomMoveSummarySetForBreed(ctx, req.BreedId, req.VersionGroupId, int(req.Level))
 	if err != nil {
 		fmt.Println(err)

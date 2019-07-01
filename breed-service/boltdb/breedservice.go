@@ -137,9 +137,6 @@ func (bs *BreedService) GetBreedSummary(ctx context.Context, req *pokemon.GetBre
 }
 
 func (bs *BreedService) GetBreedDetail(ctx context.Context, req *pokemon.GetBreedDetailRequest) (*pokemon.GetBreedDetailResponse, error) {
-
-	fmt.Println("BREED REQUEST")
-
 	b, err := bs.readBreedByID(req.Id)
 	if err != nil {
 		fmt.Println(err)

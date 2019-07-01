@@ -46,7 +46,6 @@ func (ps *BreedMoveService) GetRandomMoveSummarySetForBreed(ctx context.Context,
 		fmt.Println(err)
 		return nil, err
 	}
-	fmt.Println("BMS: ", bms)
 
 	// shuffle them
 	rand.Seed(time.Now().UnixNano())

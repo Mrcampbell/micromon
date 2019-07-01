@@ -12,44 +12,42 @@ import (
 
 func (ps *PokemonService) buildPokemon(ctx context.Context, breed pokemon.BreedDetail, p pokemon.InternalCreatePokemonRequest, vg pokemon.VersionGroup) (pokemon.Pokemon, error) {
 
-	fmt.Println(breed, p, vg)
-
 	var iHP, iAtk, iDef, iSpecAtk, iSpecDef, iSpeed int
 
 	if p.OverrideStatGroup != nil && p.OverrideStatGroup.Hp != 0 {
 		iHP = int(p.OverrideStatGroup.Hp)
 	} else {
-		iHP = rand.Intn(15)
+		iHP = rand.Intn(14) + 1
 	}
 
 	if p.OverrideStatGroup != nil && p.OverrideStatGroup.Attack != 0 {
 		iAtk = int(p.OverrideStatGroup.Attack)
 	} else {
-		iAtk = rand.Intn(15)
+		iAtk = rand.Intn(14) + 1
 	}
 
 	if p.OverrideStatGroup != nil && p.OverrideStatGroup.Defense != 0 {
 		iDef = int(p.OverrideStatGroup.Defense)
 	} else {
-		iDef = rand.Intn(15)
+		iDef = rand.Intn(14) + 1
 	}
 
 	if p.OverrideStatGroup != nil && p.OverrideStatGroup.SpecialAttack != 0 {
 		iSpecAtk = int(p.OverrideStatGroup.SpecialAttack)
 	} else {
-		iSpecDef = rand.Intn(15)
+		iSpecDef = rand.Intn(14) + 1
 	}
 
 	if p.OverrideStatGroup != nil && p.OverrideStatGroup.SpecialDefense != 0 {
 		iSpecDef = int(p.OverrideStatGroup.SpecialDefense)
 	} else {
-		iSpecDef = rand.Intn(15)
+		iSpecDef = rand.Intn(14) + 1
 	}
 
 	if p.OverrideStatGroup != nil && p.OverrideStatGroup.Speed != 0 {
 		iSpeed = int(p.OverrideStatGroup.Speed)
 	} else {
-		iSpeed = rand.Intn(15)
+		iSpeed = rand.Intn(14) + 1
 	}
 
 	hp := calcStat(int(p.Level), int(breed.Stats.Hp), iHP, 0)
@@ -58,8 +56,6 @@ func (ps *PokemonService) buildPokemon(ctx context.Context, breed pokemon.BreedD
 	specAtk := calcStat(int(p.Level), int(breed.Stats.SpecialAttack), iSpecAtk, 0)
 	specDef := calcStat(int(p.Level), int(breed.Stats.SpecialDefense), iSpecDef, 0)
 	speed := calcStat(int(p.Level), int(breed.Stats.Speed), iSpeed, 0)
-
-	fmt.Println("PRE MOVE REQUEST")
 
 	moves, err := ps.breedMoveClient.GetRandomMoveSetForBreed(ctx, &pokemon.GetRandomMoveSetForBreedRequest{
 		BreedId:        breed.Summary.Id,
@@ -70,8 +66,6 @@ func (ps *PokemonService) buildPokemon(ctx context.Context, breed pokemon.BreedD
 		fmt.Println(err)
 		return pokemon.Pokemon{}, err
 	}
-
-	fmt.Println("Moves: ", moves)
 
 	return pokemon.Pokemon{
 		Id:           uuid.PrefixedUUID("p"),
