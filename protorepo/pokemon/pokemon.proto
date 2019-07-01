@@ -8,6 +8,7 @@ import "google/api/annotations.proto";
 import "pokemon/breed.proto";
 import "pokemon/statgroup.proto";
 import "pokemon/move.proto";
+import "pokemon/versiongroup.proto";
 
 service PokemonService {
   rpc GetPokemon(GetPokemonRequest) returns (GetPokemonResponse) {
@@ -77,6 +78,7 @@ message InternalCreatePokemonRequest {
   int32 level = 2;
   bool override_gender_is_male = 3;
   pokemon.StatGroup override_stat_group = 4;
+  pokemon.VersionGroup version_group_id = 5;
 }
 
 message InternalCreatePokemonResponse {

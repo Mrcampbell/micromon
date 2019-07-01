@@ -78,9 +78,14 @@ func (ps *PokemonService) buildPokemon(ctx context.Context, breed pokemon.BreedD
 		BreedId:      breed.Summary.Id,
 		BreedSummary: breed.Summary,
 		MoveOne:      moves.MoveOne,
+		MoveOneId:    moves.MoveOne.Id,
 		MoveTwo:      moves.MoveTwo,
+		MoveTwoId:    moves.MoveTwo.Id,
 		MoveThree:    moves.MoveThree,
+		MoveThreeId:  moves.MoveThree.Id,
 		MoveFour:     moves.MoveFour,
+		MoveFourId:   moves.MoveFour.Id,
+
 		Ev: &pokemon.StatGroup{
 			Hp:             int32(1),
 			Attack:         int32(1),

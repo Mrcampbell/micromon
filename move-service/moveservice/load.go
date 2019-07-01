@@ -3,6 +3,12 @@ package moveservice
 import "github.com/Mrcampbell/pgo2/protorepo/pokemon"
 
 func (ms *MoveService) load() {
+	ms.set["0"] = pokemon.MoveDetail{
+		Summary: &pokemon.MoveSummary{
+			Id:   "0",
+			Name: "NONE",
+		},
+	}
 	ms.set["1"] = pokemon.MoveDetail{
 		Summary: &pokemon.MoveSummary{
 			Id:   "1",

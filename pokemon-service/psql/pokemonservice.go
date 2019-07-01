@@ -86,8 +86,8 @@ func (ps *PokemonService) ListPokemon(ctx context.Context, req *pokemon.ListPoke
 func (ps *PokemonService) InternalCreatePokemon(ctx context.Context, req *pokemon.InternalCreatePokemonRequest) (*pokemon.InternalCreatePokemonResponse, error) {
 	fmt.Println("PRE BREED REQUEST")
 	breed, err := ps.breedClient.GetBreedDetail(ctx, &pokemon.GetBreedDetailRequest{
-		Id: req.BreedId,
-		// VersionGroup: req.,
+		Id:             req.BreedId,
+		VersionGroupId: req.VersionGroupId,
 	})
 
 	if err != nil {

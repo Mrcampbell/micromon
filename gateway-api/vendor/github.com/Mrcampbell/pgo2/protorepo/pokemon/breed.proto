@@ -8,6 +8,7 @@ import "google/api/annotations.proto";
 import "pokemon/type.proto";
 import "pokemon/statgroup.proto";
 import "pokemon/breedmove.proto";
+import "pokemon/versiongroup.proto";
 
 // Since this is a Read-Only service, only getters are provided
 service BreedService {
@@ -39,6 +40,7 @@ message BreedDetail {
 
 message GetBreedSummaryRequest {
   string id = 1;
+  pokemon.VersionGroup version_group_id = 2;
 }
 
 message GetBreedSummaryResponse {
@@ -47,6 +49,7 @@ message GetBreedSummaryResponse {
 
 message GetBreedDetailRequest {
   string id = 1;
+  pokemon.VersionGroup version_group_id = 2;
 }
 
 message GetBreedDetailResponse {
