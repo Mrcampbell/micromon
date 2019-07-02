@@ -50,7 +50,7 @@ func (ps *PokemonService) buildPokemon(ctx context.Context, breed pokemon.BreedD
 		iSpeed = rand.Intn(14) + 1
 	}
 
-	hp := calcStat(int(p.Level), int(breed.Stats.Hp), iHP, 0)
+	hp := calcHP(int(p.Level), int(breed.Stats.Hp), iHP, 0)
 	atk := calcStat(int(p.Level), int(breed.Stats.Attack), iAtk, 0)
 	def := calcStat(int(p.Level), int(breed.Stats.Defense), iDef, 0)
 	specAtk := calcStat(int(p.Level), int(breed.Stats.SpecialAttack), iSpecAtk, 0)
@@ -71,14 +71,20 @@ func (ps *PokemonService) buildPokemon(ctx context.Context, breed pokemon.BreedD
 		Id:           uuid.PrefixedUUID("p"),
 		BreedId:      breed.Summary.Id,
 		BreedSummary: breed.Summary,
-		MoveOne:      moves.MoveOne,
-		MoveOneId:    moves.MoveOne.Id,
-		MoveTwo:      moves.MoveTwo,
-		MoveTwoId:    moves.MoveTwo.Id,
-		MoveThree:    moves.MoveThree,
-		MoveThreeId:  moves.MoveThree.Id,
-		MoveFour:     moves.MoveFour,
-		MoveFourId:   moves.MoveFour.Id,
+
+		Hp: &pokemon.HealthPoints{
+			CurrentHP: int32(hp),
+			MaxHP:     int32(hp),
+		},
+
+		MoveOne:     moves.MoveOne,
+		MoveOneId:   moves.MoveOne.Id,
+		MoveTwo:     moves.MoveTwo,
+		MoveTwoId:   moves.MoveTwo.Id,
+		MoveThree:   moves.MoveThree,
+		MoveThreeId: moves.MoveThree.Id,
+		MoveFour:    moves.MoveFour,
+		MoveFourId:  moves.MoveFour.Id,
 
 		Ev: &pokemon.StatGroup{
 			Hp:             int32(1),
