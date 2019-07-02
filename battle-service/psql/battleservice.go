@@ -1,6 +1,7 @@
 package psql
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/Mrcampbell/pgo2/battle-service/config"
@@ -8,13 +9,15 @@ import (
 	"github.com/go-pg/pg"
 )
 
+var _ pokemon.BattleServiceServer = &BattleService{}
+
 type BattleService struct {
 	DB             *pg.DB
 	pokemonService pokemon.PokemonServiceClient
 	moveService    pokemon.MoveServiceClient
 }
 
-func NewBatleService(pokemonService pokemon.PokemonServiceClient, moveService pokemon.MoveServiceClient) (*BattleService, error) {
+func NewBattleService(pokemonService pokemon.PokemonServiceClient, moveService pokemon.MoveServiceClient) (*BattleService, error) {
 
 	db := pg.Connect(&pg.Options{
 		Addr:     config.DBHost + ":" + config.DBUser,
@@ -28,7 +31,24 @@ func NewBatleService(pokemonService pokemon.PokemonServiceClient, moveService po
 	})
 
 	return &BattleService{
+		DB:             db,
 		pokemonService: pokemonService,
 		moveService:    moveService,
 	}, nil
+}
+
+func (bs *BattleService) Create(ctx context.Context, req *pokemon.CreateBattleRequest) (*pokemon.CreateBattleResponse, error) {
+	return &pokemon.CreateBattleResponse{
+		Battle: &pokemon.Battle{
+			Duration: 0,
+			PokemonABattleMask: &pokemon.PokemonBattleMask{
+				Pokemon: &pokemon.Pokemon{
+					Id: "Fuck you.",
+				},
+			},
+		},
+	}, nil
+}
+func (bs *BattleService) GetBattle(ctx context.Context, req *pokemon.GetBattleRequest) (*pokemon.GetBattleResponse, error) {
+	return nil, nil
 }

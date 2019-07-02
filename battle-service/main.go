@@ -5,7 +5,7 @@ import (
 	"net"
 
 	"github.com/Mrcampbell/pgo2/battle-service/config"
-	// "github.com/Mrcampbell/pgo2/battle-service/psql"
+	"github.com/Mrcampbell/pgo2/battle-service/psql"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 	"google.golang.org/grpc"
 )

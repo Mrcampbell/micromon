@@ -15,6 +15,7 @@ var (
 	pokemonServerEndpoint = "pokemon-service:9090"
 	breedServerEndpoint   = "breed-service:9090"
 	moveServiceEndpoint   = "move-service:9090"
+	battleServiceEndpoint = "battle-service:9090"
 )
 
 func main() {
@@ -39,8 +40,11 @@ func run() error {
 	if err != nil {
 		return err
 	}
-
 	err = pokemon.RegisterMoveServiceHandlerFromEndpoint(ctx, mux, moveServiceEndpoint, opts)
+	if err != nil {
+		return err
+	}
+	err = pokemon.RegisterBattleServiceHandlerFromEndpoint(ctx, mux, battleServiceEndpoint, opts)
 	if err != nil {
 		return err
 	}
