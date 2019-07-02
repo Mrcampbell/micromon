@@ -34,12 +34,16 @@ func NewBattleService() (*BattleService, error) {
 	}, nil
 }
 
-func (bs *BattleService) Insert(ctx context.Context, battle *pokemon.Battle) error {
+func (bs *BattleService) Upsert(ctx context.Context, battle *pokemon.Battle) error {
 
-	err := bs.DB.Insert(battle)
+	err := bs.DB.Update(battle)
 	if err != nil {
-		return err
+		err = bs.DB.Insert(battle)
+		if err != nil {
+			return err
+		}
 	}
+	return nil
 
 	return nil
 }

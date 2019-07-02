@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/Mrcampbell/pgo2/battle-service/psql"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
@@ -54,7 +55,7 @@ func (bs *BattleServer) Create(ctx context.Context, req *pokemon.CreateBattleReq
 		PokemonBBattleMask: &pbbm,
 	}
 
-	err = bs.battleService.Insert(ctx, battle)
+	err = bs.battleService.Upsert(ctx, battle)
 	if err != nil {
 		return nil, err
 	}
@@ -75,5 +76,28 @@ func (bs *BattleServer) GetBattle(ctx context.Context, req *pokemon.GetBattleReq
 }
 
 func (bs *BattleServer) UseAttack(ctx context.Context, req *pokemon.UseAttackRequest) (*pokemon.UseAttackResponse, error) {
+	b, err := bs.battleService.GetBattle(ctx, req.BattleId)
+	if err != nil {
+		return nil, err
+	}
+
+	if req.PlayerId == b.PlayerAId && b.State == pokemon.BattleState_WAITING_ON_BOTH_PLAYERS { // if one player moves first, then put state waiting on the other
+		b.State = pokemon.BattleState_WAITING_ON_PLAYER_B
+	} else if req.PlayerId == b.PlayerBId && b.State == pokemon.BattleState_WAITING_ON_BOTH_PLAYERS {
+		b.State = pokemon.BattleState_WAITING_ON_PLAYER_A
+	} else if req.PlayerId == b.PlayerAId && b.State == pokemon.BattleState_WAITING_ON_PLAYER_A { // if the player who moved was being waited for, queue it up, baby.
+		b.State = pokemon.BattleState_MOVE_RESULTS_QUEUED
+	} else if req.PlayerId == b.PlayerBId && b.State == pokemon.BattleState_WAITING_ON_PLAYER_B {
+		b.State = pokemon.BattleState_MOVE_RESULTS_QUEUED
+	}
+
+	fmt.Println(req)
+	fmt.Println(b.State)
+
+	err = bs.battleService.Upsert(ctx, b)
+	if err != nil {
+		return nil, err
+	}
+
 	return &pokemon.UseAttackResponse{}, nil
 }
