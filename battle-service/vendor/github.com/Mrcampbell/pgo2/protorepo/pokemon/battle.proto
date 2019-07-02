@@ -44,7 +44,8 @@ enum BattleState {
   WAITING_ON_BOTH_PLAYERS = 1;
   WAITING_ON_PLAYER_A = 2;
   WAITING_ON_PLAYER_B = 3;
-  BATTLE_OVER = 4;
+  MOVE_RESULTS_QUEUED = 4;
+  BATTLE_OVER = 5;
 }
 
 message CreateBattleRequest {
