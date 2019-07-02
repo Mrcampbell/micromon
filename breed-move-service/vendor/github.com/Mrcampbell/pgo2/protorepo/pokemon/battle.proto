@@ -31,8 +31,10 @@ service BattleService {
 message Battle {
   pokemon.PokemonBattleMask pokemon_a_battle_mask = 1;
   pokemon.PokemonBattleMask pokemon_b_battle_mask = 2;
-  int32 duration = 3;
-  BattleState state = 4;
+  string player_a_id = 3;
+  string player_b_id = 4;
+  int32 duration = 5;
+  BattleState state = 6;
   // todo: add history
 }
 
