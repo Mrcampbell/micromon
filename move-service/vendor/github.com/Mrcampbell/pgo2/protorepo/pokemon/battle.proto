@@ -20,6 +20,28 @@ service BattleService {
       get: "/v1/battle/{id}"
     };
   }
+
+  rpc UseAttack(UseAttackRequest) returns (UseAttackResponse) {
+    option (google.api.http) ={
+      post: "/v1/battle/{battle_id}/attack"
+    };
+  }
+}
+
+message Battle {
+  pokemon.PokemonBattleMask pokemon_a_battle_mask = 1;
+  pokemon.PokemonBattleMask pokemon_b_battle_mask = 2;
+  int32 duration = 3;
+  BattleState state = 4;
+  // todo: add history
+}
+
+enum BattleState {
+  BATTLE_STATE_UNKNOWN = 0;
+  WAITING_ON_BOTH_PLAYERS = 1;
+  WAITING_ON_PLAYER_A = 2;
+  WAITING_ON_PLAYER_B = 3;
+  BATTLE_OVER = 4;
 }
 
 message CreateBattleRequest {
@@ -39,10 +61,13 @@ message GetBattleResponse {
   Battle battle = 1;
 }
 
-message Battle {
-  pokemon.PokemonBattleMask pokemon_a_battle_mask = 1;
-  pokemon.PokemonBattleMask pokemon_b_battle_mask = 2;
-  int32 duration = 3;
-  // todo: add history
+message UseAttackRequest {
+  string battle_id = 1;
+  string player_id = 2;
+
+  // this way because we need to ensure that the move is known by the pokemon
+  string pokemon_move_slot = 3; // 1-4, pick the move you want to use
 }
 
+message UseAttackResponse {
+}
