@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "pokemon";
+
+import "pokemon/pokemon.proto";
+import "pokemon/statgroup.proto";
+
+message PokemonBattleMask {
+  pokemon.Pokemon pokemon = 1;
+  pokemon.BattleStatGroup battle_stats = 2;
+  // todo: add ailments and such
+}

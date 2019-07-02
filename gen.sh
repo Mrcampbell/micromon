@@ -27,6 +27,7 @@ protoc-go-inject-tag -input=./pokemon.pb.go
 (cd gateway-api && gv update github.com/Mrcampbell/pgo2/protorepo/pokemon)
 (cd move-service && gv update github.com/Mrcampbell/pgo2/protorepo/pokemon)
 (cd pokemon-service && gv update github.com/Mrcampbell/pgo2/protorepo/pokemon)
+(cd battle-service && gv update github.com/Mrcampbell/pgo2/protorepo/pokemon)
 
 ################################
 

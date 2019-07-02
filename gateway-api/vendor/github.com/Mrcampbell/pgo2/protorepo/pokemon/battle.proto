@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "pokemon";
+
+import "google/api/annotations.proto";
+import "pokemon/pokemonbattlemask.proto";
+
+service BattleService {
+  rpc Create(CreateBattleRequest) returns (CreateBattleResponse) {
+    option (google.api.http) ={
+      post: "/v1/battle",
+      body: "*"
+    };
+  }
+
+  rpc GetBattle(GetBattleRequest) returns (GetBattleResponse) {
+    option (google.api.http) ={
+      get: "/v1/battle/{id}"
+    };
+  }
+}
+
+message CreateBattleRequest {
+  string pokemon_a_id = 1;
+  string pokemon_b_id = 2;
+}
+
+message CreateBattleResponse {
+  Battle battle = 1;
+}
+
+message GetBattleRequest {
+  string id = 1;
+}
+
+message GetBattleResponse {
+  Battle battle = 1;
+}
+
+message Battle {
+  pokemon.PokemonBattleMask pokemon_a_battle_mask = 1;
+  pokemon.PokemonBattleMask pokemon_b_battle_mask = 2;
+  int32 duration = 3;
+  // todo: add history
+}
+

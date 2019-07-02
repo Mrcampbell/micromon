@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "pokemon";
+
+enum VersionGroup {
+  UNKNOWN_VERSION_GROUP = 0;
+  // GEN I
+  RED_BLUE = 1;
+  YELLOW = 2;
+
+  // GEN II
+  GOLD_SILVER = 3;
+  CRYSTAL = 4;
+
+  // GEN III
+  RUBY_SAPPHIRE = 5;
+  EMERALD = 6;
+  FIRERED_LEAFGREEN = 7;
+
+  // GEN IV
+  DIAMON_PEARL = 8;
+  PLATINUM = 9;
+  HEARTGOLD_SOULSILVER = 10;
+
+  // GEN V
+  BLACK_WHITE = 11;
+
+  // GEN III
+  COLOSSEUM = 12;
+  XD = 13;
+
+  // GEN V
+  BLACK_2_WHITE_2 = 14;
+
+  // GEN VI
+  X_Y = 15;
+  OMEGA_RUBY_ALPHA_SAPPHIRE = 16;
+
+  // GEN VII
+  SUN_MOON = 17;
+  ULTRA_SUN_ULTRA_MOON = 18;
+}

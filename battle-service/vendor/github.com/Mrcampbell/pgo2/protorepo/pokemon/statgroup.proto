@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "pokemon";
+
+message StatGroup {
+  int32 hp = 1;
+  int32 attack = 2;
+  int32 defense = 3;
+  int32 special_attack = 4;
+  int32 special_defense = 5;
+  int32 speed = 6;
+}
+
+// offest to match https://github.com/veekun/pokedex/blob/master/pokedex/data/csv/stats.csv
+enum Stat {
+  STAT_UNKNOWN = 0;
+  ATTACK = 2;
+  DEFENSE = 3;
+  SPECIAL_ATTACK = 4;
+  SPECIAL_DEFENSE = 5;
+  SPEED = 6;
+  ACCURACY = 7;
+  EVASION = 8;
+}
+
+message BattleStatGroup {
+  int32 hp = 1;
+  int32 attack = 2;
+  int32 defense = 3;
+  int32 special_attack = 4;
+  int32 special_defense = 5;
+  int32 speed = 6;
+  int32 evasion = 7;
+  int32 accuracy = 8;
+
+  int32 attack_stage_multiplier = 9;
+  int32 defense_stage_multiplier = 10;
+  int32 special_attack_stage_multiplier = 11;
+  int32 special_defense_stage_multiplier = 12;
+  int32 speed_stage_multiplier = 13;
+  int32 evasion_stage_multiplier = 14;
+  int32 accuracy_stage_multiplier = 15;
+}

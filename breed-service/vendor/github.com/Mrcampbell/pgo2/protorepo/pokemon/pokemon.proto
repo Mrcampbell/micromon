@@ -28,7 +28,6 @@ service PokemonService {
       body: "*"
     };
   }
-
   rpc InternalAlterHealthPointsByFixedAmount(InternalAlterHealthPointsByFixedAmountRequest) returns (InternalAlterHealthPointsByFixedAmountResponse) {
     option (google.api.http) ={
       post: "/internal/v1/pokemon/hp/fixed",
