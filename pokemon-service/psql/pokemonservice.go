@@ -115,16 +115,29 @@ func (ps *PokemonService) InternalCreatePokemon(ctx context.Context, req *pokemo
 
 func (ps *PokemonService) InternalAlterHealthPointsByFixedAmount(ctx context.Context, req *pokemon.InternalAlterHealthPointsByFixedAmountRequest) (*pokemon.InternalAlterHealthPointsByFixedAmountResponse, error) {
 
-	fmt.Println("REQ: ", req)
-
 	p := &pokemon.Pokemon{Id: req.PokemonId}
 	err := ps.DB.Select(p)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(p)
+	p.Hp.CurrentHP += req.Amount
 
-	return nil, nil
+	if p.Hp.CurrentHP > p.Hp.MaxHP {
+		p.Hp.CurrentHP = p.Hp.MaxHP
+	}
+
+	if p.Hp.CurrentHP < 1 {
+		p.Hp.CurrentHP = -1
+	}
+
+	err = Upsert(ps.DB, p)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pokemon.InternalAlterHealthPointsByFixedAmountResponse{
+		Hp: p.Hp,
+	}, nil
 }
 func (ps *PokemonService) InternalAlterHealthPointsByPercentage(ctx context.Context, req *pokemon.InternalAlterHealthPointsByPercentageRequest) (*pokemon.InternalAlterHealthPointsByPercentageResponse, error) {
 	return nil, nil
