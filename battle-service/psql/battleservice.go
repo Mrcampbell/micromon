@@ -6,7 +6,9 @@ import (
 
 	"github.com/Mrcampbell/pgo2/battle-service/config"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
+	"github.com/Mrcampbell/pgo2/shared-library/uuid"
 	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/orm"
 )
 
 var _ pokemon.BattleServiceServer = &BattleService{}
@@ -30,6 +32,8 @@ func NewBattleService(pokemonService pokemon.PokemonServiceClient, moveService p
 		},
 	})
 
+	createSchema(db)
+
 	return &BattleService{
 		DB:             db,
 		pokemonService: pokemonService,
@@ -38,17 +42,76 @@ func NewBattleService(pokemonService pokemon.PokemonServiceClient, moveService p
 }
 
 func (bs *BattleService) Create(ctx context.Context, req *pokemon.CreateBattleRequest) (*pokemon.CreateBattleResponse, error) {
+
+	pa, err := bs.pokemonService.GetPokemon(ctx, &pokemon.GetPokemonRequest{
+		Id: req.PokemonAId,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	pb, err := bs.pokemonService.GetPokemon(ctx, &pokemon.GetPokemonRequest{
+		Id: req.PokemonAId,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	pabm := mapPokemonToBattleMask(*pa.Pokemon)
+	pbbm := mapPokemonToBattleMask(*pb.Pokemon)
+
+	battle := &pokemon.Battle{
+
+		Id:                 uuid.PrefixedUUID("b"),
+		Duration:           42,
+		PlayerAId:          "a",
+		PlayerBId:          "b",
+		State:              pokemon.BattleState_WAITING_ON_BOTH_PLAYERS,
+		PokemonABattleMask: &pabm,
+		PokemonBBattleMask: &pbbm,
+	}
+
+	err = bs.DB.Insert(battle)
+	if err != nil {
+		return nil, err
+	}
+
 	return &pokemon.CreateBattleResponse{
-		Battle: &pokemon.Battle{
-			Duration: 0,
-			PokemonABattleMask: &pokemon.PokemonBattleMask{
-				Pokemon: &pokemon.Pokemon{
-					Id: "Fuck you.",
-				},
-			},
-		},
+		Battle: battle,
 	}, nil
 }
+
 func (bs *BattleService) GetBattle(ctx context.Context, req *pokemon.GetBattleRequest) (*pokemon.GetBattleResponse, error) {
-	return nil, nil
+	b := &pokemon.Battle{Id: req.Id}
+	err := bs.DB.Select(b)
+	if err != nil {
+		return nil, err
+	}
+	return &pokemon.GetBattleResponse{
+		Battle: b,
+	}, nil
+}
+
+func createSchema(db *pg.DB) error {
+
+	for _, model := range []interface{}{(*pokemon.Battle)(nil)} {
+
+		// todo: remove after debug
+		// db.DropTable(model, &orm.DropTableOptions{
+		// 	Cascade:  true,
+		// 	IfExists: true,
+		// })
+		err := db.CreateTable(model, &orm.CreateTableOptions{
+			Temp:        false,
+			IfNotExists: true,
+		})
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (bs *BattleService) UseAttack(ctx context.Context, req *pokemon.UseAttackRequest) (*pokemon.UseAttackResponse, error) {
+	return &pokemon.UseAttackResponse{}, nil
 }
