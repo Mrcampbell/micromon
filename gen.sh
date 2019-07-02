@@ -21,7 +21,6 @@ protoc-go-inject-tag -input=./pokemon/pokemon.pb.go
 
 cd ../
 
-protoc-go-inject-tag -input=./pokemon.pb.go  
 (cd breed-move-service && gv update github.com/Mrcampbell/pgo2/protorepo/pokemon)
 (cd breed-service && gv update github.com/Mrcampbell/pgo2/protorepo/pokemon)
 (cd gateway-api && gv update github.com/Mrcampbell/pgo2/protorepo/pokemon)
