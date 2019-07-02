@@ -1,323 +1,408 @@
 package psql
 
-func getTypeAdvantage() {
-	 switch (atk)
-            {
-                case Element.Type.NORMAL:
-                    switch (def)
-                    {
-                        case Element.Type.ROCK:
-                        case Element.Type.STEEL:
-                            return Effect.WEAK;
+import "github.com/Mrcampbell/pgo2/protorepo/pokemon"
 
-                        case Element.Type.GHOST:
-                            return Effect.NONE;
+type TypeAdvantage string
 
-                        default: return Effect.NORMAL;
-                    }
-                case Element.Type.FIGHTING:
-                    switch (def)
-                    {
-                        case Element.Type.NORMAL:
-                        case Element.Type.ROCK:
-                        case Element.Type.STEEL:
-                        case Element.Type.ICE:
-                        case Element.Type.DARK:
-                            return Effect.STRONG;
+const (
+	TypeAdvantageStrong TypeAdvantage = "TypeAdvantageStrong"
+	TypeAdvantageWeak   TypeAdvantage = "TypeAdvantageWeak"
+	TypeAdvantageNormal TypeAdvantage = "TypeAdvantageNormal"
+	TypeAdvantageNone   TypeAdvantage = "TypeAdvantageNone"
+)
 
-                        case Element.Type.FLYING:
-                        case Element.Type.POISON:
-                        case Element.Type.BUG:
-                        case Element.Type.PSYCHIC:
-                        case Element.Type.FAIRY:
-                            return Effect.WEAK;
+func getTypeAdvantage(atk pokemon.Type, def pokemon.Type) TypeAdvantage {
+	switch atk {
+	case pokemon.Type_NORMAL:
+		switch def {
+		case pokemon.Type_ROCK:
+			fallthrough
+		case pokemon.Type_STEEL:
+			return TypeAdvantageWeak
 
-                        case Element.Type.GHOST:
-                            return Effect.NONE;
+		case pokemon.Type_GHOST:
+			return TypeAdvantageNone
 
-                        default: return Effect.NORMAL;
-                    }
+		default:
+			return TypeAdvantageNormal
+		}
+	case pokemon.Type_FIGHTING:
+		switch def {
+		case pokemon.Type_NORMAL:
+			fallthrough
+		case pokemon.Type_ROCK:
+			fallthrough
+		case pokemon.Type_STEEL:
+			fallthrough
+		case pokemon.Type_ICE:
+			fallthrough
+		case pokemon.Type_DARK:
+			return TypeAdvantageStrong
 
-                case Element.Type.FLYING:
-                    switch (def)
-                    {
-                        case Element.Type.FIGHTING:
-                        case Element.Type.BUG:
-                        case Element.Type.GRASS:
-                            return Effect.STRONG;
+		case pokemon.Type_FLYING:
+			fallthrough
+		case pokemon.Type_POISON:
+			fallthrough
+		case pokemon.Type_BUG:
+			fallthrough
+		case pokemon.Type_PSYCHIC:
+			fallthrough
+		case pokemon.Type_FAIRY:
+			return TypeAdvantageWeak
 
-                        case Element.Type.ROCK:
-                        case Element.Type.STEEL:
-                        case Element.Type.ELECTRIC:
-                            return Effect.WEAK;
+		case pokemon.Type_GHOST:
+			return TypeAdvantageNone
 
-                        default: return Effect.NORMAL;
-                    }
+		default:
+			return TypeAdvantageNormal
+		}
 
-                case Element.Type.POISON:
-                    switch (def)
-                    {
-                        case Element.Type.GRASS:
-                        case Element.Type.FAIRY:
-                            return Effect.STRONG;
+	case pokemon.Type_FLYING:
+		switch def {
+		case pokemon.Type_FIGHTING:
+			fallthrough
+		case pokemon.Type_BUG:
+			fallthrough
+		case pokemon.Type_GRASS:
+			return TypeAdvantageStrong
 
-                        case Element.Type.POISON:
-                        case Element.Type.GROUND:
-                        case Element.Type.ROCK:
-                        case Element.Type.GHOST:
-                            return Effect.WEAK;
+		case pokemon.Type_ROCK:
+			fallthrough
+		case pokemon.Type_STEEL:
+			fallthrough
+		case pokemon.Type_ELECTRIC:
+			return TypeAdvantageWeak
 
-                        case Element.Type.STEEL:
-                            return Effect.NONE;
+		default:
+			return TypeAdvantageNormal
+		}
 
-                        default: return Effect.NORMAL;
-                    }
+	case pokemon.Type_POISON:
+		switch def {
+		case pokemon.Type_GRASS:
+			fallthrough
+		case pokemon.Type_FAIRY:
+			return TypeAdvantageStrong
 
-                case Element.Type.GROUND:
-                    switch (def)
-                    {
+		case pokemon.Type_POISON:
+			fallthrough
+		case pokemon.Type_GROUND:
+			fallthrough
+		case pokemon.Type_ROCK:
+			fallthrough
+		case pokemon.Type_GHOST:
+			return TypeAdvantageWeak
 
-                        case Element.Type.POISON:
-                        case Element.Type.ROCK:
-                        case Element.Type.STEEL:
-                        case Element.Type.FIRE:
-                        case Element.Type.ELECTRIC:
-                            return Effect.STRONG;
+		case pokemon.Type_STEEL:
+			return TypeAdvantageNone
 
-                        case Element.Type.BUG:
-                        case Element.Type.GRASS:
-                            return Effect.WEAK;
+		default:
+			return TypeAdvantageNormal
+		}
 
-                        case Element.Type.FLYING:
-                            return Effect.NONE;
+	case pokemon.Type_GROUND:
+		switch def {
 
-                        default: return Effect.NORMAL;
-                    }
+		case pokemon.Type_POISON:
+			fallthrough
+		case pokemon.Type_ROCK:
+			fallthrough
+		case pokemon.Type_STEEL:
+			fallthrough
+		case pokemon.Type_FIRE:
+			fallthrough
+		case pokemon.Type_ELECTRIC:
+			return TypeAdvantageStrong
 
-                case Element.Type.ROCK:
-                    switch (def)
-                    {
-                        case Element.Type.FLYING:
-                        case Element.Type.BUG:
-                        case Element.Type.FIRE:
-                        case Element.Type.ICE:
-                            return Effect.STRONG;
+		case pokemon.Type_BUG:
+			fallthrough
+		case pokemon.Type_GRASS:
+			return TypeAdvantageWeak
 
-                        case Element.Type.FIGHTING:
-                        case Element.Type.GROUND:
-                        case Element.Type.STEEL:
-                            return Effect.WEAK;
+		case pokemon.Type_FLYING:
+			return TypeAdvantageNone
 
-                        default: return Effect.NORMAL;
-                    }
+		default:
+			return TypeAdvantageNormal
+		}
 
-                case Element.Type.BUG:
-                    switch (def)
-                    {
-                        case Element.Type.GRASS:
-                        case Element.Type.PSYCHIC:
-                        case Element.Type.DARK:
-                            return Effect.STRONG;
+	case pokemon.Type_ROCK:
+		switch def {
+		case pokemon.Type_FLYING:
+			fallthrough
+		case pokemon.Type_BUG:
+			fallthrough
+		case pokemon.Type_FIRE:
+			fallthrough
+		case pokemon.Type_ICE:
+			return TypeAdvantageStrong
 
-                        case Element.Type.FIGHTING:
-                        case Element.Type.FLYING:
-                        case Element.Type.POISON:
-                        case Element.Type.GHOST:
-                        case Element.Type.STEEL:
-                        case Element.Type.FIRE:
-                            return Effect.WEAK;
+		case pokemon.Type_FIGHTING:
+			fallthrough
+		case pokemon.Type_GROUND:
+			fallthrough
+		case pokemon.Type_STEEL:
+			return TypeAdvantageWeak
 
-                        default: return Effect.NORMAL;
-                    }
+		default:
+			return TypeAdvantageNormal
+		}
 
-                case Element.Type.GHOST:
-                    switch (def)
-                    {
-                        case Element.Type.GHOST:
-                        case Element.Type.PSYCHIC:
-                            return Effect.STRONG;
+	case pokemon.Type_BUG:
+		switch def {
+		case pokemon.Type_GRASS:
+			fallthrough
+		case pokemon.Type_PSYCHIC:
+			fallthrough
+		case pokemon.Type_DARK:
+			return TypeAdvantageStrong
 
-                        case Element.Type.DARK:
-                            return Effect.WEAK;
+		case pokemon.Type_FIGHTING:
+			fallthrough
+		case pokemon.Type_FLYING:
+			fallthrough
+		case pokemon.Type_POISON:
+			fallthrough
+		case pokemon.Type_GHOST:
+			fallthrough
+		case pokemon.Type_STEEL:
+			fallthrough
+		case pokemon.Type_FIRE:
+			return TypeAdvantageWeak
 
-                        case Element.Type.NORMAL:
-                            return Effect.NONE;
+		default:
+			return TypeAdvantageNormal
+		}
 
-                        default: return Effect.NORMAL;
-                    }
+	case pokemon.Type_GHOST:
+		switch def {
+		case pokemon.Type_GHOST:
+			fallthrough
+		case pokemon.Type_PSYCHIC:
+			return TypeAdvantageStrong
 
-                case Element.Type.STEEL:
-                    switch (def)
-                    {
-                        case Element.Type.ROCK:
-                        case Element.Type.ICE:
-                        case Element.Type.FAIRY:
-                            return Effect.STRONG;
+		case pokemon.Type_DARK:
+			return TypeAdvantageWeak
 
-                        case Element.Type.STEEL:
-                        case Element.Type.FIRE:
-                        case Element.Type.WATER:
-                        case Element.Type.ELECTRIC:
-                            return Effect.WEAK;
+		case pokemon.Type_NORMAL:
+			return TypeAdvantageNone
 
-                        default: return Effect.NORMAL;
-                    }
+		default:
+			return TypeAdvantageNormal
+		}
 
-                case Element.Type.FIRE:
-                    switch (def)
-                    {
-                        case Element.Type.BUG:
-                        case Element.Type.STEEL:
-                        case Element.Type.GRASS:
-                        case Element.Type.ICE:
-                            return Effect.STRONG;
+	case pokemon.Type_STEEL:
+		switch def {
+		case pokemon.Type_ROCK:
+			fallthrough
+		case pokemon.Type_ICE:
+			fallthrough
+		case pokemon.Type_FAIRY:
+			return TypeAdvantageStrong
 
-                        case Element.Type.ROCK:
-                        case Element.Type.FIRE:
-                        case Element.Type.WATER:
-                        case Element.Type.DRAGON:
-                            return Effect.WEAK;
+		case pokemon.Type_STEEL:
+			fallthrough
+		case pokemon.Type_FIRE:
+			fallthrough
+		case pokemon.Type_WATER:
+			fallthrough
+		case pokemon.Type_ELECTRIC:
+			return TypeAdvantageWeak
 
-                        default: return Effect.NORMAL;
-                    }
+		default:
+			return TypeAdvantageNormal
+		}
 
-                case Element.Type.WATER:
-                    switch (def)
-                    {
-                        case Element.Type.GROUND:
-                        case Element.Type.ROCK:
-                        case Element.Type.FIRE:
-                            return Effect.STRONG;
+	case pokemon.Type_FIRE:
+		switch def {
+		case pokemon.Type_BUG:
+			fallthrough
+		case pokemon.Type_STEEL:
+			fallthrough
+		case pokemon.Type_GRASS:
+			fallthrough
+		case pokemon.Type_ICE:
+			return TypeAdvantageStrong
 
-                        case Element.Type.WATER:
-                        case Element.Type.GRASS:
-                        case Element.Type.DRAGON:
-                            return Effect.WEAK;
+		case pokemon.Type_ROCK:
+			fallthrough
+		case pokemon.Type_FIRE:
+			fallthrough
+		case pokemon.Type_WATER:
+			fallthrough
+		case pokemon.Type_DRAGON:
+			return TypeAdvantageWeak
 
-                        default: return Effect.NORMAL;
-                    }
+		default:
+			return TypeAdvantageNormal
+		}
 
-                case Element.Type.GRASS:
-                    switch (def)
-                    {
-                        case Element.Type.GROUND:
-                        case Element.Type.ROCK:
-                        case Element.Type.WATER:
-                            return Effect.STRONG;
+	case pokemon.Type_WATER:
+		switch def {
+		case pokemon.Type_GROUND:
+			fallthrough
+		case pokemon.Type_ROCK:
+			fallthrough
+		case pokemon.Type_FIRE:
+			return TypeAdvantageStrong
 
-                        case Element.Type.FLYING:
-                        case Element.Type.POISON:
-                        case Element.Type.BUG:
-                        case Element.Type.STEEL:
-                        case Element.Type.FIRE:
-                        case Element.Type.GRASS:
-                        case Element.Type.DRAGON:
-                            return Effect.WEAK;
+		case pokemon.Type_WATER:
+			fallthrough
+		case pokemon.Type_GRASS:
+			fallthrough
+		case pokemon.Type_DRAGON:
+			return TypeAdvantageWeak
 
+		default:
+			return TypeAdvantageNormal
+		}
 
-                        default: return Effect.NORMAL;
-                    }
+	case pokemon.Type_GRASS:
+		switch def {
+		case pokemon.Type_GROUND:
+			fallthrough
+		case pokemon.Type_ROCK:
+			fallthrough
+		case pokemon.Type_WATER:
+			return TypeAdvantageStrong
 
-                case Element.Type.ELECTRIC:
-                    switch (def)
-                    {
-                        case Element.Type.FLYING:
-                        case Element.Type.WATER:
-                            return Effect.STRONG;
+		case pokemon.Type_FLYING:
+			fallthrough
+		case pokemon.Type_POISON:
+			fallthrough
+		case pokemon.Type_BUG:
+			fallthrough
+		case pokemon.Type_STEEL:
+			fallthrough
+		case pokemon.Type_FIRE:
+			fallthrough
+		case pokemon.Type_GRASS:
+			fallthrough
+		case pokemon.Type_DRAGON:
+			return TypeAdvantageWeak
 
-                        case Element.Type.GRASS:
-                        case Element.Type.ELECTRIC:
-                        case Element.Type.DRAGON:
-                            return Effect.WEAK;
+		default:
+			return TypeAdvantageNormal
+		}
 
-                        case Element.Type.GROUND:
-                            return Effect.NONE;
+	case pokemon.Type_ELECTRIC:
+		switch def {
+		case pokemon.Type_FLYING:
+			fallthrough
+		case pokemon.Type_WATER:
+			return TypeAdvantageStrong
 
-                        default: return Effect.NORMAL;
-                    }
+		case pokemon.Type_GRASS:
+			fallthrough
+		case pokemon.Type_ELECTRIC:
+			fallthrough
+		case pokemon.Type_DRAGON:
+			return TypeAdvantageWeak
 
-                case Element.Type.PSYCHIC:
-                    switch (def)
-                    {
-                        case Element.Type.FIGHTING:
-                        case Element.Type.POISON:
-                            return Effect.STRONG;
+		case pokemon.Type_GROUND:
+			return TypeAdvantageNone
 
-                        case Element.Type.STEEL:
-                        case Element.Type.PSYCHIC:
-                            return Effect.WEAK;
+		default:
+			return TypeAdvantageNormal
+		}
 
-                        case Element.Type.DARK:
-                            return Effect.NONE;
+	case pokemon.Type_PSYCHIC:
+		switch def {
+		case pokemon.Type_FIGHTING:
+			fallthrough
+		case pokemon.Type_POISON:
+			return TypeAdvantageStrong
 
-                        default: return Effect.NORMAL;
-                    }
+		case pokemon.Type_STEEL:
+			fallthrough
+		case pokemon.Type_PSYCHIC:
+			return TypeAdvantageWeak
 
-                case Element.Type.ICE:
-                    switch (def)
-                    {
-                        case Element.Type.FLYING:
-                        case Element.Type.GROUND:
-                        case Element.Type.GRASS:
-                        case Element.Type.DRAGON:
-                            return Effect.STRONG;
+		case pokemon.Type_DARK:
+			return TypeAdvantageNone
 
-                        case Element.Type.STEEL:
-                        case Element.Type.FIRE:
-                        case Element.Type.WATER:
-                        case Element.Type.ICE:
-                            return Effect.WEAK;
+		default:
+			return TypeAdvantageNormal
+		}
 
-                        default: return Effect.NORMAL;
-                    }
+	case pokemon.Type_ICE:
+		switch def {
+		case pokemon.Type_FLYING:
+			fallthrough
+		case pokemon.Type_GROUND:
+			fallthrough
+		case pokemon.Type_GRASS:
+			fallthrough
+		case pokemon.Type_DRAGON:
+			return TypeAdvantageStrong
 
-                case Element.Type.DRAGON:
-                    switch (def)
-                    {
-                        case Element.Type.DRAGON:
-                            return Effect.STRONG;
+		case pokemon.Type_STEEL:
+			fallthrough
+		case pokemon.Type_FIRE:
+			fallthrough
+		case pokemon.Type_WATER:
+			fallthrough
+		case pokemon.Type_ICE:
+			return TypeAdvantageWeak
 
-                        case Element.Type.STEEL:
-                            return Effect.WEAK;
+		default:
+			return TypeAdvantageNormal
+		}
 
-                        case Element.Type.FAIRY:
-                            return Effect.NONE;
+	case pokemon.Type_DRAGON:
+		switch def {
+		case pokemon.Type_DRAGON:
+			return TypeAdvantageStrong
 
-                        default: return Effect.NORMAL;
-                    }
+		case pokemon.Type_STEEL:
+			return TypeAdvantageWeak
 
-                case Element.Type.DARK:
-                    switch (def)
-                    {
-                        case Element.Type.GHOST:
-                        case Element.Type.PSYCHIC:
-                            return Effect.STRONG;
+		case pokemon.Type_FAIRY:
+			return TypeAdvantageNone
 
-                        case Element.Type.FIGHTING:
-                        case Element.Type.DARK:
-                        case Element.Type.FAIRY:
-                            return Effect.WEAK;
+		default:
+			return TypeAdvantageNormal
+		}
 
-                        default: return Effect.NORMAL;
-                    }
+	case pokemon.Type_DARK:
+		switch def {
+		case pokemon.Type_GHOST:
+			fallthrough
+		case pokemon.Type_PSYCHIC:
+			return TypeAdvantageStrong
 
-                case Element.Type.FAIRY:
-                    switch (def)
-                    {
-                        case Element.Type.FIGHTING:
-                        case Element.Type.DRAGON:
-                        case Element.Type.DARK:
-                            return Effect.STRONG;
+		case pokemon.Type_FIGHTING:
+			fallthrough
+		case pokemon.Type_DARK:
+			fallthrough
+		case pokemon.Type_FAIRY:
+			return TypeAdvantageWeak
 
-                        case Element.Type.POISON:
-                        case Element.Type.STEEL:
-                        case Element.Type.FIRE:
-                            return Effect.WEAK;
+		default:
+			return TypeAdvantageNormal
+		}
 
-                        default: return Effect.NORMAL;
-                    }
+	case pokemon.Type_FAIRY:
+		switch def {
+		case pokemon.Type_FIGHTING:
+			fallthrough
+		case pokemon.Type_DRAGON:
+			fallthrough
+		case pokemon.Type_DARK:
+			return TypeAdvantageStrong
 
-                default:
-                    return Effect.NORMAL;
-            }
+		case pokemon.Type_POISON:
+			fallthrough
+		case pokemon.Type_STEEL:
+			fallthrough
+		case pokemon.Type_FIRE:
+			return TypeAdvantageWeak
+
+		default:
+			return TypeAdvantageNormal
+		}
+
+	default:
+		return TypeAdvantageNormal
+	}
 }
