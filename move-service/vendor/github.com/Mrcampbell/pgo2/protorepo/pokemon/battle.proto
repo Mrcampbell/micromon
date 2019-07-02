@@ -23,7 +23,8 @@ service BattleService {
 
   rpc UseAttack(UseAttackRequest) returns (UseAttackResponse) {
     option (google.api.http) ={
-      post: "/v1/battle/{battle_id}/attack"
+      post: "/v1/battle/{battle_id}/attack",
+      body: "*"
     };
   }
 }
