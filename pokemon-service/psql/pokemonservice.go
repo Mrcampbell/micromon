@@ -10,6 +10,8 @@ import (
 	"github.com/go-pg/pg/orm"
 )
 
+var _ pokemon.PokemonServiceServer = &PokemonService{}
+
 type PokemonService struct {
 	DB              *pg.DB
 	breedClient     pokemon.BreedServiceClient
@@ -109,6 +111,29 @@ func (ps *PokemonService) InternalCreatePokemon(ctx context.Context, req *pokemo
 	return &pokemon.InternalCreatePokemonResponse{
 		Pokemon: &result,
 	}, nil
+}
+
+func (ps *PokemonService) InternalAlterHealthPointsByFixedAmount(ctx context.Context, req *pokemon.InternalAlterHealthPointsByFixedAmountRequest) (*pokemon.InternalAlterHealthPointsByFixedAmountResponse, error) {
+
+	fmt.Println("REQ: ", req)
+
+	p := &pokemon.Pokemon{Id: req.PokemonId}
+	err := ps.DB.Select(p)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(p)
+
+	return nil, nil
+}
+func (ps *PokemonService) InternalAlterHealthPointsByPercentage(ctx context.Context, req *pokemon.InternalAlterHealthPointsByPercentageRequest) (*pokemon.InternalAlterHealthPointsByPercentageResponse, error) {
+	return nil, nil
+}
+func (ps *PokemonService) InternalAlterHealthPointsToFullHealth(ctx context.Context, req *pokemon.InternalAlterHealthPointsToFullHealthRequest) (*pokemon.InternalAlterHealthPointsToFullHealthResponse, error) {
+	return nil, nil
+}
+func (ps *PokemonService) InternalAlterHealthPointsToZero(ctx context.Context, req *pokemon.InternalAlterHealthPointsToZeroRequest) (*pokemon.InternalAlterHealthPointsToZeroResponse, error) {
+	return nil, nil
 }
 
 func createSchema(db *pg.DB) error {

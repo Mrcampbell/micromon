@@ -31,22 +31,26 @@ service PokemonService {
 
   rpc InternalAlterHealthPointsByFixedAmount(InternalAlterHealthPointsByFixedAmountRequest) returns (InternalAlterHealthPointsByFixedAmountResponse) {
     option (google.api.http) ={
-      post: "/internal/v1/pokemon/hp/fixed"
+      post: "/internal/v1/pokemon/hp/fixed",
+      body: "*"
     };
   }
   rpc InternalAlterHealthPointsByPercentage(InternalAlterHealthPointsByPercentageRequest) returns (InternalAlterHealthPointsByPercentageResponse) {
     option (google.api.http) ={
-      post: "/internal/v1/pokemon/hp/percentage"
+      post: "/internal/v1/pokemon/hp/percentage",
+      body: "*"
     };
   }
   rpc InternalAlterHealthPointsToFullHealth(InternalAlterHealthPointsToFullHealthRequest) returns (InternalAlterHealthPointsToFullHealthResponse) {
     option (google.api.http) ={
-      post: "/internal/v1/pokemon/hp/full"
+      post: "/internal/v1/pokemon/hp/full",
+      body: "*"
     };
   }
   rpc InternalAlterHealthPointsToZero(InternalAlterHealthPointsToZeroRequest) returns (InternalAlterHealthPointsToZeroResponse) {
     option (google.api.http) ={
-      post: "/internal/v1/pokemon/hp/zero"
+      post: "/internal/v1/pokemon/hp/zero",
+      body: "*"
     };
   }
 }
