@@ -32,6 +32,12 @@ services:
       context: ./move-service
     volumes: 
       - ./move-service/:/go/src/github.com/Mrcampbell/pgo2/move-service
+  battle-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./battle-service
+    volumes: 
+      - ./battle-service/:/go/src/github.com/Mrcampbell/pgo2/battle-service
   postgres-db:
     image: postgres
     restart: always
