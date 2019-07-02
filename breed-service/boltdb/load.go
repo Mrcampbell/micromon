@@ -15,13 +15,14 @@ import (
 
 func (bs *BreedService) load() error {
 	breedList := make(map[string]pokemon.BreedDetail, 0)
-	err := loadBaseFromCSV(breedList)
+	err := loadCSVBase(breedList)
 
 	if err != nil {
 		return err
 	}
 
 	err = applyCSVStat(breedList)
+	err = applyCSVTypes(breedList)
 
 	if err != nil {
 		return err
@@ -49,7 +50,7 @@ func (bs *BreedService) load() error {
 	})
 }
 
-func loadBaseFromCSV(breedList map[string]pokemon.BreedDetail) error {
+func loadCSVBase(breedList map[string]pokemon.BreedDetail) error {
 	reader, err := getCSVReader("./data/source/pokemon.csv")
 	if err != nil {
 		return err
@@ -89,6 +90,7 @@ func loadBaseFromCSV(breedList map[string]pokemon.BreedDetail) error {
 	return nil
 }
 
+// todo: map effort values
 func applyCSVStat(breedList map[string]pokemon.BreedDetail) error {
 	reader, err := getCSVReader("./data/source/pokemon_stat.csv")
 	if err != nil {
@@ -139,6 +141,40 @@ func applyCSVStat(breedList map[string]pokemon.BreedDetail) error {
 	return nil
 }
 
+func applyCSVTypes(breedList map[string]pokemon.BreedDetail) error {
+	reader, err := getCSVReader("./data/source/pokemon_type.csv")
+	if err != nil {
+		return err
+	}
+
+	for i := 0; i < 14; i++ {
+		line, err := reader.Read()
+		if i == 0 {
+			// skip header
+			continue
+		}
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			return err
+		}
+		csvT := app.CSVPokemonType{
+			PokemonID: line[0],
+			TypeID:    line[1],
+			Slot:      line[2],
+		}
+
+		t := getCSVKeyToTypeMap()[csvT.TypeID]
+
+		if csvT.Slot == "1" {
+			breedList[csvT.PokemonID].Summary.Type_1 = t
+		} else {
+			breedList[csvT.PokemonID].Summary.Type_2 = t
+		}
+	}
+	return nil
+}
+
 func getCSVReader(path string) (*csv.Reader, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -147,79 +183,25 @@ func getCSVReader(path string) (*csv.Reader, error) {
 	return csv.NewReader(bufio.NewReader(file)), nil
 }
 
-// func (bs *BreedService) load() error {
-// 	return bs.DB.Update(func(tx *bolt.Tx) error {
-// 		b, err := tx.CreateBucketIfNotExists(bucket)
-// 		if err != nil {
-// 			return err
-// 		}
-
-// 		b1, err := encode(pokemon.BreedDetail{
-// 			Summary: &pokemon.BreedSummary{
-// 				Id:   "1",
-// 				Name: "Bulbasaur",
-// 			},
-// 			Stats: &pokemon.StatGroup{
-// 				Hp:             45,
-// 				Attack:         49,
-// 				Defense:        49,
-// 				SpecialAttack:  65,
-// 				SpecialDefense: 65,
-// 				Speed:          45,
-// 			},
-// 		})
-// 		if err != nil {
-// 			return err
-// 		}
-// 		b2, err := encode(pokemon.BreedDetail{
-// 			Summary: &pokemon.BreedSummary{
-// 				Id:   "2",
-// 				Name: "Ivysaur",
-// 			},
-// 			Stats: &pokemon.StatGroup{
-// 				Hp:             60,
-// 				Attack:         62,
-// 				Defense:        63,
-// 				SpecialAttack:  80,
-// 				SpecialDefense: 80,
-// 				Speed:          60,
-// 			},
-// 		})
-// 		if err != nil {
-// 			return err
-// 		}
-
-// 		b3, err := encode(pokemon.BreedDetail{
-// 			Summary: &pokemon.BreedSummary{
-// 				Id:   "25",
-// 				Name: "Pikachu",
-// 			},
-// 			Stats: &pokemon.StatGroup{
-// 				Hp:             35,
-// 				Attack:         55,
-// 				Defense:        30,
-// 				SpecialAttack:  50,
-// 				SpecialDefense: 40,
-// 				Speed:          90,
-// 			},
-// 		})
-// 		if err != nil {
-// 			return err
-// 		}
-
-// 		err = b.Put([]byte("1"), b1)
-// 		if err != nil {
-// 			return err
-// 		}
-// 		err = b.Put([]byte("2"), b2)
-// 		if err != nil {
-// 			return err
-// 		}
-// 		err = b.Put([]byte("25"), b3)
-// 		if err != nil {
-// 			return err
-// 		}
-
-// 		return nil
-// 	})
-// }
+func getCSVKeyToTypeMap() map[string]pokemon.Type {
+	return map[string]pokemon.Type{
+		"1":  pokemon.Type_NORMAL,
+		"2":  pokemon.Type_FIGHTING,
+		"3":  pokemon.Type_FLYING,
+		"4":  pokemon.Type_POISON,
+		"5":  pokemon.Type_GROUND,
+		"6":  pokemon.Type_ROCK,
+		"7":  pokemon.Type_BUG,
+		"8":  pokemon.Type_GHOST,
+		"9":  pokemon.Type_STEEL,
+		"10": pokemon.Type_FIRE,
+		"11": pokemon.Type_WATER,
+		"12": pokemon.Type_GRASS,
+		"13": pokemon.Type_ELECTRIC,
+		"14": pokemon.Type_PSYCHIC,
+		"15": pokemon.Type_ICE,
+		"16": pokemon.Type_DRAGON,
+		"17": pokemon.Type_DARK,
+		"18": pokemon.Type_FAIRY,
+	}
+}
