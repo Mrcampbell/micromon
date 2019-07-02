@@ -9,6 +9,12 @@
 			"revisionTime": "2019-06-22T22:33:27Z"
 		},
 		{
+			"checksumSHA1": "4hjToEo97I1X8tXjD79g1eFBFR4=",
+			"path": "github.com/Mrcampbell/pgo2/shared-library/uuid",
+			"revision": "4d375b80acdff81341e99a0bfeabe3562a6d261a",
+			"revisionTime": "2019-07-02T20:27:11Z"
+		},
+		{
 			"checksumSHA1": "XVVsiUDhG5Dh7zgJJ3YwXmsS9B8=",
 			"path": "github.com/go-pg/pg",
 			"revision": "50c566b109ca9408003cceccda27e71eaaf75235",
@@ -134,6 +140,12 @@
 			"path": "github.com/golang/protobuf/ptypes/wrappers",
 			"revision": "b285ee9cfc6c881bb20c0d8dc73370ea9b9ec90f",
 			"revisionTime": "2019-05-17T06:12:10Z"
+		},
+		{
+			"checksumSHA1": "s5tdcjh84+tiKS3oSq77mzjB970=",
+			"path": "github.com/google/uuid",
+			"revision": "c2e93f3ae59f2904160ceaab466009f965df46d6",
+			"revisionTime": "2019-04-16T17:24:45Z"
 		},
 		{
 			"checksumSHA1": "POMWFQKvaDrJ1dlFWWl5uYigTGA=",
