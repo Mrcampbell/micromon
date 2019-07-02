@@ -5,6 +5,7 @@ import (
 	"net"
 
 	"github.com/Mrcampbell/pgo2/battle-service/config"
+	pgrpc "github.com/Mrcampbell/pgo2/battle-service/grpc"
 	"github.com/Mrcampbell/pgo2/battle-service/psql"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 	"google.golang.org/grpc"
@@ -30,13 +31,14 @@ func main() {
 	}
 	moveClient := pokemon.NewMoveServiceClient(moveConn)
 
-	service, err := psql.NewBattleService(pokemonClient, moveClient)
+	battleService, err := psql.NewBattleService()
+	battleServer, err := pgrpc.NewBattleServer(*battleService, pokemonClient, moveClient)
 	if err != nil {
 		log.Fatal(err)
 	}
 	server := grpc.NewServer()
-	pokemon.RegisterBattleServiceServer(server, service)
+	pokemon.RegisterBattleServiceServer(server, battleServer)
 
-	log.Println("Starting Pokemon Service..")
+	log.Println("Starting Battle Service..")
 	server.Serve(lis)
 }

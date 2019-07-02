@@ -1,4 +1,4 @@
-package psql
+package grpc
 
 import "github.com/Mrcampbell/pgo2/protorepo/pokemon"
 
