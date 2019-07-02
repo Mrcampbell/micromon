@@ -42,17 +42,18 @@ type Pokemon struct {
 	// @inject_tag: sql:"-"
 	MoveThree *MoveSummary `protobuf:"bytes,9,opt,name=move_three,json=moveThree,proto3" json:"move_three,omitempty" sql:"-"`
 	// @inject_tag: sql:"-"
-	MoveFour             *MoveSummary `protobuf:"bytes,10,opt,name=move_four,json=moveFour,proto3" json:"move_four,omitempty" sql:"-"`
-	MoveOneId            string       `protobuf:"bytes,11,opt,name=move_one_id,json=moveOneId,proto3" json:"move_one_id,omitempty"`
-	MoveTwoId            string       `protobuf:"bytes,12,opt,name=move_two_id,json=moveTwoId,proto3" json:"move_two_id,omitempty"`
-	MoveThreeId          string       `protobuf:"bytes,13,opt,name=move_three_id,json=moveThreeId,proto3" json:"move_three_id,omitempty"`
-	MoveFourId           string       `protobuf:"bytes,14,opt,name=move_four_id,json=moveFourId,proto3" json:"move_four_id,omitempty"`
-	Weight               int32        `protobuf:"varint,15,opt,name=weight,proto3" json:"weight,omitempty"`
-	Height               int32        `protobuf:"varint,16,opt,name=height,proto3" json:"height,omitempty"`
-	Effort               Stat         `protobuf:"varint,17,opt,name=effort,proto3,enum=pokemon.Stat" json:"effort,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+	MoveFour             *MoveSummary  `protobuf:"bytes,10,opt,name=move_four,json=moveFour,proto3" json:"move_four,omitempty" sql:"-"`
+	MoveOneId            string        `protobuf:"bytes,11,opt,name=move_one_id,json=moveOneId,proto3" json:"move_one_id,omitempty"`
+	MoveTwoId            string        `protobuf:"bytes,12,opt,name=move_two_id,json=moveTwoId,proto3" json:"move_two_id,omitempty"`
+	MoveThreeId          string        `protobuf:"bytes,13,opt,name=move_three_id,json=moveThreeId,proto3" json:"move_three_id,omitempty"`
+	MoveFourId           string        `protobuf:"bytes,14,opt,name=move_four_id,json=moveFourId,proto3" json:"move_four_id,omitempty"`
+	Weight               int32         `protobuf:"varint,15,opt,name=weight,proto3" json:"weight,omitempty"`
+	Height               int32         `protobuf:"varint,16,opt,name=height,proto3" json:"height,omitempty"`
+	Effort               Stat          `protobuf:"varint,17,opt,name=effort,proto3,enum=pokemon.Stat" json:"effort,omitempty"`
+	Hp                   *HealthPoints `protobuf:"bytes,18,opt,name=hp,proto3" json:"hp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
 func (m *Pokemon) Reset()         { *m = Pokemon{} }
@@ -197,6 +198,13 @@ func (m *Pokemon) GetEffort() Stat {
 		return m.Effort
 	}
 	return Stat_STAT_UNKNOWN
+}
+
+func (m *Pokemon) GetHp() *HealthPoints {
+	if m != nil {
+		return m.Hp
+	}
+	return nil
 }
 
 type GetPokemonRequest struct {
@@ -457,6 +465,362 @@ func (m *InternalCreatePokemonResponse) GetPokemon() *Pokemon {
 	return nil
 }
 
+type InternalAlterHealthPointsByFixedAmountRequest struct {
+	PokemonId            string   `protobuf:"bytes,1,opt,name=pokemon_id,json=pokemonId,proto3" json:"pokemon_id,omitempty"`
+	Amount               int32    `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *InternalAlterHealthPointsByFixedAmountRequest) Reset() {
+	*m = InternalAlterHealthPointsByFixedAmountRequest{}
+}
+func (m *InternalAlterHealthPointsByFixedAmountRequest) String() string {
+	return proto.CompactTextString(m)
+}
+func (*InternalAlterHealthPointsByFixedAmountRequest) ProtoMessage() {}
+func (*InternalAlterHealthPointsByFixedAmountRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_27fc31544a7745c3, []int{7}
+}
+
+func (m *InternalAlterHealthPointsByFixedAmountRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InternalAlterHealthPointsByFixedAmountRequest.Unmarshal(m, b)
+}
+func (m *InternalAlterHealthPointsByFixedAmountRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InternalAlterHealthPointsByFixedAmountRequest.Marshal(b, m, deterministic)
+}
+func (m *InternalAlterHealthPointsByFixedAmountRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InternalAlterHealthPointsByFixedAmountRequest.Merge(m, src)
+}
+func (m *InternalAlterHealthPointsByFixedAmountRequest) XXX_Size() int {
+	return xxx_messageInfo_InternalAlterHealthPointsByFixedAmountRequest.Size(m)
+}
+func (m *InternalAlterHealthPointsByFixedAmountRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_InternalAlterHealthPointsByFixedAmountRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InternalAlterHealthPointsByFixedAmountRequest proto.InternalMessageInfo
+
+func (m *InternalAlterHealthPointsByFixedAmountRequest) GetPokemonId() string {
+	if m != nil {
+		return m.PokemonId
+	}
+	return ""
+}
+
+func (m *InternalAlterHealthPointsByFixedAmountRequest) GetAmount() int32 {
+	if m != nil {
+		return m.Amount
+	}
+	return 0
+}
+
+type InternalAlterHealthPointsByFixedAmountResponse struct {
+	Hp                   *HealthPoints `protobuf:"bytes,1,opt,name=hp,proto3" json:"hp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *InternalAlterHealthPointsByFixedAmountResponse) Reset() {
+	*m = InternalAlterHealthPointsByFixedAmountResponse{}
+}
+func (m *InternalAlterHealthPointsByFixedAmountResponse) String() string {
+	return proto.CompactTextString(m)
+}
+func (*InternalAlterHealthPointsByFixedAmountResponse) ProtoMessage() {}
+func (*InternalAlterHealthPointsByFixedAmountResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_27fc31544a7745c3, []int{8}
+}
+
+func (m *InternalAlterHealthPointsByFixedAmountResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InternalAlterHealthPointsByFixedAmountResponse.Unmarshal(m, b)
+}
+func (m *InternalAlterHealthPointsByFixedAmountResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InternalAlterHealthPointsByFixedAmountResponse.Marshal(b, m, deterministic)
+}
+func (m *InternalAlterHealthPointsByFixedAmountResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InternalAlterHealthPointsByFixedAmountResponse.Merge(m, src)
+}
+func (m *InternalAlterHealthPointsByFixedAmountResponse) XXX_Size() int {
+	return xxx_messageInfo_InternalAlterHealthPointsByFixedAmountResponse.Size(m)
+}
+func (m *InternalAlterHealthPointsByFixedAmountResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_InternalAlterHealthPointsByFixedAmountResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InternalAlterHealthPointsByFixedAmountResponse proto.InternalMessageInfo
+
+func (m *InternalAlterHealthPointsByFixedAmountResponse) GetHp() *HealthPoints {
+	if m != nil {
+		return m.Hp
+	}
+	return nil
+}
+
+type InternalAlterHealthPointsByPercentageRequest struct {
+	PokemonId            string   `protobuf:"bytes,1,opt,name=pokemon_id,json=pokemonId,proto3" json:"pokemon_id,omitempty"`
+	Percent              int32    `protobuf:"varint,2,opt,name=percent,proto3" json:"percent,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *InternalAlterHealthPointsByPercentageRequest) Reset() {
+	*m = InternalAlterHealthPointsByPercentageRequest{}
+}
+func (m *InternalAlterHealthPointsByPercentageRequest) String() string {
+	return proto.CompactTextString(m)
+}
+func (*InternalAlterHealthPointsByPercentageRequest) ProtoMessage() {}
+func (*InternalAlterHealthPointsByPercentageRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_27fc31544a7745c3, []int{9}
+}
+
+func (m *InternalAlterHealthPointsByPercentageRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InternalAlterHealthPointsByPercentageRequest.Unmarshal(m, b)
+}
+func (m *InternalAlterHealthPointsByPercentageRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InternalAlterHealthPointsByPercentageRequest.Marshal(b, m, deterministic)
+}
+func (m *InternalAlterHealthPointsByPercentageRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InternalAlterHealthPointsByPercentageRequest.Merge(m, src)
+}
+func (m *InternalAlterHealthPointsByPercentageRequest) XXX_Size() int {
+	return xxx_messageInfo_InternalAlterHealthPointsByPercentageRequest.Size(m)
+}
+func (m *InternalAlterHealthPointsByPercentageRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_InternalAlterHealthPointsByPercentageRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InternalAlterHealthPointsByPercentageRequest proto.InternalMessageInfo
+
+func (m *InternalAlterHealthPointsByPercentageRequest) GetPokemonId() string {
+	if m != nil {
+		return m.PokemonId
+	}
+	return ""
+}
+
+func (m *InternalAlterHealthPointsByPercentageRequest) GetPercent() int32 {
+	if m != nil {
+		return m.Percent
+	}
+	return 0
+}
+
+type InternalAlterHealthPointsByPercentageResponse struct {
+	Hp                   *HealthPoints `protobuf:"bytes,1,opt,name=hp,proto3" json:"hp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *InternalAlterHealthPointsByPercentageResponse) Reset() {
+	*m = InternalAlterHealthPointsByPercentageResponse{}
+}
+func (m *InternalAlterHealthPointsByPercentageResponse) String() string {
+	return proto.CompactTextString(m)
+}
+func (*InternalAlterHealthPointsByPercentageResponse) ProtoMessage() {}
+func (*InternalAlterHealthPointsByPercentageResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_27fc31544a7745c3, []int{10}
+}
+
+func (m *InternalAlterHealthPointsByPercentageResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InternalAlterHealthPointsByPercentageResponse.Unmarshal(m, b)
+}
+func (m *InternalAlterHealthPointsByPercentageResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InternalAlterHealthPointsByPercentageResponse.Marshal(b, m, deterministic)
+}
+func (m *InternalAlterHealthPointsByPercentageResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InternalAlterHealthPointsByPercentageResponse.Merge(m, src)
+}
+func (m *InternalAlterHealthPointsByPercentageResponse) XXX_Size() int {
+	return xxx_messageInfo_InternalAlterHealthPointsByPercentageResponse.Size(m)
+}
+func (m *InternalAlterHealthPointsByPercentageResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_InternalAlterHealthPointsByPercentageResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InternalAlterHealthPointsByPercentageResponse proto.InternalMessageInfo
+
+func (m *InternalAlterHealthPointsByPercentageResponse) GetHp() *HealthPoints {
+	if m != nil {
+		return m.Hp
+	}
+	return nil
+}
+
+type InternalAlterHealthPointsToFullHealthRequest struct {
+	PokemonId            string   `protobuf:"bytes,1,opt,name=pokemon_id,json=pokemonId,proto3" json:"pokemon_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *InternalAlterHealthPointsToFullHealthRequest) Reset() {
+	*m = InternalAlterHealthPointsToFullHealthRequest{}
+}
+func (m *InternalAlterHealthPointsToFullHealthRequest) String() string {
+	return proto.CompactTextString(m)
+}
+func (*InternalAlterHealthPointsToFullHealthRequest) ProtoMessage() {}
+func (*InternalAlterHealthPointsToFullHealthRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_27fc31544a7745c3, []int{11}
+}
+
+func (m *InternalAlterHealthPointsToFullHealthRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InternalAlterHealthPointsToFullHealthRequest.Unmarshal(m, b)
+}
+func (m *InternalAlterHealthPointsToFullHealthRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InternalAlterHealthPointsToFullHealthRequest.Marshal(b, m, deterministic)
+}
+func (m *InternalAlterHealthPointsToFullHealthRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InternalAlterHealthPointsToFullHealthRequest.Merge(m, src)
+}
+func (m *InternalAlterHealthPointsToFullHealthRequest) XXX_Size() int {
+	return xxx_messageInfo_InternalAlterHealthPointsToFullHealthRequest.Size(m)
+}
+func (m *InternalAlterHealthPointsToFullHealthRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_InternalAlterHealthPointsToFullHealthRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InternalAlterHealthPointsToFullHealthRequest proto.InternalMessageInfo
+
+func (m *InternalAlterHealthPointsToFullHealthRequest) GetPokemonId() string {
+	if m != nil {
+		return m.PokemonId
+	}
+	return ""
+}
+
+type InternalAlterHealthPointsToFullHealthResponse struct {
+	Hp                   *HealthPoints `protobuf:"bytes,1,opt,name=hp,proto3" json:"hp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *InternalAlterHealthPointsToFullHealthResponse) Reset() {
+	*m = InternalAlterHealthPointsToFullHealthResponse{}
+}
+func (m *InternalAlterHealthPointsToFullHealthResponse) String() string {
+	return proto.CompactTextString(m)
+}
+func (*InternalAlterHealthPointsToFullHealthResponse) ProtoMessage() {}
+func (*InternalAlterHealthPointsToFullHealthResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_27fc31544a7745c3, []int{12}
+}
+
+func (m *InternalAlterHealthPointsToFullHealthResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InternalAlterHealthPointsToFullHealthResponse.Unmarshal(m, b)
+}
+func (m *InternalAlterHealthPointsToFullHealthResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InternalAlterHealthPointsToFullHealthResponse.Marshal(b, m, deterministic)
+}
+func (m *InternalAlterHealthPointsToFullHealthResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InternalAlterHealthPointsToFullHealthResponse.Merge(m, src)
+}
+func (m *InternalAlterHealthPointsToFullHealthResponse) XXX_Size() int {
+	return xxx_messageInfo_InternalAlterHealthPointsToFullHealthResponse.Size(m)
+}
+func (m *InternalAlterHealthPointsToFullHealthResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_InternalAlterHealthPointsToFullHealthResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InternalAlterHealthPointsToFullHealthResponse proto.InternalMessageInfo
+
+func (m *InternalAlterHealthPointsToFullHealthResponse) GetHp() *HealthPoints {
+	if m != nil {
+		return m.Hp
+	}
+	return nil
+}
+
+type InternalAlterHealthPointsToZeroRequest struct {
+	PokemonId            string   `protobuf:"bytes,1,opt,name=pokemon_id,json=pokemonId,proto3" json:"pokemon_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *InternalAlterHealthPointsToZeroRequest) Reset() {
+	*m = InternalAlterHealthPointsToZeroRequest{}
+}
+func (m *InternalAlterHealthPointsToZeroRequest) String() string { return proto.CompactTextString(m) }
+func (*InternalAlterHealthPointsToZeroRequest) ProtoMessage()    {}
+func (*InternalAlterHealthPointsToZeroRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_27fc31544a7745c3, []int{13}
+}
+
+func (m *InternalAlterHealthPointsToZeroRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InternalAlterHealthPointsToZeroRequest.Unmarshal(m, b)
+}
+func (m *InternalAlterHealthPointsToZeroRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InternalAlterHealthPointsToZeroRequest.Marshal(b, m, deterministic)
+}
+func (m *InternalAlterHealthPointsToZeroRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InternalAlterHealthPointsToZeroRequest.Merge(m, src)
+}
+func (m *InternalAlterHealthPointsToZeroRequest) XXX_Size() int {
+	return xxx_messageInfo_InternalAlterHealthPointsToZeroRequest.Size(m)
+}
+func (m *InternalAlterHealthPointsToZeroRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_InternalAlterHealthPointsToZeroRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InternalAlterHealthPointsToZeroRequest proto.InternalMessageInfo
+
+func (m *InternalAlterHealthPointsToZeroRequest) GetPokemonId() string {
+	if m != nil {
+		return m.PokemonId
+	}
+	return ""
+}
+
+type InternalAlterHealthPointsToZeroResponse struct {
+	Hp                   *HealthPoints `protobuf:"bytes,1,opt,name=hp,proto3" json:"hp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *InternalAlterHealthPointsToZeroResponse) Reset() {
+	*m = InternalAlterHealthPointsToZeroResponse{}
+}
+func (m *InternalAlterHealthPointsToZeroResponse) String() string { return proto.CompactTextString(m) }
+func (*InternalAlterHealthPointsToZeroResponse) ProtoMessage()    {}
+func (*InternalAlterHealthPointsToZeroResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_27fc31544a7745c3, []int{14}
+}
+
+func (m *InternalAlterHealthPointsToZeroResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InternalAlterHealthPointsToZeroResponse.Unmarshal(m, b)
+}
+func (m *InternalAlterHealthPointsToZeroResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InternalAlterHealthPointsToZeroResponse.Marshal(b, m, deterministic)
+}
+func (m *InternalAlterHealthPointsToZeroResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InternalAlterHealthPointsToZeroResponse.Merge(m, src)
+}
+func (m *InternalAlterHealthPointsToZeroResponse) XXX_Size() int {
+	return xxx_messageInfo_InternalAlterHealthPointsToZeroResponse.Size(m)
+}
+func (m *InternalAlterHealthPointsToZeroResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_InternalAlterHealthPointsToZeroResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InternalAlterHealthPointsToZeroResponse proto.InternalMessageInfo
+
+func (m *InternalAlterHealthPointsToZeroResponse) GetHp() *HealthPoints {
+	if m != nil {
+		return m.Hp
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*Pokemon)(nil), "pokemon.Pokemon")
 	proto.RegisterType((*GetPokemonRequest)(nil), "pokemon.GetPokemonRequest")
@@ -465,57 +829,83 @@ func init() {
 	proto.RegisterType((*ListPokemonResponse)(nil), "pokemon.ListPokemonResponse")
 	proto.RegisterType((*InternalCreatePokemonRequest)(nil), "pokemon.InternalCreatePokemonRequest")
 	proto.RegisterType((*InternalCreatePokemonResponse)(nil), "pokemon.InternalCreatePokemonResponse")
+	proto.RegisterType((*InternalAlterHealthPointsByFixedAmountRequest)(nil), "pokemon.InternalAlterHealthPointsByFixedAmountRequest")
+	proto.RegisterType((*InternalAlterHealthPointsByFixedAmountResponse)(nil), "pokemon.InternalAlterHealthPointsByFixedAmountResponse")
+	proto.RegisterType((*InternalAlterHealthPointsByPercentageRequest)(nil), "pokemon.InternalAlterHealthPointsByPercentageRequest")
+	proto.RegisterType((*InternalAlterHealthPointsByPercentageResponse)(nil), "pokemon.InternalAlterHealthPointsByPercentageResponse")
+	proto.RegisterType((*InternalAlterHealthPointsToFullHealthRequest)(nil), "pokemon.InternalAlterHealthPointsToFullHealthRequest")
+	proto.RegisterType((*InternalAlterHealthPointsToFullHealthResponse)(nil), "pokemon.InternalAlterHealthPointsToFullHealthResponse")
+	proto.RegisterType((*InternalAlterHealthPointsToZeroRequest)(nil), "pokemon.InternalAlterHealthPointsToZeroRequest")
+	proto.RegisterType((*InternalAlterHealthPointsToZeroResponse)(nil), "pokemon.InternalAlterHealthPointsToZeroResponse")
 }
 
 func init() { proto.RegisterFile("pokemon/pokemon.proto", fileDescriptor_27fc31544a7745c3) }
 
 var fileDescriptor_27fc31544a7745c3 = []byte{
-	// 706 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0x4d, 0x6f, 0xd3, 0x40,
-	0x10, 0x95, 0xdd, 0xe6, 0x6b, 0xd2, 0x84, 0x74, 0x92, 0x52, 0x37, 0x14, 0x88, 0x8c, 0x5a, 0x45,
-	0x3d, 0x34, 0x6a, 0x2a, 0x2e, 0xbd, 0x00, 0x45, 0xa2, 0xb2, 0xa0, 0x02, 0xb9, 0x15, 0x07, 0x24,
-	0x64, 0xb9, 0x78, 0x9a, 0x5a, 0x24, 0xde, 0xb0, 0xde, 0x38, 0x42, 0x88, 0x0b, 0x97, 0x1e, 0x38,
-	0xf2, 0xd3, 0xb8, 0x71, 0xe6, 0x87, 0x20, 0xaf, 0xbd, 0x8e, 0xdb, 0xa6, 0xa9, 0x38, 0x45, 0x33,
-	0xef, 0xbd, 0x9d, 0xb7, 0x3b, 0x33, 0x0e, 0xac, 0x8d, 0xd9, 0x67, 0x1a, 0xb1, 0xa0, 0x97, 0xfe,
-	0xee, 0x8e, 0x39, 0x13, 0x0c, 0x4b, 0x69, 0xd8, 0xde, 0x1c, 0x30, 0x36, 0x18, 0x52, 0xcf, 0x1d,
-	0xfb, 0x3d, 0x37, 0x08, 0x98, 0x70, 0x85, 0xcf, 0x82, 0x30, 0xa1, 0xb5, 0x9b, 0x4a, 0x7d, 0xc6,
-	0x89, 0xbc, 0x34, 0xb9, 0xae, 0x92, 0xa1, 0x70, 0xc5, 0x80, 0xb3, 0xc9, 0x38, 0x05, 0x50, 0x01,
-	0x23, 0x16, 0x51, 0x9a, 0x6b, 0xab, 0x5c, 0x44, 0x3c, 0xf4, 0x59, 0x90, 0xe3, 0x9b, 0x97, 0x05,
-	0x28, 0xbd, 0x4b, 0x60, 0xac, 0x83, 0xee, 0x7b, 0x86, 0xd6, 0xd1, 0xba, 0x15, 0x5b, 0xf7, 0x3d,
-	0xdc, 0x80, 0xb2, 0xac, 0xe9, 0xf8, 0x9e, 0xa1, 0xcb, 0x6c, 0x49, 0xc6, 0x96, 0x87, 0x07, 0x50,
-	0x4b, 0xa0, 0x70, 0x32, 0x1a, 0xb9, 0xfc, 0xab, 0xb1, 0xd4, 0xd1, 0xba, 0xd5, 0xfe, 0xda, 0xae,
-	0xba, 0xe2, 0x61, 0x8c, 0x9e, 0x24, 0xa0, 0xbd, 0x72, 0x96, 0x8b, 0xd0, 0x04, 0xdd, 0x8f, 0x8c,
-	0x65, 0x29, 0xc0, 0x4c, 0x70, 0x22, 0x5c, 0x71, 0x14, 0x1b, 0xb3, 0x75, 0x3f, 0x8a, 0x39, 0x14,
-	0x19, 0x85, 0xdb, 0x39, 0x14, 0xe1, 0x36, 0x2c, 0xc7, 0xb7, 0x37, 0x8a, 0xb7, 0xb2, 0x24, 0x8e,
-	0x3d, 0x28, 0xc7, 0x8f, 0xe1, 0xb0, 0x80, 0x8c, 0x92, 0xe4, 0xb6, 0x32, 0xee, 0x31, 0x8b, 0x48,
-	0xb9, 0x2c, 0xc5, 0xac, 0xb7, 0x01, 0x65, 0x02, 0x31, 0x65, 0x46, 0xf9, 0x2e, 0xc1, 0xe9, 0x94,
-	0xe1, 0x3e, 0x40, 0x22, 0xb8, 0xe0, 0x44, 0x46, 0x65, 0x81, 0xa4, 0x22, 0x25, 0x31, 0x0d, 0xf7,
-	0x40, 0x06, 0xce, 0x39, 0x9b, 0x70, 0x03, 0x16, 0x68, 0xa4, 0x99, 0x57, 0x6c, 0xc2, 0xf1, 0x11,
-	0x54, 0xd5, 0x4d, 0xe2, 0x9e, 0x54, 0x65, 0x4f, 0x2a, 0xa9, 0x6d, 0xcb, 0xcb, 0x70, 0x31, 0x65,
-	0x31, 0xbe, 0x32, 0xc3, 0x4f, 0xa7, 0xcc, 0xf2, 0xd0, 0x84, 0xda, 0xcc, 0x67, 0xcc, 0xa8, 0x49,
-	0x46, 0x35, 0x33, 0x65, 0x79, 0xd8, 0x81, 0x95, 0xcc, 0x56, 0x4c, 0xa9, 0x4b, 0x0a, 0x28, 0x0f,
-	0x96, 0x87, 0xf7, 0xa1, 0x38, 0x25, 0x7f, 0x70, 0x21, 0x8c, 0x7b, 0x1d, 0xad, 0x5b, 0xb0, 0xd3,
-	0x28, 0xce, 0x5f, 0x24, 0xf9, 0x46, 0x92, 0x4f, 0x22, 0xdc, 0x82, 0x22, 0x9d, 0x9f, 0x33, 0x2e,
-	0x8c, 0xd5, 0x8e, 0xd6, 0xad, 0xf7, 0x6b, 0x57, 0x3a, 0x65, 0xa7, 0xa0, 0xf9, 0x04, 0x56, 0x8f,
-	0x48, 0xa4, 0xb3, 0x68, 0xd3, 0x97, 0x09, 0x85, 0xe2, 0xfa, 0x48, 0x9a, 0xcf, 0x01, 0xf3, 0xa4,
-	0x70, 0xcc, 0x82, 0x90, 0x70, 0x07, 0xd4, 0x2e, 0x49, 0x6a, 0xb5, 0xdf, 0xc8, 0x4a, 0x28, 0xaa,
-	0x22, 0x98, 0x2d, 0xc0, 0x37, 0x7e, 0x78, 0xad, 0x8e, 0xf9, 0x02, 0x9a, 0x57, 0xb2, 0xf3, 0x0e,
-	0x5e, 0x5a, 0x7c, 0xf0, 0x4f, 0x1d, 0x36, 0xad, 0x40, 0x10, 0x0f, 0xdc, 0xe1, 0x4b, 0x4e, 0xae,
-	0xa0, 0x6b, 0x77, 0xc9, 0xaf, 0x93, 0x76, 0x75, 0x9d, 0x5a, 0x50, 0x18, 0x52, 0x44, 0x43, 0xb9,
-	0x66, 0x05, 0x3b, 0x09, 0xf0, 0x29, 0xac, 0xb3, 0x88, 0x38, 0xf7, 0x3d, 0x72, 0x06, 0x14, 0x78,
-	0xc4, 0x1d, 0x3f, 0x74, 0x46, 0xee, 0x90, 0xe4, 0xba, 0x95, 0xed, 0x96, 0x82, 0x8f, 0x24, 0x6a,
-	0x85, 0xc7, 0xee, 0x90, 0xf0, 0x10, 0x9a, 0x99, 0x2c, 0x5e, 0x00, 0x47, 0xee, 0xfb, 0x82, 0x85,
-	0x5b, 0x55, 0xf4, 0x2c, 0x85, 0xcf, 0xa0, 0x91, 0x7e, 0x2c, 0x12, 0x75, 0xec, 0xb9, 0x20, 0xbb,
-	0x37, 0x5b, 0xf1, 0xf7, 0x09, 0x21, 0x39, 0xa3, 0x1e, 0xe5, 0x22, 0xcb, 0x33, 0x5f, 0xc3, 0xc3,
-	0x5b, 0x1e, 0xe3, 0xff, 0x7b, 0xd6, 0xff, 0xa3, 0x43, 0x3d, 0x4d, 0x9e, 0x10, 0x8f, 0xfc, 0x4f,
-	0x84, 0x0e, 0xc0, 0x6c, 0x10, 0xb0, 0x9d, 0x69, 0x6f, 0x8c, 0x50, 0xfb, 0xc1, 0x5c, 0x2c, 0x71,
-	0x61, 0x1a, 0x3f, 0x7e, 0xff, 0xfd, 0xa5, 0x23, 0x36, 0x7a, 0xd1, 0x9e, 0xfa, 0x3c, 0xf7, 0xbe,
-	0xf9, 0xde, 0x77, 0xfc, 0x08, 0xd5, 0xdc, 0x44, 0xe0, 0xec, 0x94, 0x9b, 0xd3, 0xd3, 0xde, 0x9c,
-	0x0f, 0xa6, 0x35, 0x9a, 0xb2, 0x46, 0x0d, 0xab, 0xb9, 0x1a, 0x78, 0xa9, 0xc1, 0xda, 0xdc, 0x07,
-	0xc2, 0xad, 0xec, 0xb0, 0x45, 0xd3, 0xd4, 0xde, 0xbe, 0x8b, 0x96, 0x56, 0x7f, 0x2c, 0xab, 0x6f,
-	0x98, 0xad, 0x9e, 0x9f, 0xf2, 0x72, 0x36, 0x0e, 0xb4, 0x9d, 0xc3, 0xca, 0x07, 0xf5, 0xce, 0x67,
-	0x45, 0xf9, 0x9f, 0xb0, 0xff, 0x2f, 0x00, 0x00, 0xff, 0xff, 0x30, 0x70, 0xea, 0x57, 0xb1, 0x06,
-	0x00, 0x00,
+	// 995 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x56, 0x41, 0x6f, 0xe3, 0x54,
+	0x10, 0x96, 0xb3, 0x9b, 0xa6, 0x99, 0xb4, 0xa1, 0x9d, 0xa6, 0xac, 0xd7, 0xb4, 0xdb, 0xc8, 0x6c,
+	0x4a, 0x55, 0x41, 0xcd, 0x76, 0xb5, 0x8b, 0xb4, 0x17, 0x68, 0x91, 0x5a, 0x22, 0xa8, 0xa8, 0xd2,
+	0x6a, 0x91, 0x56, 0x42, 0x91, 0xbb, 0x9e, 0x24, 0x16, 0x8e, 0x9f, 0xb1, 0x5f, 0x1c, 0x16, 0xc4,
+	0x85, 0x0b, 0x07, 0x8e, 0xfc, 0x0b, 0x0e, 0xfc, 0x02, 0x0e, 0x88, 0x1f, 0xc0, 0x85, 0xbf, 0xc0,
+	0x0f, 0x41, 0x7e, 0x7e, 0x76, 0x9c, 0x36, 0x71, 0x1c, 0x4e, 0xd1, 0x9b, 0xf9, 0xbe, 0x99, 0x6f,
+	0xde, 0x9b, 0x99, 0x18, 0xb6, 0x3d, 0xf6, 0x0d, 0x0d, 0x99, 0x6b, 0xc8, 0xdf, 0x23, 0xcf, 0x67,
+	0x9c, 0x61, 0x45, 0x1e, 0xb5, 0x9d, 0x3e, 0x63, 0x7d, 0x87, 0x0c, 0xd3, 0xb3, 0x0d, 0xd3, 0x75,
+	0x19, 0x37, 0xb9, 0xcd, 0xdc, 0x20, 0x86, 0x69, 0x5b, 0x09, 0xfb, 0xc6, 0x27, 0xb2, 0xa4, 0xf1,
+	0x41, 0x62, 0x0c, 0xb8, 0xc9, 0xfb, 0x3e, 0x1b, 0x79, 0xd2, 0x81, 0x89, 0x63, 0xc8, 0x42, 0x92,
+	0x36, 0x2d, 0xb1, 0x85, 0xe4, 0x07, 0x36, 0x73, 0xb3, 0xf8, 0xd4, 0x37, 0x20, 0xd3, 0xe1, 0x03,
+	0x8f, 0xd9, 0x2e, 0x97, 0x99, 0xf5, 0xdf, 0xcb, 0x50, 0xb9, 0x8c, 0xdd, 0x58, 0x87, 0x92, 0x6d,
+	0xa9, 0x4a, 0x53, 0x39, 0xa8, 0x76, 0x4a, 0xb6, 0x85, 0x0f, 0x61, 0x55, 0xe8, 0xe9, 0xda, 0x96,
+	0x5a, 0x12, 0xd6, 0x8a, 0x38, 0xb7, 0x2d, 0x7c, 0x01, 0xeb, 0xb1, 0x2b, 0x18, 0x0d, 0x87, 0xa6,
+	0xff, 0x46, 0xbd, 0xd7, 0x54, 0x0e, 0x6a, 0xc7, 0xdb, 0x47, 0x49, 0xf9, 0xa7, 0x91, 0xf7, 0x2a,
+	0x76, 0x76, 0xd6, 0x6e, 0x32, 0x27, 0xd4, 0xa1, 0x64, 0x87, 0xea, 0x7d, 0x41, 0xc0, 0x94, 0x70,
+	0xc5, 0x4d, 0x7e, 0x1e, 0x89, 0xee, 0x94, 0xec, 0x30, 0xc2, 0x50, 0xa8, 0x96, 0xe7, 0x63, 0x28,
+	0xc4, 0x7d, 0xb8, 0x1f, 0xdd, 0x8c, 0xba, 0x32, 0x17, 0x25, 0xfc, 0x68, 0xc0, 0x6a, 0x74, 0x51,
+	0x5d, 0xe6, 0x92, 0x5a, 0x11, 0xd8, 0x46, 0x8a, 0xbd, 0x60, 0x21, 0x25, 0x2a, 0x2b, 0x11, 0xea,
+	0x4b, 0x97, 0x52, 0x02, 0x1f, 0x33, 0x75, 0x75, 0x11, 0xe1, 0x7a, 0xcc, 0xf0, 0x29, 0x40, 0x4c,
+	0x18, 0xf8, 0x44, 0x6a, 0x35, 0x87, 0x52, 0x15, 0x94, 0x08, 0x86, 0x4f, 0x40, 0x1c, 0xba, 0x3d,
+	0x36, 0xf2, 0x55, 0xc8, 0xe1, 0x08, 0x31, 0x67, 0x6c, 0xe4, 0xe3, 0x23, 0xa8, 0x25, 0x95, 0x44,
+	0x6f, 0x52, 0x13, 0x6f, 0x52, 0x95, 0xb2, 0xdb, 0x56, 0xea, 0xe7, 0x63, 0x16, 0xf9, 0xd7, 0x26,
+	0xfe, 0xeb, 0x31, 0x6b, 0x5b, 0xa8, 0xc3, 0xfa, 0x44, 0x67, 0x84, 0x58, 0x17, 0x88, 0x5a, 0x2a,
+	0xaa, 0x6d, 0x61, 0x13, 0xd6, 0x52, 0x59, 0x11, 0xa4, 0x2e, 0x20, 0x90, 0x68, 0x68, 0x5b, 0xf8,
+	0x36, 0xac, 0x8c, 0xc9, 0xee, 0x0f, 0xb8, 0xfa, 0x56, 0x53, 0x39, 0x28, 0x77, 0xe4, 0x29, 0xb2,
+	0x0f, 0x62, 0xfb, 0x46, 0x6c, 0x8f, 0x4f, 0xd8, 0x82, 0x15, 0xea, 0xf5, 0x98, 0xcf, 0xd5, 0xcd,
+	0xa6, 0x72, 0x50, 0x3f, 0x5e, 0x9f, 0x7a, 0xa9, 0x8e, 0x74, 0x62, 0x0b, 0x4a, 0x03, 0x4f, 0xc5,
+	0x5b, 0x7d, 0xf4, 0x99, 0x68, 0xd9, 0x4b, 0xd1, 0xb2, 0x9d, 0xd2, 0xc0, 0xd3, 0xdf, 0x85, 0xcd,
+	0x73, 0xe2, 0xb2, 0x65, 0x3b, 0xf4, 0xed, 0x88, 0x02, 0x7e, 0xbb, 0x73, 0xf5, 0x4f, 0x00, 0xb3,
+	0xa0, 0xc0, 0x63, 0x6e, 0x40, 0x78, 0x08, 0xc9, 0x38, 0x0a, 0x68, 0xed, 0x78, 0x23, 0x4d, 0x93,
+	0x40, 0x13, 0x80, 0xde, 0x00, 0xfc, 0xc2, 0x0e, 0x6e, 0xe5, 0xd1, 0x4f, 0x60, 0x6b, 0xca, 0x3a,
+	0x2b, 0xf0, 0xbd, 0xfc, 0xc0, 0xbf, 0x94, 0x60, 0xa7, 0xed, 0x72, 0xf2, 0x5d, 0xd3, 0xf9, 0xd4,
+	0x27, 0x93, 0xd3, 0xad, 0x5a, 0xb2, 0x53, 0xa7, 0x4c, 0x4f, 0x5d, 0x03, 0xca, 0x0e, 0x85, 0xe4,
+	0x88, 0x69, 0x2c, 0x77, 0xe2, 0x03, 0x3e, 0x83, 0x07, 0x2c, 0x24, 0xdf, 0xb7, 0x2d, 0xea, 0xf6,
+	0xc9, 0xb5, 0xc8, 0xef, 0xda, 0x41, 0x77, 0x68, 0x3a, 0x24, 0xa6, 0x72, 0xb5, 0xd3, 0x48, 0xdc,
+	0xe7, 0xc2, 0xdb, 0x0e, 0x2e, 0x4c, 0x87, 0xf0, 0x14, 0xb6, 0x52, 0x5a, 0x34, 0x27, 0x5d, 0xb1,
+	0x32, 0x72, 0xe6, 0x72, 0x33, 0x81, 0xa7, 0x26, 0xfc, 0x18, 0x36, 0xe4, 0xbe, 0x89, 0xd9, 0x91,
+	0xe6, 0xb2, 0x78, 0xe4, 0xc9, 0x0b, 0xbe, 0x8c, 0x01, 0x71, 0x8c, 0x7a, 0x98, 0x39, 0xb5, 0x2d,
+	0xfd, 0x73, 0xd8, 0x9d, 0x73, 0x19, 0xff, 0xe3, 0xcd, 0x7a, 0xf0, 0x41, 0x12, 0xec, 0xc4, 0xe1,
+	0xe4, 0x67, 0x7b, 0xe7, 0xf4, 0xcd, 0x99, 0xfd, 0x1d, 0x59, 0x27, 0x43, 0x36, 0x72, 0x79, 0x72,
+	0xd5, 0xbb, 0x00, 0x92, 0x3b, 0xb9, 0xec, 0xaa, 0xb4, 0xc4, 0x8d, 0x6e, 0x0a, 0xbc, 0xbc, 0x6f,
+	0x79, 0xd2, 0xbf, 0x82, 0xa3, 0xa2, 0x79, 0x64, 0x15, 0x71, 0x6f, 0x2b, 0x8b, 0x7a, 0xbb, 0x0f,
+	0xef, 0xe7, 0x04, 0xbe, 0x24, 0xff, 0x35, 0xb9, 0xdc, 0xec, 0x53, 0x41, 0xfd, 0x2a, 0x54, 0xbc,
+	0x98, 0x23, 0x0b, 0x48, 0x8e, 0xfa, 0xcb, 0xdc, 0x9b, 0xca, 0x26, 0x5a, 0xae, 0x80, 0x8b, 0x9c,
+	0x02, 0xae, 0xd9, 0xd9, 0xc8, 0x71, 0x62, 0x4b, 0xb1, 0x02, 0x72, 0x65, 0x4e, 0x87, 0x5b, 0x4e,
+	0xe6, 0x39, 0xec, 0xe7, 0xc4, 0x7d, 0x45, 0x3e, 0x2b, 0x28, 0xf0, 0x12, 0xde, 0x5b, 0x18, 0x68,
+	0x29, 0x69, 0xc7, 0x7f, 0xaf, 0x42, 0x5d, 0x36, 0xf6, 0x15, 0xf9, 0xa1, 0xfd, 0x9a, 0xb0, 0x0b,
+	0x30, 0x59, 0x66, 0xa8, 0xa5, 0xdc, 0x3b, 0x6b, 0x50, 0x7b, 0x67, 0xa6, 0x2f, 0x16, 0xa0, 0xab,
+	0x3f, 0xfd, 0xf3, 0xef, 0xaf, 0x25, 0xc4, 0x0d, 0x23, 0x7c, 0x92, 0x7c, 0xa5, 0x18, 0x3f, 0xd8,
+	0xd6, 0x8f, 0xf8, 0x35, 0xd4, 0x32, 0x5b, 0x0d, 0x27, 0x51, 0xee, 0x6e, 0x40, 0x6d, 0x67, 0xb6,
+	0x53, 0xe6, 0xd8, 0x12, 0x39, 0xd6, 0xb1, 0x96, 0xc9, 0x81, 0x3f, 0x2b, 0xb0, 0x3d, 0x73, 0xc8,
+	0xb1, 0x95, 0x06, 0xcb, 0xdb, 0x88, 0xda, 0xfe, 0x22, 0x98, 0xcc, 0xbe, 0x27, 0xb2, 0x3f, 0xd4,
+	0x1b, 0x86, 0x2d, 0x71, 0x19, 0x19, 0x2f, 0x94, 0x43, 0xfc, 0x53, 0xc9, 0x79, 0xf8, 0xa9, 0xc9,
+	0xc5, 0xe7, 0x77, 0x72, 0x16, 0x5a, 0x29, 0xda, 0x47, 0x4b, 0xf3, 0xa4, 0xf8, 0x96, 0x10, 0xbf,
+	0xa7, 0xef, 0xce, 0x12, 0x6f, 0x0c, 0x3c, 0xa3, 0x17, 0x91, 0xf0, 0x2f, 0x05, 0x5a, 0x85, 0x46,
+	0x17, 0x9f, 0x15, 0x51, 0x72, 0x67, 0xa7, 0x68, 0xcf, 0x97, 0xa5, 0x49, 0xfd, 0x87, 0x42, 0xff,
+	0x63, 0x5d, 0x9f, 0xa7, 0xdf, 0x9b, 0x48, 0xfb, 0x23, 0xaf, 0x88, 0xec, 0x60, 0x17, 0x29, 0x62,
+	0xc6, 0x5e, 0x29, 0x52, 0xc4, 0xac, 0xfd, 0xa1, 0x3f, 0x16, 0x45, 0x3c, 0xd2, 0x77, 0xe6, 0x3e,
+	0xc2, 0xc8, 0x71, 0xf0, 0x37, 0x05, 0xf6, 0x16, 0x8c, 0x3d, 0x1a, 0x45, 0x14, 0x64, 0x36, 0x8d,
+	0xf6, 0x61, 0x71, 0x42, 0x51, 0xb1, 0xdf, 0x93, 0xcf, 0x4e, 0xab, 0xaf, 0x92, 0xff, 0xc7, 0x9b,
+	0x15, 0xf1, 0xc9, 0xff, 0xf4, 0xbf, 0x00, 0x00, 0x00, 0xff, 0xff, 0xd8, 0xb0, 0x84, 0x1d, 0xac,
+	0x0c, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -533,6 +923,10 @@ type PokemonServiceClient interface {
 	GetPokemon(ctx context.Context, in *GetPokemonRequest, opts ...grpc.CallOption) (*GetPokemonResponse, error)
 	ListPokemon(ctx context.Context, in *ListPokemonRequest, opts ...grpc.CallOption) (*ListPokemonResponse, error)
 	InternalCreatePokemon(ctx context.Context, in *InternalCreatePokemonRequest, opts ...grpc.CallOption) (*InternalCreatePokemonResponse, error)
+	InternalAlterHealthPointsByFixedAmount(ctx context.Context, in *InternalAlterHealthPointsByFixedAmountRequest, opts ...grpc.CallOption) (*InternalAlterHealthPointsByFixedAmountResponse, error)
+	InternalAlterHealthPointsByPercentage(ctx context.Context, in *InternalAlterHealthPointsByPercentageRequest, opts ...grpc.CallOption) (*InternalAlterHealthPointsByPercentageResponse, error)
+	InternalAlterHealthPointsToFullHealth(ctx context.Context, in *InternalAlterHealthPointsToFullHealthRequest, opts ...grpc.CallOption) (*InternalAlterHealthPointsToFullHealthResponse, error)
+	InternalAlterHealthPointsToZero(ctx context.Context, in *InternalAlterHealthPointsToZeroRequest, opts ...grpc.CallOption) (*InternalAlterHealthPointsToZeroResponse, error)
 }
 
 type pokemonServiceClient struct {
@@ -570,11 +964,51 @@ func (c *pokemonServiceClient) InternalCreatePokemon(ctx context.Context, in *In
 	return out, nil
 }
 
+func (c *pokemonServiceClient) InternalAlterHealthPointsByFixedAmount(ctx context.Context, in *InternalAlterHealthPointsByFixedAmountRequest, opts ...grpc.CallOption) (*InternalAlterHealthPointsByFixedAmountResponse, error) {
+	out := new(InternalAlterHealthPointsByFixedAmountResponse)
+	err := c.cc.Invoke(ctx, "/pokemon.PokemonService/InternalAlterHealthPointsByFixedAmount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pokemonServiceClient) InternalAlterHealthPointsByPercentage(ctx context.Context, in *InternalAlterHealthPointsByPercentageRequest, opts ...grpc.CallOption) (*InternalAlterHealthPointsByPercentageResponse, error) {
+	out := new(InternalAlterHealthPointsByPercentageResponse)
+	err := c.cc.Invoke(ctx, "/pokemon.PokemonService/InternalAlterHealthPointsByPercentage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pokemonServiceClient) InternalAlterHealthPointsToFullHealth(ctx context.Context, in *InternalAlterHealthPointsToFullHealthRequest, opts ...grpc.CallOption) (*InternalAlterHealthPointsToFullHealthResponse, error) {
+	out := new(InternalAlterHealthPointsToFullHealthResponse)
+	err := c.cc.Invoke(ctx, "/pokemon.PokemonService/InternalAlterHealthPointsToFullHealth", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pokemonServiceClient) InternalAlterHealthPointsToZero(ctx context.Context, in *InternalAlterHealthPointsToZeroRequest, opts ...grpc.CallOption) (*InternalAlterHealthPointsToZeroResponse, error) {
+	out := new(InternalAlterHealthPointsToZeroResponse)
+	err := c.cc.Invoke(ctx, "/pokemon.PokemonService/InternalAlterHealthPointsToZero", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PokemonServiceServer is the server API for PokemonService service.
 type PokemonServiceServer interface {
 	GetPokemon(context.Context, *GetPokemonRequest) (*GetPokemonResponse, error)
 	ListPokemon(context.Context, *ListPokemonRequest) (*ListPokemonResponse, error)
 	InternalCreatePokemon(context.Context, *InternalCreatePokemonRequest) (*InternalCreatePokemonResponse, error)
+	InternalAlterHealthPointsByFixedAmount(context.Context, *InternalAlterHealthPointsByFixedAmountRequest) (*InternalAlterHealthPointsByFixedAmountResponse, error)
+	InternalAlterHealthPointsByPercentage(context.Context, *InternalAlterHealthPointsByPercentageRequest) (*InternalAlterHealthPointsByPercentageResponse, error)
+	InternalAlterHealthPointsToFullHealth(context.Context, *InternalAlterHealthPointsToFullHealthRequest) (*InternalAlterHealthPointsToFullHealthResponse, error)
+	InternalAlterHealthPointsToZero(context.Context, *InternalAlterHealthPointsToZeroRequest) (*InternalAlterHealthPointsToZeroResponse, error)
 }
 
 // UnimplementedPokemonServiceServer can be embedded to have forward compatible implementations.
@@ -589,6 +1023,18 @@ func (*UnimplementedPokemonServiceServer) ListPokemon(ctx context.Context, req *
 }
 func (*UnimplementedPokemonServiceServer) InternalCreatePokemon(ctx context.Context, req *InternalCreatePokemonRequest) (*InternalCreatePokemonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalCreatePokemon not implemented")
+}
+func (*UnimplementedPokemonServiceServer) InternalAlterHealthPointsByFixedAmount(ctx context.Context, req *InternalAlterHealthPointsByFixedAmountRequest) (*InternalAlterHealthPointsByFixedAmountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalAlterHealthPointsByFixedAmount not implemented")
+}
+func (*UnimplementedPokemonServiceServer) InternalAlterHealthPointsByPercentage(ctx context.Context, req *InternalAlterHealthPointsByPercentageRequest) (*InternalAlterHealthPointsByPercentageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalAlterHealthPointsByPercentage not implemented")
+}
+func (*UnimplementedPokemonServiceServer) InternalAlterHealthPointsToFullHealth(ctx context.Context, req *InternalAlterHealthPointsToFullHealthRequest) (*InternalAlterHealthPointsToFullHealthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalAlterHealthPointsToFullHealth not implemented")
+}
+func (*UnimplementedPokemonServiceServer) InternalAlterHealthPointsToZero(ctx context.Context, req *InternalAlterHealthPointsToZeroRequest) (*InternalAlterHealthPointsToZeroResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalAlterHealthPointsToZero not implemented")
 }
 
 func RegisterPokemonServiceServer(s *grpc.Server, srv PokemonServiceServer) {
@@ -649,6 +1095,78 @@ func _PokemonService_InternalCreatePokemon_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PokemonService_InternalAlterHealthPointsByFixedAmount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalAlterHealthPointsByFixedAmountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PokemonServiceServer).InternalAlterHealthPointsByFixedAmount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pokemon.PokemonService/InternalAlterHealthPointsByFixedAmount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PokemonServiceServer).InternalAlterHealthPointsByFixedAmount(ctx, req.(*InternalAlterHealthPointsByFixedAmountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PokemonService_InternalAlterHealthPointsByPercentage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalAlterHealthPointsByPercentageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PokemonServiceServer).InternalAlterHealthPointsByPercentage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pokemon.PokemonService/InternalAlterHealthPointsByPercentage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PokemonServiceServer).InternalAlterHealthPointsByPercentage(ctx, req.(*InternalAlterHealthPointsByPercentageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PokemonService_InternalAlterHealthPointsToFullHealth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalAlterHealthPointsToFullHealthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PokemonServiceServer).InternalAlterHealthPointsToFullHealth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pokemon.PokemonService/InternalAlterHealthPointsToFullHealth",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PokemonServiceServer).InternalAlterHealthPointsToFullHealth(ctx, req.(*InternalAlterHealthPointsToFullHealthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PokemonService_InternalAlterHealthPointsToZero_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalAlterHealthPointsToZeroRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PokemonServiceServer).InternalAlterHealthPointsToZero(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pokemon.PokemonService/InternalAlterHealthPointsToZero",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PokemonServiceServer).InternalAlterHealthPointsToZero(ctx, req.(*InternalAlterHealthPointsToZeroRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _PokemonService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pokemon.PokemonService",
 	HandlerType: (*PokemonServiceServer)(nil),
@@ -664,6 +1182,22 @@ var _PokemonService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalCreatePokemon",
 			Handler:    _PokemonService_InternalCreatePokemon_Handler,
+		},
+		{
+			MethodName: "InternalAlterHealthPointsByFixedAmount",
+			Handler:    _PokemonService_InternalAlterHealthPointsByFixedAmount_Handler,
+		},
+		{
+			MethodName: "InternalAlterHealthPointsByPercentage",
+			Handler:    _PokemonService_InternalAlterHealthPointsByPercentage_Handler,
+		},
+		{
+			MethodName: "InternalAlterHealthPointsToFullHealth",
+			Handler:    _PokemonService_InternalAlterHealthPointsToFullHealth_Handler,
+		},
+		{
+			MethodName: "InternalAlterHealthPointsToZero",
+			Handler:    _PokemonService_InternalAlterHealthPointsToZero_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

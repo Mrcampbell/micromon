@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "pokemon";
+
+import "google/api/annotations.proto";
+
+message HealthPoints {
+  int32 MaxHP = 1;
+  int32 CurrentHP = 2;
+}

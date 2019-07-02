@@ -9,6 +9,7 @@ import "pokemon/breed.proto";
 import "pokemon/statgroup.proto";
 import "pokemon/move.proto";
 import "pokemon/versiongroup.proto";
+import "pokemon/healthpoints.proto";
 
 service PokemonService {
   rpc GetPokemon(GetPokemonRequest) returns (GetPokemonResponse) {
@@ -25,6 +26,27 @@ service PokemonService {
     option (google.api.http) ={
       post: "/internal/v1/pokemon",
       body: "*"
+    };
+  }
+
+  rpc InternalAlterHealthPointsByFixedAmount(InternalAlterHealthPointsByFixedAmountRequest) returns (InternalAlterHealthPointsByFixedAmountResponse) {
+    option (google.api.http) ={
+      post: "/internal/v1/pokemon/hp/fixed"
+    };
+  }
+  rpc InternalAlterHealthPointsByPercentage(InternalAlterHealthPointsByPercentageRequest) returns (InternalAlterHealthPointsByPercentageResponse) {
+    option (google.api.http) ={
+      post: "/internal/v1/pokemon/hp/percentage"
+    };
+  }
+  rpc InternalAlterHealthPointsToFullHealth(InternalAlterHealthPointsToFullHealthRequest) returns (InternalAlterHealthPointsToFullHealthResponse) {
+    option (google.api.http) ={
+      post: "/internal/v1/pokemon/hp/full"
+    };
+  }
+  rpc InternalAlterHealthPointsToZero(InternalAlterHealthPointsToZeroRequest) returns (InternalAlterHealthPointsToZeroResponse) {
+    option (google.api.http) ={
+      post: "/internal/v1/pokemon/hp/zero"
     };
   }
 }
@@ -59,6 +81,7 @@ message Pokemon {
   int32 weight = 15;
   int32 height = 16;
   pokemon.Stat effort = 17;
+  pokemon.HealthPoints hp = 18;
 }
 
 message GetPokemonRequest {
@@ -86,4 +109,38 @@ message InternalCreatePokemonRequest {
 
 message InternalCreatePokemonResponse {
   Pokemon pokemon = 1;
+}
+
+message InternalAlterHealthPointsByFixedAmountRequest {
+  string pokemon_id = 1;
+  int32 amount = 2;
+}
+
+message InternalAlterHealthPointsByFixedAmountResponse {
+  pokemon.HealthPoints hp = 1;
+}
+
+message InternalAlterHealthPointsByPercentageRequest {
+  string pokemon_id = 1;
+  int32 percent = 2;
+}
+
+message InternalAlterHealthPointsByPercentageResponse {
+  pokemon.HealthPoints hp = 1;
+}
+
+message InternalAlterHealthPointsToFullHealthRequest {
+  string pokemon_id = 1;
+}
+
+message InternalAlterHealthPointsToFullHealthResponse {
+  pokemon.HealthPoints hp = 1;
+}
+
+message InternalAlterHealthPointsToZeroRequest {
+  string pokemon_id = 1;
+}
+
+message InternalAlterHealthPointsToZeroResponse {
+  pokemon.HealthPoints hp = 1;
 }
