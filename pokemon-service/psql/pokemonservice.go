@@ -3,6 +3,7 @@ package psql
 import (
 	"context"
 	"fmt"
+	"math"
 
 	"github.com/Mrcampbell/pgo2/pokemon-service/config"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
@@ -122,13 +123,7 @@ func (ps *PokemonService) InternalAlterHealthPointsByFixedAmount(ctx context.Con
 	}
 	p.Hp.CurrentHP += req.Amount
 
-	if p.Hp.CurrentHP > p.Hp.MaxHP {
-		p.Hp.CurrentHP = p.Hp.MaxHP
-	}
-
-	if p.Hp.CurrentHP < 1 {
-		p.Hp.CurrentHP = -1
-	}
+	keepHPInBounds(p.Hp)
 
 	err = Upsert(ps.DB, p)
 	if err != nil {
@@ -140,13 +135,40 @@ func (ps *PokemonService) InternalAlterHealthPointsByFixedAmount(ctx context.Con
 	}, nil
 }
 func (ps *PokemonService) InternalAlterHealthPointsByPercentage(ctx context.Context, req *pokemon.InternalAlterHealthPointsByPercentageRequest) (*pokemon.InternalAlterHealthPointsByPercentageResponse, error) {
-	return nil, nil
+	p := &pokemon.Pokemon{Id: req.PokemonId}
+	err := ps.DB.Select(p)
+	if err != nil {
+		return nil, err
+	}
+
+	amount := float32(p.Hp.MaxHP) * float32(float32(req.Percent)/100)
+	p.Hp.CurrentHP += int32(math.Ceil(float64(amount)))
+
+	keepHPInBounds(p.Hp)
+
+	err = Upsert(ps.DB, p)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pokemon.InternalAlterHealthPointsByPercentageResponse{
+		Hp: p.Hp,
+	}, nil
 }
 func (ps *PokemonService) InternalAlterHealthPointsToFullHealth(ctx context.Context, req *pokemon.InternalAlterHealthPointsToFullHealthRequest) (*pokemon.InternalAlterHealthPointsToFullHealthResponse, error) {
 	return nil, nil
 }
 func (ps *PokemonService) InternalAlterHealthPointsToZero(ctx context.Context, req *pokemon.InternalAlterHealthPointsToZeroRequest) (*pokemon.InternalAlterHealthPointsToZeroResponse, error) {
 	return nil, nil
+}
+
+func keepHPInBounds(hp *pokemon.HealthPoints) {
+	if hp.CurrentHP > hp.MaxHP {
+		hp.CurrentHP = hp.MaxHP
+	}
+	if hp.CurrentHP < 1 {
+		hp.CurrentHP = 0
+	}
 }
 
 func createSchema(db *pg.DB) error {
