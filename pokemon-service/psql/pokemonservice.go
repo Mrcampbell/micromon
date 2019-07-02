@@ -156,10 +156,40 @@ func (ps *PokemonService) InternalAlterHealthPointsByPercentage(ctx context.Cont
 	}, nil
 }
 func (ps *PokemonService) InternalAlterHealthPointsToFullHealth(ctx context.Context, req *pokemon.InternalAlterHealthPointsToFullHealthRequest) (*pokemon.InternalAlterHealthPointsToFullHealthResponse, error) {
-	return nil, nil
+	p := &pokemon.Pokemon{Id: req.PokemonId}
+	err := ps.DB.Select(p)
+	if err != nil {
+		return nil, err
+	}
+
+	p.Hp.CurrentHP = p.Hp.MaxHP
+
+	err = Upsert(ps.DB, p)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pokemon.InternalAlterHealthPointsToFullHealthResponse{
+		Hp: p.Hp,
+	}, nil
 }
 func (ps *PokemonService) InternalAlterHealthPointsToZero(ctx context.Context, req *pokemon.InternalAlterHealthPointsToZeroRequest) (*pokemon.InternalAlterHealthPointsToZeroResponse, error) {
-	return nil, nil
+	p := &pokemon.Pokemon{Id: req.PokemonId}
+	err := ps.DB.Select(p)
+	if err != nil {
+		return nil, err
+	}
+
+	p.Hp.CurrentHP = 0
+
+	err = Upsert(ps.DB, p)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pokemon.InternalAlterHealthPointsToZeroResponse{
+		Hp: p.Hp,
+	}, nil
 }
 
 func keepHPInBounds(hp *pokemon.HealthPoints) {
