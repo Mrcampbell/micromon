@@ -6,6 +6,7 @@ option go_package = "pokemon";
 
 import "google/api/annotations.proto";
 import "pokemon/type.proto";
+import "pokemon/statgroup.proto";
 
 service MoveService {
   rpc GetMoveDetail(GetMoveDetailRequest) returns (GetMoveDetailResponse) {
@@ -52,7 +53,7 @@ message MoveDetail {
   int32 critical_rate = 21;
   int32 flinch_chance = 22;
   int32 stat_chance = 23;
-  repeated StatAffected stats_affected = 24;
+  repeated pokemon.Stat stats_affected = 24;
 }
 
 
@@ -77,18 +78,6 @@ enum DamageClass {
   STATUS = 1;
   PHYSICAL = 2;
   SPECIAL = 3;
-}
-
-// offest to match https://github.com/veekun/pokedex/blob/master/pokedex/data/csv/stats.csv
-enum StatAffected {
-  STAT_AFFECTED_UNKNOWN = 0;
-  ATTACK = 2;
-  DEFENSE = 3;
-  SPECIAL_ATTACK = 4;
-  SPECIAL_DEFENSE = 5;
-  SPEED = 6;
-  ACCURACY = 7;
-  EVASION = 8;
 }
 
 enum MoveEffect {
