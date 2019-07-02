@@ -22,7 +22,7 @@ func loadCSVBase(moveList map[string]pokemon.MoveDetail) error {
 		return err
 	}
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 730; i++ {
 		line, err := reader.Read()
 		if i == 0 {
 			// skip header
