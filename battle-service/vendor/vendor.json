@@ -3,7 +3,7 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "E7miBnOGc3QDMMjGTHP7mG4y8eA=",
+			"checksumSHA1": "PtLkkJrSE7v+e2bM0m2/npj0Zys=",
 			"path": "github.com/Mrcampbell/pgo2/protorepo/pokemon",
 			"revision": "34b69c391de444258dcf778701bd07c1c526519d",
 			"revisionTime": "2019-06-22T22:33:27Z"
@@ -170,6 +170,18 @@
 			"path": "github.com/jinzhu/inflection",
 			"revision": "f5c5f50e6090ae76a29240b61ae2a90dd810112e",
 			"revisionTime": "2019-06-03T04:28:36Z"
+		},
+		{
+			"checksumSHA1": "3ohk4dFYrERZ6WTdKkIwnTA0HSI=",
+			"path": "github.com/kr/pretty",
+			"revision": "73f6ac0b30a98e433b289500d779f50c1a6f0712",
+			"revisionTime": "2018-05-06T08:33:45Z"
+		},
+		{
+			"checksumSHA1": "SbguDK5lY8uhaHNrmJmNbiWIGM0=",
+			"path": "github.com/kr/text",
+			"revision": "e2ffdb16a802fe2bb95e2e35ff34f0e53aeef34f",
+			"revisionTime": "2018-05-06T08:24:08Z"
 		},
 		{
 			"checksumSHA1": "1MGpGDQqnUoRpv7VEcQrXOBydXE=",

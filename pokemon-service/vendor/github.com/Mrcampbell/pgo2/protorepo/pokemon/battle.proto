@@ -37,6 +37,7 @@ message Battle {
   string player_b_id = 5;
   int32 duration = 6;
   BattleState state = 7;
+  repeated BattleRound rounds = 8;
   // todo: add history
 }
 
