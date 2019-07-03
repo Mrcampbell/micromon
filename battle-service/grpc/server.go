@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/kr/pretty"
+
 	"github.com/Mrcampbell/pgo2/battle-service/psql"
 	"github.com/Mrcampbell/pgo2/protorepo/pokemon"
 	"github.com/Mrcampbell/pgo2/shared-library/uuid"
@@ -53,6 +55,7 @@ func (bs *BattleServer) Create(ctx context.Context, req *pokemon.CreateBattleReq
 		State:              pokemon.BattleState_WAITING_ON_BOTH_PLAYERS,
 		PokemonABattleMask: &pabm,
 		PokemonBBattleMask: &pbbm,
+		Rounds:             make([]*pokemon.BattleRound, 0),
 	}
 
 	err = bs.battleService.Upsert(ctx, battle)
@@ -80,25 +83,39 @@ func (bs *BattleServer) SubmitTurn(ctx context.Context, req *pokemon.SubmitTurnR
 	if err != nil {
 		return nil, err
 	}
-	
+
 	fmt.Println("REQ: ", req)
-	b.State = pokemon.BattleState_WAITING_ON_BOTH_PLAYERS
+	// b.State = pokemon.BattleState_WAITING_ON_BOTH_PLAYERS
+
+	if b.State == pokemon.BattleState_WAITING_ON_BOTH_PLAYERS {
+		b.Rounds = append(b.Rounds, &pokemon.BattleRound{})
+	}
+
+	lastRound := b.Rounds[len(b.Rounds)-1]
 
 	if req.PlayerId == b.PlayerAId && b.State == pokemon.BattleState_WAITING_ON_PLAYER_B ||
 		req.PlayerId == b.PlayerBId && b.State == pokemon.BattleState_WAITING_ON_PLAYER_A ||
 		b.State == pokemon.BattleState_MOVE_RESULTS_QUEUED { // if a player has already taken a turn and resubmits
 		fmt.Println("You already took your turn, you schmuck.")
 	} else if req.PlayerId == b.PlayerAId && b.State == pokemon.BattleState_WAITING_ON_BOTH_PLAYERS { // if one player moves first, then put state waiting on the other
+		lastRound.PlayerATurn = req.Turn
 		b.State = pokemon.BattleState_WAITING_ON_PLAYER_B
 	} else if req.PlayerId == b.PlayerBId && b.State == pokemon.BattleState_WAITING_ON_BOTH_PLAYERS {
+		lastRound.PlayerBTurn = req.Turn
 		b.State = pokemon.BattleState_WAITING_ON_PLAYER_A
 	} else if req.PlayerId == b.PlayerAId && b.State == pokemon.BattleState_WAITING_ON_PLAYER_A { // if the player who moved was being waited for, queue it up, baby.
+		lastRound.PlayerATurn = req.Turn
 		b.State = pokemon.BattleState_MOVE_RESULTS_QUEUED
 	} else if req.PlayerId == b.PlayerBId && b.State == pokemon.BattleState_WAITING_ON_PLAYER_B {
+		lastRound.PlayerBTurn = req.Turn
 		b.State = pokemon.BattleState_MOVE_RESULTS_QUEUED
 	}
 
-	fmt.Println(b.State)
+	if b.State == pokemon.BattleState_MOVE_RESULTS_QUEUED {
+		b.Duration++
+	}
+
+	pretty.Println(b)
 
 	err = bs.battleService.Upsert(ctx, b)
 	if err != nil {

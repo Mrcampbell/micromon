@@ -44,8 +44,6 @@ func (bs *BattleService) Upsert(ctx context.Context, battle *pokemon.Battle) err
 		}
 	}
 	return nil
-
-	return nil
 }
 
 func (bs *BattleService) GetBattle(ctx context.Context, id string) (*pokemon.Battle, error) {
