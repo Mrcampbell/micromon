@@ -21,10 +21,10 @@ service BattleService {
     };
   }
 
-  rpc UseAttack(UseAttackRequest) returns (UseAttackResponse) {
+  rpc SubmitTurn(SubmitTurnRequest) returns (SubmitTurnResponse) {
     option (google.api.http) ={
-      post: "/v1/battle/{battle_id}/attack",
-      body: "*"
+      post: "/v1/battle/{battle_id}/turn/{player_id}",
+      body: "turn"
     };
   }
 }
@@ -66,13 +66,30 @@ message GetBattleResponse {
   Battle battle = 1;
 }
 
-message UseAttackRequest {
+message SubmitTurnRequest {
   string battle_id = 1;
   string player_id = 2;
-
-  // this way because we need to ensure that the move is known by the pokemon
-  string pokemon_move_slot = 3; // 1-4, pick the move you want to use
+  PlayerTurn turn = 3;
 }
 
-message UseAttackResponse {
+message SubmitTurnResponse {
+  string battle_id = 1;
+  string player_id = 2;
+  PlayerTurn turn = 3;
+}
+
+message BattleRound {
+  PlayerTurn player_a_turn = 1;
+  PlayerTurn player_b_turn = 2;
+}
+
+message PlayerTurn {
+  bool is_attack = 1;
+  PlayerAttack attack = 2;
+  // is_use_item = 3;
+  // PlayerItemUse = 4;
+}
+
+message PlayerAttack {
+  int32 pokemon_move_slot = 1;
 }

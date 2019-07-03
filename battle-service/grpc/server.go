@@ -75,11 +75,12 @@ func (bs *BattleServer) GetBattle(ctx context.Context, req *pokemon.GetBattleReq
 	}, nil
 }
 
-func (bs *BattleServer) UseAttack(ctx context.Context, req *pokemon.UseAttackRequest) (*pokemon.UseAttackResponse, error) {
+func (bs *BattleServer) SubmitTurn(ctx context.Context, req *pokemon.SubmitTurnRequest) (*pokemon.SubmitTurnResponse, error) {
 	b, err := bs.battleService.GetBattle(ctx, req.BattleId)
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("REQ: ", req)
 
 	if req.PlayerId == b.PlayerAId && b.State == pokemon.BattleState_WAITING_ON_BOTH_PLAYERS { // if one player moves first, then put state waiting on the other
 		b.State = pokemon.BattleState_WAITING_ON_PLAYER_B
@@ -99,5 +100,5 @@ func (bs *BattleServer) UseAttack(ctx context.Context, req *pokemon.UseAttackReq
 		return nil, err
 	}
 
-	return &pokemon.UseAttackResponse{}, nil
+	return &pokemon.SubmitTurnResponse{}, nil
 }
