@@ -86,10 +86,14 @@ message BattleRound {
 message PlayerTurn {
   bool is_attack = 1;
   PlayerAttack attack = 2;
-  // is_use_item = 3;
-  // PlayerItemUse = 4;
+  bool is_use_item = 3;
+  PlayerItemUse item = 4;
 }
 
 message PlayerAttack {
   int32 pokemon_move_slot = 1;
+}
+
+message PlayerItemUse {
+  int32 item_slot = 1;
 }

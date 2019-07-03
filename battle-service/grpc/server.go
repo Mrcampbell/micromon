@@ -80,9 +80,15 @@ func (bs *BattleServer) SubmitTurn(ctx context.Context, req *pokemon.SubmitTurnR
 	if err != nil {
 		return nil, err
 	}
+	
 	fmt.Println("REQ: ", req)
+	b.State = pokemon.BattleState_WAITING_ON_BOTH_PLAYERS
 
-	if req.PlayerId == b.PlayerAId && b.State == pokemon.BattleState_WAITING_ON_BOTH_PLAYERS { // if one player moves first, then put state waiting on the other
+	if req.PlayerId == b.PlayerAId && b.State == pokemon.BattleState_WAITING_ON_PLAYER_B ||
+		req.PlayerId == b.PlayerBId && b.State == pokemon.BattleState_WAITING_ON_PLAYER_A ||
+		b.State == pokemon.BattleState_MOVE_RESULTS_QUEUED { // if a player has already taken a turn and resubmits
+		fmt.Println("You already took your turn, you schmuck.")
+	} else if req.PlayerId == b.PlayerAId && b.State == pokemon.BattleState_WAITING_ON_BOTH_PLAYERS { // if one player moves first, then put state waiting on the other
 		b.State = pokemon.BattleState_WAITING_ON_PLAYER_B
 	} else if req.PlayerId == b.PlayerBId && b.State == pokemon.BattleState_WAITING_ON_BOTH_PLAYERS {
 		b.State = pokemon.BattleState_WAITING_ON_PLAYER_A
@@ -92,7 +98,6 @@ func (bs *BattleServer) SubmitTurn(ctx context.Context, req *pokemon.SubmitTurnR
 		b.State = pokemon.BattleState_MOVE_RESULTS_QUEUED
 	}
 
-	fmt.Println(req)
 	fmt.Println(b.State)
 
 	err = bs.battleService.Upsert(ctx, b)
